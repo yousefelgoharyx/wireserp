@@ -9,16 +9,16 @@ import {
 import { ChevronDown } from 'tabler-icons-react';
 import en from '../images/english.png';
 import ar from '../images/arabic.png';
-import { useDir } from '../App';
+import { useLang } from '../AppProvider';
 
-type Lang = {
+type LangItem = {
     label: string;
+    id: Lang;
     image: any;
-    dir: 'ltr' | 'rtl';
 };
-const langs: Lang[] = [
-    { label: 'English', image: en, dir: 'ltr' },
-    { label: 'Arabic', image: ar, dir: 'rtl' },
+const langs: LangItem[] = [
+    { label: 'English', image: en, id: 'en' },
+    { label: 'Arabic', image: ar, id: 'ar' },
 ];
 
 const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({
@@ -61,22 +61,22 @@ const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({
 }));
 
 export function LanguagePicker() {
-    const [dir, setDir] = useDir();
+    const [lang, setLang] = useLang();
     const [opened, setOpened] = useState(false);
     const { classes } = useStyles({ opened });
-    const [selected, setSelected] = useState(langs.find((l) => l.dir === dir));
+    const [selected, setSelected] = useState(langs.find((l) => l.id === lang));
 
-    const handleClick = (item) => {
-        setSelected(item);
-        setDir(item.dir);
+    const handleClick = (lang) => {
+        setSelected(lang);
+        setLang(lang.id);
     };
-    const items = langs.map((item) => (
+    const items = langs.map((lang) => (
         <Menu.Item
-            icon={<Image src={item.image} width={18} height={18} />}
-            onClick={() => handleClick(item)}
-            key={item.label}
+            icon={<Image src={lang.image} width={18} height={18} />}
+            onClick={() => handleClick(lang)}
+            key={lang.id}
         >
-            {item.label}
+            {lang.label}
         </Menu.Item>
     ));
 

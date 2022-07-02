@@ -1,8 +1,8 @@
-import { MantineThemeOverride } from '@mantine/core';
+import { ColorScheme, MantineThemeOverride } from '@mantine/core';
 
 type Options = {
-    colorScheme: 'light' | 'dark';
-    dir?: 'rtl' | 'ltr';
+    colorScheme: ColorScheme;
+    dir?: Dir;
 };
 export function theme({
     colorScheme,

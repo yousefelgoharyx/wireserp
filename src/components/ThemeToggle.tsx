@@ -1,6 +1,5 @@
-import { createStyles, ThemeIcon } from '@mantine/core';
+import { createStyles, useMantineColorScheme } from '@mantine/core';
 import { Moon, Sun } from 'tabler-icons-react';
-import { useTheme } from '../App';
 
 const useStyles = createStyles({
     theme: {
@@ -12,11 +11,10 @@ const useStyles = createStyles({
 
 const ThemeToggle = () => {
     const { classes } = useStyles();
-    const [theme, setTheme] = useTheme();
-    const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+    const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     return (
-        <div className={classes.theme} onClick={toggleTheme}>
-            {theme === 'dark' ? <Sun /> : <Moon />}
+        <div className={classes.theme} onClick={() => toggleColorScheme()}>
+            {colorScheme === 'dark' ? <Sun /> : <Moon />}
         </div>
     );
 };
