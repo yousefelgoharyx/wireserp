@@ -41,18 +41,10 @@ const AppProvider = (props: Props) => {
     const toggleDir = () => {
         const nextDir = dir === 'rtl' ? 'ltr' : 'rtl';
         setDir(nextDir);
-        window.location.reload();
     };
     useHotkeys([['ctrl+J', toggleColorScheme]]);
     useHotkeys([['ctrl+D', toggleDir]]);
 
-    const emotion =
-        dir === 'rtl'
-            ? {
-                  key: 'mantine',
-                  stylisPlugins: [rtlPlugin],
-              }
-            : { key: 'mantine' };
     return (
         <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
             <ColorSchemeProvider
@@ -63,7 +55,14 @@ const AppProvider = (props: Props) => {
                     <MantineProvider
                         withGlobalStyles
                         withNormalizeCSS
-                        emotionOptions={emotion}
+                        emotionOptions={
+                            dir === 'rtl'
+                                ? {
+                                      key: 'mantine-rtl',
+                                      stylisPlugins: [rtlPlugin],
+                                  }
+                                : { key: 'mantine' }
+                        }
                         theme={theme({ colorScheme, dir })}
                     >
                         {props.children}
