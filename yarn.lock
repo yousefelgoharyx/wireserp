@@ -12043,6 +12043,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tabler-icons-react@npm:^1.52.0":
+  version: 1.52.0
+  resolution: "tabler-icons-react@npm:1.52.0"
+  peerDependencies:
+    react: ">= 16.8.0"
+  checksum: 2615e90ee8638e9a3f39381730c7877cbbe0f9636d53c8aaa88483c2056a20fe339034cf88ff5c2a268f9384a7eba8c04d8d3c0952a4b4e86121ce9c23940319
+  languageName: node
+  linkType: hard
+
 "tailwindcss@npm:^3.0.2":
   version: 3.1.4
   resolution: "tailwindcss@npm:3.1.4"
@@ -12973,6 +12982,7 @@ __metadata:
     stylis: ^4.1.1
     stylis-plugin-rtl: ^2.1.1
     swr: ^1.3.0
+    tabler-icons-react: ^1.52.0
     typescript: ^4.7.4
     web-vitals: ^2.1.0
   languageName: unknown

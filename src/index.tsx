@@ -1,24 +1,14 @@
-import { MantineProvider } from "@mantine/core";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { theme } from "./theme/mantine";
-import rtlPlugin from "stylis-plugin-rtl";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById("root")!);
+const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <MantineProvider
-                withGlobalStyles
-                emotionOptions={{ key: "mantine", stylisPlugins: [rtlPlugin] }}
-                withNormalizeCSS
-                theme={theme}
-            >
-                <App />
-            </MantineProvider>
+            <App />
         </BrowserRouter>
     </React.StrictMode>
 );

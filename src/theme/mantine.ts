@@ -1,7 +1,17 @@
-import { MantineThemeOverride } from "@mantine/core";
+import { MantineThemeOverride } from '@mantine/core';
 
-export const theme: MantineThemeOverride = {
-    fontFamily: "Cairo",
-    colorScheme: "dark",
-    dir: "rtl",
+type Options = {
+    colorScheme: 'light' | 'dark';
+    dir?: 'rtl' | 'ltr';
 };
+export function theme({
+    colorScheme,
+    dir = 'rtl',
+}: Options): MantineThemeOverride {
+    return {
+        fontFamily: 'Cairo',
+        colorScheme,
+        dir,
+        primaryColor: 'teal',
+    };
+}
