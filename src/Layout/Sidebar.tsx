@@ -6,6 +6,7 @@ import {
     UnstyledButton,
     Text,
     ScrollArea,
+    Transition,
 } from '@mantine/core';
 import { UserCircle } from 'tabler-icons-react';
 import { LinksGroup } from './NavbarLinks';

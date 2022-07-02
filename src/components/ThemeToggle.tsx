@@ -6,6 +6,7 @@ const useStyles = createStyles({
     theme: {
         cursor: 'pointer',
         padding: 4,
+        fontSize: 0,
     },
 });
 
@@ -14,14 +15,9 @@ const ThemeToggle = () => {
     const [theme, setTheme] = useTheme();
     const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
     return (
-        <ThemeIcon
-            className={classes.theme}
-            size="lg"
-            variant="light"
-            onClick={toggleTheme}
-        >
+        <div className={classes.theme} onClick={toggleTheme}>
             {theme === 'dark' ? <Sun /> : <Moon />}
-        </ThemeIcon>
+        </div>
     );
 };
 
