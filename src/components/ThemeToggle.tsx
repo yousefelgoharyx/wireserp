@@ -6,9 +6,6 @@ const useStyles = createStyles({
     theme: {
         cursor: 'pointer',
         padding: 4,
-        position: 'fixed',
-        bottom: 16,
-        right: 16,
     },
 });
 

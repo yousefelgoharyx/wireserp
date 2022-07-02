@@ -10,11 +10,12 @@ import {
 import { theme } from './theme/mantine';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
-import React, { useContext } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
+
+type Dir = 'ltr' | 'rtl';
 type Props = {
     children: React.ReactNode;
 };
-
 type ThemeContextType = [ColorScheme, (colorScheme: ColorScheme) => void];
 const ThemeContext = React.createContext<ThemeContextType>(null);
 
@@ -23,32 +24,51 @@ const AppProvider = (props: Props) => {
     const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
         key: 'mantine-color-scheme',
         defaultValue: 'dark',
-        getInitialValueInEffect: true,
+        getInitialValueInEffect: false,
     });
 
-    const toggleColorScheme = () =>
-        setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+    const [dir, setDir] = useLocalStorage<Dir>({
+        key: 'mantine-dir',
+        defaultValue: 'rtl',
+        getInitialValueInEffect: false,
+    });
 
-    useHotkeys([['ctrl+J', toggleColorScheme]]);
-
-    const emotion = {
-        key: 'mantine',
-        stylisPlugins: [rtlPlugin],
+    const toggleColorScheme = () => {
+        const nextScheme = colorScheme === 'dark' ? 'light' : 'dark';
+        setColorScheme(nextScheme);
     };
+
+    const toggleDir = () => {
+        const nextDir = dir === 'rtl' ? 'ltr' : 'rtl';
+        setDir(nextDir);
+        window.location.reload();
+    };
+    useHotkeys([['ctrl+J', toggleColorScheme]]);
+    useHotkeys([['ctrl+D', toggleDir]]);
+
+    const emotion =
+        dir === 'rtl'
+            ? {
+                  key: 'mantine',
+                  stylisPlugins: [rtlPlugin],
+              }
+            : { key: 'mantine' };
     return (
         <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
             <ColorSchemeProvider
                 colorScheme={colorScheme}
                 toggleColorScheme={toggleColorScheme}
             >
-                <MantineProvider
-                    withGlobalStyles
-                    withNormalizeCSS
-                    emotionOptions={emotion}
-                    theme={theme({ colorScheme })}
-                >
-                    {props.children}
-                </MantineProvider>
+                <div dir={dir}>
+                    <MantineProvider
+                        withGlobalStyles
+                        withNormalizeCSS
+                        emotionOptions={emotion}
+                        theme={theme({ colorScheme, dir })}
+                    >
+                        {props.children}
+                    </MantineProvider>
+                </div>
             </ColorSchemeProvider>
         </ThemeContext.Provider>
     );

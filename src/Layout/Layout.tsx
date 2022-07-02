@@ -8,6 +8,7 @@ import {
 } from '@mantine/core';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import Bar from './Bar';
 import Sidebar from './Sidebar';
 
 const Layout = () => {
@@ -15,35 +16,10 @@ const Layout = () => {
     const [opened, setOpened] = useState(false);
     return (
         <AppShell
-            header={
-                <Header height={70} p="md">
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            height: '100%',
-                        }}
-                    >
-                        <MediaQuery
-                            largerThan="sm"
-                            styles={{ display: 'none' }}
-                        >
-                            <Burger
-                                opened={opened}
-                                onClick={() => setOpened((o) => !o)}
-                                size="sm"
-                                color={theme.colors.gray[6]}
-                                mr="xl"
-                            />
-                        </MediaQuery>
-
-                        <Text>Wires ERP</Text>
-                    </div>
-                </Header>
-            }
+            header={<Bar opened={opened} onMenu={() => setOpened(!opened)} />}
+            navbar={<Sidebar open={opened} />}
             fixed
             navbarOffsetBreakpoint="sm"
-            navbar={<Sidebar open={opened} />}
         >
             <Outlet />
         </AppShell>

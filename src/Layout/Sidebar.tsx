@@ -8,7 +8,6 @@ import {
     ScrollArea,
 } from '@mantine/core';
 import { UserCircle } from 'tabler-icons-react';
-import ThemeToggle from '../components/ThemeToggle';
 import { LinksGroup } from './NavbarLinks';
 const useStyles = createStyles((theme) => ({
     user: {
