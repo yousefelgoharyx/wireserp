@@ -9,32 +9,8 @@ import {
     Transition,
 } from '@mantine/core';
 import { UserCircle } from 'tabler-icons-react';
+import UserControl from '../components/UserControl';
 import { LinksGroup } from './NavbarLinks';
-const useStyles = createStyles((theme) => ({
-    user: {
-        display: 'flex',
-        width: '100%',
-        padding: theme.spacing.md,
-        color:
-            theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        borderRadius: theme.spacing.xs,
-
-        '&:hover': {
-            backgroundColor:
-                theme.colorScheme === 'dark'
-                    ? theme.colors.dark[8]
-                    : theme.colors.gray[0],
-        },
-    },
-
-    email: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-    },
-    header: {
-        padding: theme.spacing.sm,
-    },
-}));
 
 const sidebar = [
     {
@@ -88,31 +64,41 @@ const Sidebar = ({ open }: { open: boolean }) => {
                 ))}
             </Navbar.Section>
             <Navbar.Section>
-                <UnstyledButton className={classes.user}>
-                    <Group noWrap>
-                        <Avatar
-                            src="https://avatars.githubusercontent.com/u/30435916?s=40&v=4"
-                            radius="xl"
-                        />
-
-                        <div>
-                            <Text size="sm" weight={500}>
-                                Yousef
-                            </Text>
-
-                            <Text
-                                color="dimmed"
-                                size="xs"
-                                className={classes.email}
-                            >
-                                yousefelgoharyx@gmail.com
-                            </Text>
-                        </div>
-                    </Group>
-                </UnstyledButton>
+                <UserControl
+                    onClick={() => {}}
+                    source="https://avatars.githubusercontent.com/u/30435916?s=40&v=4"
+                    name="Yousef"
+                    email="yousefelgoharyx@gmail.com"
+                />
             </Navbar.Section>
         </Navbar>
     );
 };
+
+const useStyles = createStyles((theme) => ({
+    user: {
+        display: 'flex',
+        width: '100%',
+        padding: theme.spacing.md,
+        color:
+            theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        borderRadius: 0,
+
+        '&:hover': {
+            backgroundColor:
+                theme.colorScheme === 'dark'
+                    ? theme.colors.dark[8]
+                    : theme.colors.gray[0],
+        },
+    },
+
+    email: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    },
+    header: {
+        padding: theme.spacing.sm,
+    },
+}));
 
 export default Sidebar;

@@ -6,6 +6,7 @@ import {
     Image,
     MediaQuery,
     Text,
+    useMantineColorScheme,
     useMantineTheme,
 } from '@mantine/core';
 import { LanguagePicker } from '../components/LangPicker';
@@ -25,6 +26,7 @@ const useStyles = createStyles((theme) => ({
 }));
 const Bar = ({ onMenu, opened }) => {
     const theme = useMantineTheme();
+    const { colorScheme } = useMantineColorScheme();
     const { classes } = useStyles();
     return (
         <Header height={70} px="md" className={classes.container}>
@@ -40,7 +42,11 @@ const Bar = ({ onMenu, opened }) => {
                         />
                     </MediaQuery>
                     <Image
-                        src="https://digitwires.com/logo-full.svg"
+                        src={
+                            colorScheme === 'dark'
+                                ? 'https://digitwires.com/logo-white.svg'
+                                : 'https://digitwires.com/logo-full.svg'
+                        }
                         height={35}
                     />
                 </Group>
