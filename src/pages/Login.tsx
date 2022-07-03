@@ -48,6 +48,52 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
+const loginInputs = [
+    {
+        name: 'email',
+        label: 'Email',
+        placeholder: 'Email',
+        type: 'email',
+        required: true,
+    },
+    {
+        name: 'password',
+        label: 'Password',
+        placeholder: 'Password',
+        type: 'password',
+        required: true,
+    },
+];
+const signupInputs = [
+    {
+        name: 'name',
+        label: 'Name',
+        placeholder: 'Name',
+        type: 'text',
+        required: true,
+    },
+    {
+        name: 'email',
+        label: 'Email',
+        placeholder: 'Email',
+        type: 'email',
+        required: true,
+    },
+    {
+        name: 'password',
+        label: 'Password',
+        placeholder: 'Password',
+        type: 'password',
+        required: true,
+    },
+    {
+        name: 'confirmPassword',
+        label: 'Confirm Password',
+        placeholder: 'Confirm Password',
+        type: 'password',
+        required: true,
+    },
+];
 function Login(props: PaperProps<'div'>) {
     const { classes } = useStyles();
     const [type, toggle] = useToggle('login', ['login', 'register']);
@@ -64,7 +110,7 @@ function Login(props: PaperProps<'div'>) {
             password: (val) => val.length >= 6,
         },
     });
-
+    const inputs = type === 'login' ? loginInputs : signupInputs;
     return (
         <Box className={classes.container}>
             <Paper withBorder {...props} className={classes.auth}>
@@ -79,20 +125,24 @@ function Login(props: PaperProps<'div'>) {
                     onSubmit={form.onSubmit(() => {})}
                 >
                     <Group direction="column" grow>
-                        {type === 'register' && (
+                        {/* {type === 'register' && (
+                            
+                        )} */}
+
+                        {inputs.map((input) => (
                             <TextInput
-                                label="الاسم"
-                                placeholder="اسمك"
-                                value={form.values.name}
+                                label={input.label}
+                                placeholder={input.placeholder}
+                                value={form.values[input.name]}
                                 onChange={(event) =>
                                     form.setFieldValue(
-                                        'name',
+                                        input.name as keyof typeof form.values,
                                         event.currentTarget.value
                                     )
                                 }
                             />
-                        )}
-
+                        ))}
+                        {/* 
                         <TextInput
                             required
                             label="البريد الالكتروني"
@@ -135,7 +185,7 @@ function Login(props: PaperProps<'div'>) {
                                     )
                                 }
                             />
-                        )}
+                        )} */}
                     </Group>
 
                     <Group position="apart" mt="xl">
