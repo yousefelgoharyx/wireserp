@@ -2,5 +2,8 @@
     "home": "الرئيسية",
     "about": "من نحن",
     "clients": "العملاء",
-    "checks": "الفواتير"
+    "checks": "الفواتير",
+    "add": "إضافة {{text}}",
+    "product": "منتج",
+    "product_plural": "منتجات"
 }

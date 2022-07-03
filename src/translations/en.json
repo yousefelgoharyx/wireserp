@@ -2,5 +2,8 @@
     "home": "Home",
     "about": "About",
     "clients": "Clients",
-    "checks": "Checks"
+    "checks": "Checks",
+    "add": "Add {{text}}",
+    "product": "Product",
+    "product_plural": "Products"
 }
