@@ -8,6 +8,7 @@ import {
     ScrollArea,
     Transition,
 } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 import { UserCircle } from 'tabler-icons-react';
 import UserControl from '../components/UserControl';
 import { LinksGroup } from './NavbarLinks';
@@ -52,6 +53,7 @@ const sidebar = [
 ];
 const Sidebar = ({ open }: { open: boolean }) => {
     const { classes } = useStyles();
+    const navigate = useNavigate();
     return (
         <Navbar
             hidden={!open}
@@ -65,7 +67,7 @@ const Sidebar = ({ open }: { open: boolean }) => {
             </Navbar.Section>
             <Navbar.Section>
                 <UserControl
-                    onClick={() => {}}
+                    onClick={() => navigate('settings')}
                     source="https://avatars.githubusercontent.com/u/30435916?s=40&v=4"
                     name="Yousef"
                     email="yousefelgoharyx@gmail.com"

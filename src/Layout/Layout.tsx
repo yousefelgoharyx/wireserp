@@ -12,7 +12,6 @@ import Bar from './Bar';
 import Sidebar from './Sidebar';
 
 const Layout = () => {
-    const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
     return (
         <AppShell

@@ -9,6 +9,7 @@ import {
     useMantineColorScheme,
     useMantineTheme,
 } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 import { LanguagePicker } from '../components/LangPicker';
 import ThemeToggle from '../components/ThemeToggle';
 
@@ -28,6 +29,7 @@ const Bar = ({ onMenu, opened }) => {
     const theme = useMantineTheme();
     const { colorScheme } = useMantineColorScheme();
     const { classes } = useStyles();
+    const navigate = useNavigate();
     return (
         <Header height={70} px="md" className={classes.container}>
             <div className={classes.header}>
@@ -42,6 +44,7 @@ const Bar = ({ onMenu, opened }) => {
                         />
                     </MediaQuery>
                     <Image
+                        onClick={() => navigate('/')}
                         src={
                             colorScheme === 'dark'
                                 ? 'https://digitwires.com/logo-white.svg'
