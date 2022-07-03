@@ -1,9 +1,9 @@
 import {
-    Box,
     Burger,
     createStyles,
     Group,
     Header,
+    Image,
     MediaQuery,
     Text,
     useMantineTheme,
@@ -12,17 +12,22 @@ import { LanguagePicker } from '../components/LangPicker';
 import ThemeToggle from '../components/ThemeToggle';
 
 const useStyles = createStyles((theme) => ({
+    container: {
+        display: 'flex',
+        alignItems: 'center',
+    },
     header: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        width: '100%',
     },
 }));
 const Bar = ({ onMenu, opened }) => {
     const theme = useMantineTheme();
     const { classes } = useStyles();
     return (
-        <Header height={80} p="md">
+        <Header height={70} px="md" className={classes.container}>
             <div className={classes.header}>
                 <Group>
                     <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
@@ -34,8 +39,10 @@ const Bar = ({ onMenu, opened }) => {
                             mr="xl"
                         />
                     </MediaQuery>
-
-                    <Text>Wires ERP</Text>
+                    <Image
+                        src="https://digitwires.com/logo-full.svg"
+                        height={35}
+                    />
                 </Group>
                 <Group>
                     <ThemeToggle />

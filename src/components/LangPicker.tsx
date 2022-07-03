@@ -87,6 +87,7 @@ export function LanguagePicker() {
             onOpen={() => setOpened(true)}
             onClose={() => setOpened(false)}
             radius="md"
+            sx={{ userSelect: 'none' }}
             control={
                 <UnstyledButton className={classes.control}>
                     <Group spacing="xs">

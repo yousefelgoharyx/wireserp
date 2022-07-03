@@ -1,10 +1,18 @@
 import { useForm, yupResolver } from '@mantine/form';
-import { TextInput, PasswordInput, Group, Button, Anchor } from '@mantine/core';
+import {
+    TextInput,
+    PasswordInput,
+    Group,
+    Button,
+    Anchor,
+    createStyles,
+} from '@mantine/core';
 import AuthForm from '../../components/AuthForm';
 import schema from './Schema';
 import { Link } from 'react-router-dom';
 
 function Signup() {
+    const { classes } = useStyles();
     const form = useForm({
         schema: yupResolver(schema),
         initialValues: {
@@ -20,7 +28,10 @@ function Signup() {
 
     return (
         <AuthForm>
-            <form onSubmit={form.onSubmit(handleSubmit)}>
+            <form
+                className={classes.form}
+                onSubmit={form.onSubmit(handleSubmit)}
+            >
                 <Group direction="column" grow>
                     <TextInput
                         label="الاسم"
@@ -56,5 +67,11 @@ function Signup() {
         </AuthForm>
     );
 }
+
+const useStyles = createStyles({
+    form: {
+        width: '100%',
+    },
+});
 
 export default Signup;

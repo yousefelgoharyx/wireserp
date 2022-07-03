@@ -68,38 +68,10 @@ function Login(props: PaperProps<'div'>) {
     );
 }
 
-const useStyles = createStyles((theme) => ({
-    container: {
-        height: '100vh',
-        backgroundColor:
-            theme.colorScheme === 'dark'
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    auth: {
-        maxWidth: 400,
-        width: '100%',
-        margin: 32,
-        padding: theme.spacing.xl,
-        borderRadius: theme.spacing.xs,
-        '@media (max-width: 475px)': {
-            width: '100%',
-            maxWidth: '100%',
-            height: '100%',
-            margin: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-    },
+const useStyles = createStyles({
     form: {
         width: '100%',
     },
-}));
+});
 
 export default Login;
