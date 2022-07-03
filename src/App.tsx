@@ -7,7 +7,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import ar from './translations/ar.json';
 import en from './translations/en.json';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
+import Signup from './pages/Signup/Signup';
 const resources = {
     en: {
         translation: en,
@@ -30,6 +31,7 @@ function App() {
                     <Route path="/about" element={<About />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
             </Routes>
         </AppProvider>
     );
