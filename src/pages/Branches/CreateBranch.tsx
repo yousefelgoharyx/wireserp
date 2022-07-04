@@ -6,6 +6,7 @@ import {
     TextInput,
     useMantineTheme,
 } from '@mantine/core';
+import FormDivider from '../../components/FormDivider';
 import FormGroup from '../../components/FormGroup';
 import FormShell from '../../components/FormShell';
 
@@ -25,14 +26,7 @@ const CreateBranch = (props: Props) => {
                         <TextInput label="عنوان الفرع" />
                         <TextInput label="السجل التجاري" />
                     </FormGroup>
-                    <Divider
-                        my={8}
-                        color={
-                            theme.colorScheme === 'dark'
-                                ? theme.colors.dark[5]
-                                : theme.colors.gray[3]
-                        }
-                    />
+                    <FormDivider />
                     <Group>
                         <Button>اضافة</Button>
                     </Group>

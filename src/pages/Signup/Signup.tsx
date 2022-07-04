@@ -1,103 +1,86 @@
-import { useForm, yupResolver } from '@mantine/form';
-import {
-    TextInput,
-    PasswordInput,
-    Group,
-    Button,
-    Anchor,
-    createStyles,
-    Select,
-    NumberInput,
-} from '@mantine/core';
-import AuthForm from '../../components/AuthForm';
-import schema from './Schema';
-import { Link } from 'react-router-dom';
+import { Box, createStyles, Loader, Stack, Stepper, Text } from '@mantine/core';
+
+import Step1 from './Step1';
+import { useState } from 'react';
+import Step2 from './Step2';
+import Step3 from './Step3';
 
 function Signup() {
     const { classes } = useStyles();
-    const form = useForm({
-        schema: yupResolver(schema),
-        initialValues: {
-            companyName: '',
-            phone: '',
-            country: '',
-            currency: '',
-        },
-    });
+    const [active, setActive] = useState(0);
+    const nextStep = () =>
+        setActive((current) => (current < 3 ? current + 1 : current));
+    const prevStep = () =>
+        setActive((current) => (current > 0 ? current - 1 : current));
 
     const handleSubmit = (e) => {
         console.log(e);
     };
 
     return (
-        <AuthForm>
-            <form
-                className={classes.form}
-                onSubmit={form.onSubmit(handleSubmit)}
+        <Stack className={classes.root}>
+            <Stepper
+                className={classes.stepper}
+                active={active}
+                onStepClick={setActive}
+                breakpoint="sm"
+                styles={{
+                    content: {
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                    },
+                }}
             >
-                <Group direction="column" grow>
-                    <TextInput
-                        label="اسم الشركة"
-                        placeholder="ادخل اسم الشركة"
-                        {...form.getInputProps('companyName')}
-                    />
-                    <NumberInput
-                        label="رقم هاتف الشركة"
-                        placeholder="ادخل رقم الهاتف"
-                        rightSectionWidth={70}
-                        hideControls
-                        {...form.getInputProps('phone')}
-                    />
-                    <Select
-                        label="الدولة"
-                        placeholder="اختر الدولة"
-                        nothingFound="لا يوجد شيء"
-                        searchable
-                        data={[
-                            { value: 'react', label: 'React' },
-                            { value: 'ng', label: 'Angular' },
-                            { value: 'svelte', label: 'Svelte' },
-                            { value: 'vue', label: 'Vue' },
-                        ]}
-                        {...form.getInputProps('country')}
-                    />
-
-                    <Select
-                        label="العملة"
-                        placeholder="اختر العملة"
-                        nothingFound="لا يوجد شيء"
-                        searchable
-                        data={[
-                            { value: 'react', label: 'React' },
-                            { value: 'ng', label: 'Angular' },
-                            { value: 'svelte', label: 'Svelte' },
-                            { value: 'vue', label: 'Vue' },
-                        ]}
-                        {...form.getInputProps('currency')}
-                    />
-                </Group>
-
-                <Group position="apart" mt="xl">
-                    <Anchor
-                        to="/login"
-                        component={Link}
-                        type="button"
-                        color="gray"
-                        size="xs"
-                    >
-                        لديك حساب؟ سجل دخول
-                    </Anchor>
-                    <Button type="submit">دخول</Button>
-                </Group>
-            </form>
-        </AuthForm>
+                <Stepper.Step
+                    label="Basic Info"
+                    description="Fill company's info"
+                    allowStepSelect={active > 0 && active < 3}
+                >
+                    <Step1 onNext={nextStep} />
+                </Stepper.Step>
+                <Stepper.Step
+                    allowStepSelect={active > 1 && active < 3}
+                    label="Fiscal year"
+                    description="Define fiscal year"
+                >
+                    <Step2 onNext={nextStep} />
+                </Stepper.Step>
+                <Stepper.Step
+                    label="Admin Info"
+                    description="Fill Admin Info"
+                    allowStepSelect={active > 2 && active < 3}
+                >
+                    <Step3 onNext={nextStep} />
+                </Stepper.Step>
+                <Stepper.Completed>
+                    <Stack className={classes.loader} align="center">
+                        <Loader size="lg" />
+                        <Text>Please Wait...</Text>
+                    </Stack>
+                </Stepper.Completed>
+            </Stepper>
+        </Stack>
     );
 }
 
-const useStyles = createStyles({
-    form: {
-        width: '100%',
+const useStyles = createStyles((theme) => ({
+    root: {
+        minHeight: '100vh',
+        alignItems: 'stretch',
+        padding: 32,
+        maxWidth: 992,
+        margin: '0 auto',
     },
-});
+    stepper: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    loader: {
+        justifyContent: 'center',
+        flex: 1,
+    },
+}));
 
 export default Signup;

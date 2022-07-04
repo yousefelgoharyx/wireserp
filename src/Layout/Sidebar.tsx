@@ -8,16 +8,19 @@ const sidebar = [
     {
         label: 'المنتجات',
         icon: UserCircle,
+        link: '/',
         items: [
             {
                 label: 'الفروع',
                 icon: UserCircle,
+                link: '/branches',
                 items: [{ label: 'اضافة فرع', link: '/branches/create' }],
             },
             {
                 label: 'المخازن',
                 icon: UserCircle,
-                items: [{ label: 'اضافة مخزن', link: '/' }],
+                link: '/storages',
+                items: [{ label: 'اضافة مخزن', link: '/storages/create' }],
             },
         ],
     },
@@ -25,15 +28,18 @@ const sidebar = [
     {
         label: 'الديون',
         icon: UserCircle,
+        link: '/debt',
         items: [
             {
                 label: 'العملاء',
                 icon: UserCircle,
+                link: '/debt/clients',
                 items: [{ label: 'اضافة فرع', link: '/' }],
             },
             {
                 label: 'الموردين',
                 icon: UserCircle,
+                link: '/debt/storage',
                 items: [{ label: 'اضافة مخزن', link: '/' }],
             },
         ],

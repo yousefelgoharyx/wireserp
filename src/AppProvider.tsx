@@ -24,7 +24,7 @@ export const useLang = () => useContext(LangContext);
 const AppProvider = (props: Props) => {
     const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
         key: 'wireserp-color-scheme',
-        defaultValue: 'dark',
+        defaultValue: 'light',
         getInitialValueInEffect: false,
     });
 

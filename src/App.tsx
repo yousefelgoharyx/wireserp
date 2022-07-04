@@ -40,6 +40,7 @@ function App() {
                         <Route index element={<Branches />} />
                         <Route path="create" element={<CreateBranch />} />
                     </Route>
+                    <Route path="*" element={<CreateBranch />} />
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="signup" element={<Signup />} />

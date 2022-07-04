@@ -11,52 +11,28 @@ import {
     Icon as TablerIcon,
     ChevronLeft,
     ChevronRight,
+    UserCircle,
 } from 'tabler-icons-react';
-import {
-    Link,
-    NavLink,
-    useLocation,
-    useMatch,
-    useNavigate,
-} from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 type SidebarDropdownProps = {
     level: number;
     icon: TablerIcon;
     label: string;
-    items: any;
     link?: string;
+    children: React.ReactNode;
 };
 const SidebarDropdown = (props: SidebarDropdownProps) => {
-    const { level, icon: Icon, label, items } = props;
+    const { level, icon: Icon, label } = props;
     const [opened, setOpened] = useState(false);
-    const { classes, theme } = useStyles({ opened: opened, level });
+    const { classes, theme } = useStyles();
+    const icon = useIconStyles(opened);
     const navigate = useNavigate();
     const ChevronIcon = theme.dir === 'ltr' ? ChevronRight : ChevronLeft;
     const handleClick = () => {
         setOpened(!opened);
         if (props.link) navigate(props.link);
     };
-
-    let nested = null;
-    nested = items.map((item) => {
-        if (item.items)
-            return (
-                <SidebarDropdown
-                    key={item.label}
-                    level={level + 1}
-                    link={item.link}
-                    icon={item.icon}
-                    items={item.items}
-                    label={item.label}
-                />
-            );
-        return (
-            <NavLink className={classes.link} to={item.link} key={item.label}>
-                {item.label}
-            </NavLink>
-        );
-    });
 
     return (
         <>
@@ -73,44 +49,51 @@ const SidebarDropdown = (props: SidebarDropdownProps) => {
                         <Box ml="md">{label}</Box>
                     </Box>
 
-                    <ChevronIcon className={classes.chevron} size={14} />
+                    <ChevronIcon className={icon.classes.chevron} size={14} />
                 </Group>
             </UnstyledButton>
             <Collapse className={classes.collapse} in={opened}>
-                {nested}
+                {props.children}
             </Collapse>
         </>
     );
 };
 
 export const SidebarLinks = (props) => {
-    return props.items.map((item) => {
-        if (item.items) {
-            return (
+    const { classes } = useStyles();
+    return (
+        <>
+            <SidebarDropdown
+                level={1}
+                label="Products"
+                icon={UserCircle}
+                link="/"
+            >
                 <SidebarDropdown
-                    level={1}
-                    items={item.items}
-                    label={item.label}
-                    icon={item.icon}
-                    key={item.label}
-                    link={item.link}
-                />
-            );
-        }
-
-        return (
-            <Link to={item.link} key={item.label}>
-                {item.label}
-            </Link>
-        );
-    });
+                    level={2}
+                    label="Branches"
+                    icon={UserCircle}
+                    link="branches"
+                >
+                    <NavLink className={classes.link} to="branches/create">
+                        Cretae
+                    </NavLink>
+                </SidebarDropdown>
+            </SidebarDropdown>
+        </>
+    );
 };
 
-type StyleOptions = {
-    opened: boolean;
-    level: number;
-};
-const useStyles = createStyles((theme, options: StyleOptions) => ({
+const useIconStyles = createStyles((theme, opened: boolean) => ({
+    chevron: {
+        transition: 'transform 200ms ease',
+        transform: opened
+            ? `rotate(${theme.dir === 'rtl' ? -90 : 90}deg)`
+            : 'none',
+    },
+}));
+
+const useStyles = createStyles((theme) => ({
     control: {
         fontWeight: 500,
         display: 'block',
@@ -161,12 +144,5 @@ const useStyles = createStyles((theme, options: StyleOptions) => ({
                     : theme.colors.gray[0],
             color: theme.colorScheme === 'dark' ? theme.white : theme.black,
         },
-    },
-
-    chevron: {
-        transition: 'transform 200ms ease',
-        transform: options.opened
-            ? `rotate(${theme.dir === 'rtl' ? -90 : 90}deg)`
-            : 'none',
     },
 }));
