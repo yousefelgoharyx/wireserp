@@ -43,15 +43,17 @@ const Bar = ({ onMenu, opened }) => {
                             mr="xl"
                         />
                     </MediaQuery>
-                    <Image
-                        onClick={() => navigate('/')}
-                        src={
-                            colorScheme === 'dark'
-                                ? 'https://digitwires.com/logo-white.svg'
-                                : 'https://digitwires.com/logo-full.svg'
-                        }
-                        height={35}
-                    />
+                    <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+                        <Image
+                            onClick={() => navigate('/')}
+                            src={
+                                colorScheme === 'dark'
+                                    ? 'https://digitwires.com/logo-white.svg'
+                                    : 'https://digitwires.com/logo-full.svg'
+                            }
+                            height={35}
+                        />
+                    </MediaQuery>
                 </Group>
                 <Group>
                     <ThemeToggle />

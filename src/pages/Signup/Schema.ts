@@ -1,14 +1,12 @@
 import * as yup from 'yup';
 const schema = yup.object().shape({
-    name: yup
+    companyName: yup
         .string()
         .required('Name is required')
         .min(3, 'Name must be at least 3 characters'),
-    email: yup.string().required('Email is required').email('Invalid e-mail'),
-    password: yup
-        .string()
-        .required()
-        .min(5, 'Password must be at least 5 characters'),
+    phone: yup.string().required('Phone is required'),
+    country: yup.string().required('Country is required'),
+    currency: yup.string().required('Currency is required'),
 });
 
 export default schema;

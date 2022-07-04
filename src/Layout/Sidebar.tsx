@@ -1,58 +1,51 @@
-import {
-    Avatar,
-    createStyles,
-    Group,
-    Navbar,
-    UnstyledButton,
-    Text,
-    ScrollArea,
-    Transition,
-} from '@mantine/core';
+import { createStyles, Navbar, ScrollArea } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { UserCircle } from 'tabler-icons-react';
 import UserControl from '../components/UserControl';
-import { LinksGroup } from './NavbarLinks';
+import { SidebarLinks } from './SidebarLinks';
 
 const sidebar = [
     {
-        label: 'العملاء',
+        label: 'المنتجات',
         icon: UserCircle,
-        links: [
-            { label: 'اضافة عميل', link: '/' },
-            { label: 'طباعة فاتورة', link: '/' },
-            { label: 'تحيا مصر', link: '/' },
+        items: [
+            {
+                label: 'الفروع',
+                icon: UserCircle,
+                items: [
+                    {
+                        label: 'الفروع',
+                        icon: UserCircle,
+                        items: [{ label: 'اضافة فرع', link: '/' }],
+                    },
+                ],
+            },
+            {
+                label: 'المخازن',
+                icon: UserCircle,
+                items: [{ label: 'اضافة مخزن', link: '/' }],
+            },
         ],
     },
+
     {
-        label: 'الفواتير',
+        label: 'الديون',
         icon: UserCircle,
-        links: [
-            { label: 'اضافة فاتورة', link: '/' },
-            { label: 'طباعة فاتورة', link: '/' },
-            { label: 'تحيا مصر', link: '/' },
-        ],
-    },
-    {
-        label: 'الفواتير',
-        icon: UserCircle,
-        links: [
-            { label: 'اضافة فاتورة', link: '/' },
-            { label: 'طباعة فاتورة', link: '/' },
-            { label: 'تحيا مصر', link: '/' },
-        ],
-    },
-    {
-        label: 'الفواتير',
-        icon: UserCircle,
-        links: [
-            { label: 'اضافة فاتورة', link: '/' },
-            { label: 'طباعة فاتورة', link: '/' },
-            { label: 'تحيا مصر', link: '/' },
+        items: [
+            {
+                label: 'العملاء',
+                icon: UserCircle,
+                items: [{ label: 'اضافة فرع', link: '/' }],
+            },
+            {
+                label: 'الموردين',
+                icon: UserCircle,
+                items: [{ label: 'اضافة مخزن', link: '/' }],
+            },
         ],
     },
 ];
 const Sidebar = ({ open }: { open: boolean }) => {
-    const { classes } = useStyles();
     const navigate = useNavigate();
     return (
         <Navbar
@@ -61,9 +54,7 @@ const Sidebar = ({ open }: { open: boolean }) => {
             hiddenBreakpoint="sm"
         >
             <Navbar.Section grow component={ScrollArea}>
-                {sidebar.map((group) => (
-                    <LinksGroup {...group} />
-                ))}
+                <SidebarLinks items={sidebar} />
             </Navbar.Section>
             <Navbar.Section>
                 <UserControl

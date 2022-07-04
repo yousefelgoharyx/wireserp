@@ -6,6 +6,8 @@ import {
     Button,
     Anchor,
     createStyles,
+    Select,
+    NumberInput,
 } from '@mantine/core';
 import AuthForm from '../../components/AuthForm';
 import schema from './Schema';
@@ -16,9 +18,10 @@ function Signup() {
     const form = useForm({
         schema: yupResolver(schema),
         initialValues: {
-            name: '',
-            email: '',
-            password: '',
+            companyName: '',
+            phone: '',
+            country: '',
+            currency: '',
         },
     });
 
@@ -34,20 +37,43 @@ function Signup() {
             >
                 <Group direction="column" grow>
                     <TextInput
-                        label="الاسم"
-                        placeholder="ادخل اسمك"
-                        {...form.getInputProps('name')}
+                        label="اسم الشركة"
+                        placeholder="ادخل اسم الشركة"
+                        {...form.getInputProps('companyName')}
                     />
-                    <TextInput
-                        label="البريد الالكتروني"
-                        placeholder="بريدك الالكتروني"
-                        {...form.getInputProps('email')}
+                    <NumberInput
+                        label="رقم هاتف الشركة"
+                        placeholder="ادخل رقم الهاتف"
+                        rightSectionWidth={70}
+                        hideControls
+                        {...form.getInputProps('phone')}
+                    />
+                    <Select
+                        label="الدولة"
+                        placeholder="اختر الدولة"
+                        nothingFound="لا يوجد شيء"
+                        searchable
+                        data={[
+                            { value: 'react', label: 'React' },
+                            { value: 'ng', label: 'Angular' },
+                            { value: 'svelte', label: 'Svelte' },
+                            { value: 'vue', label: 'Vue' },
+                        ]}
+                        {...form.getInputProps('country')}
                     />
 
-                    <PasswordInput
-                        label="الرقم السري"
-                        placeholder="رقمك السري"
-                        {...form.getInputProps('password')}
+                    <Select
+                        label="العملة"
+                        placeholder="اختر العملة"
+                        nothingFound="لا يوجد شيء"
+                        searchable
+                        data={[
+                            { value: 'react', label: 'React' },
+                            { value: 'ng', label: 'Angular' },
+                            { value: 'svelte', label: 'Svelte' },
+                            { value: 'vue', label: 'Vue' },
+                        ]}
+                        {...form.getInputProps('currency')}
                     />
                 </Group>
 
