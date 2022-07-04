@@ -1,4 +1,4 @@
-import { createStyles, Navbar, ScrollArea } from '@mantine/core';
+import { Navbar, ScrollArea } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { UserCircle } from 'tabler-icons-react';
 import UserControl from '../components/UserControl';
@@ -12,13 +12,7 @@ const sidebar = [
             {
                 label: 'الفروع',
                 icon: UserCircle,
-                items: [
-                    {
-                        label: 'الفروع',
-                        icon: UserCircle,
-                        items: [{ label: 'اضافة فرع', link: '/' }],
-                    },
-                ],
+                items: [{ label: 'اضافة فرع', link: '/branches/create' }],
             },
             {
                 label: 'المخازن',
@@ -67,31 +61,5 @@ const Sidebar = ({ open }: { open: boolean }) => {
         </Navbar>
     );
 };
-
-const useStyles = createStyles((theme) => ({
-    user: {
-        display: 'flex',
-        width: '100%',
-        padding: theme.spacing.md,
-        color:
-            theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        borderRadius: 0,
-
-        '&:hover': {
-            backgroundColor:
-                theme.colorScheme === 'dark'
-                    ? theme.colors.dark[8]
-                    : theme.colors.gray[0],
-        },
-    },
-
-    email: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-    },
-    header: {
-        padding: theme.spacing.sm,
-    },
-}));
 
 export default Sidebar;

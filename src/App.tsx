@@ -10,6 +10,8 @@ import en from './translations/en.json';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import Settings from './pages/Settings/Settings';
+import Branches from './pages/Branches/Branches';
+import CreateBranch from './pages/Branches/CreateBranch';
 const resources = {
     en: {
         translation: en,
@@ -30,8 +32,13 @@ function App() {
                 <Route element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
+
                     <Route path="settings">
                         <Route index element={<Settings />} />
+                    </Route>
+                    <Route path="branches">
+                        <Route index element={<Branches />} />
+                        <Route path="create" element={<CreateBranch />} />
                     </Route>
                 </Route>
                 <Route path="login" element={<Login />} />

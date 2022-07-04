@@ -12,7 +12,7 @@ import {
     ChevronLeft,
     ChevronRight,
 } from 'tabler-icons-react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 type SidebarDropdownProps = {
     level: number;
@@ -39,9 +39,9 @@ const SidebarDropdown = (props: SidebarDropdownProps) => {
                 />
             );
         return (
-            <Link className={classes.link} to={item.link} key={item.label}>
+            <NavLink className={classes.link} to={item.link} key={item.label}>
                 {item.label}
-            </Link>
+            </NavLink>
         );
     });
 
