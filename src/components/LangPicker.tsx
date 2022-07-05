@@ -18,7 +18,7 @@ type LangItem = {
 };
 const langs: LangItem[] = [
     { label: 'English', image: en, id: 'en' },
-    { label: 'Arabic', image: ar, id: 'ar' },
+    { label: 'العربية', image: ar, id: 'ar' },
 ];
 
 const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({

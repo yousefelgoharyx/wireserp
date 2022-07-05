@@ -3,77 +3,73 @@ import {
     Group,
     Box,
     Collapse,
-    ThemeIcon,
     UnstyledButton,
     createStyles,
 } from '@mantine/core';
-import {
-    Icon as TablerIcon,
-    ChevronLeft,
-    ChevronRight,
-} from 'tabler-icons-react';
-import {
-    Link,
-    NavLink,
-    useLocation,
-    useMatch,
-    useNavigate,
-} from 'react-router-dom';
+import { Icon as TablerIcon } from 'tabler-icons-react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import Chevron from '../components/Chevron';
+import LeveledIcon from '../components/LeveledIcon';
 
 type SidebarDropdownProps = {
     level: number;
     icon: TablerIcon;
     label: string;
     items: any;
-    link?: string;
+    to?: string;
+    opened: boolean;
+    toggle: () => void;
 };
 const SidebarDropdown = (props: SidebarDropdownProps) => {
-    const { level, icon: Icon, label, items } = props;
-    const [opened, setOpened] = useState(false);
-    const { classes, theme } = useStyles({ opened: opened, level });
+    const { level, icon: Icon, label, items, opened, toggle } = props;
+    const { classes } = useStyles({ opened: opened });
     const navigate = useNavigate();
-    const ChevronIcon = theme.dir === 'ltr' ? ChevronRight : ChevronLeft;
+
+    const [active, setActive] = useState(null);
     const handleClick = () => {
-        setOpened(!opened);
-        if (props.link) navigate(props.link);
+        toggle();
+        if (props.to) navigate(props.to);
     };
 
     let nested = null;
-    nested = items.map((item) => {
-        if (item.items)
+    if (items) {
+        nested = items.map((item, i) => {
+            if (item.items) {
+                return (
+                    <SidebarDropdown
+                        opened={active === i}
+                        toggle={() => setActive(active === i ? null : i)}
+                        key={item.label}
+                        level={level + 1}
+                        to={item.to}
+                        icon={item.icon}
+                        items={item.items}
+                        label={item.label}
+                    />
+                );
+            }
+
             return (
-                <SidebarDropdown
-                    key={item.label}
-                    level={level + 1}
-                    link={item.link}
-                    icon={item.icon}
-                    items={item.items}
-                    label={item.label}
-                />
+                <NavLink className={classes.link} to={item.to} key={item.label}>
+                    {item.label}
+                </NavLink>
             );
-        return (
-            <NavLink className={classes.link} to={item.link} key={item.label}>
-                {item.label}
-            </NavLink>
-        );
-    });
+        });
+    }
 
     return (
         <>
             <UnstyledButton onClick={handleClick} className={classes.control}>
                 <Group position="apart" spacing={0}>
                     <Box className={classes.controlInfo}>
-                        <ThemeIcon
-                            variant={level > 1 ? 'light' : 'filled'}
-                            size={32}
-                        >
+                        <LeveledIcon level={level} size={32}>
                             <Icon size={24} />
-                        </ThemeIcon>
+                        </LeveledIcon>
 
                         <Box ml="md">{label}</Box>
                     </Box>
 
-                    <ChevronIcon className={classes.chevron} size={14} />
+                    {items && <Chevron className={classes.chevron} size={14} />}
                 </Group>
             </UnstyledButton>
             <Collapse className={classes.collapse} in={opened}>
@@ -84,31 +80,25 @@ const SidebarDropdown = (props: SidebarDropdownProps) => {
 };
 
 export const SidebarLinks = (props) => {
-    return props.items.map((item) => {
-        if (item.items) {
-            return (
-                <SidebarDropdown
-                    level={1}
-                    items={item.items}
-                    label={item.label}
-                    icon={item.icon}
-                    key={item.label}
-                    link={item.link}
-                />
-            );
-        }
-
+    const [active, setActive] = useState(null);
+    return props.items.map((item, i) => {
         return (
-            <Link to={item.link} key={item.label}>
-                {item.label}
-            </Link>
+            <SidebarDropdown
+                opened={active === i}
+                toggle={() => setActive(active === i ? null : i)}
+                level={1}
+                items={item.items}
+                label={item.label}
+                icon={item.icon}
+                key={item.label}
+                to={item.to}
+            />
         );
     });
 };
 
 type StyleOptions = {
     opened: boolean;
-    level: number;
 };
 const useStyles = createStyles((theme, options: StyleOptions) => ({
     control: {

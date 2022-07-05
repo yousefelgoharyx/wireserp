@@ -8,41 +8,44 @@ const sidebar = [
     {
         label: 'المنتجات',
         icon: UserCircle,
-        link: '/',
         items: [
             {
                 label: 'الفروع',
                 icon: UserCircle,
-                link: '/branches',
-                items: [{ label: 'اضافة فرع', link: '/branches/create' }],
+                to: '/branches',
+                items: [{ label: 'اضافة فرع', to: '/branches/create' }],
             },
             {
                 label: 'المخازن',
                 icon: UserCircle,
-                link: '/storages',
-                items: [{ label: 'اضافة مخزن', link: '/storages/create' }],
+                to: '/storages',
+                items: [{ label: 'اضافة مخزن', to: '/storages/create' }],
+            },
+        ],
+    },
+    {
+        label: 'المنتجات',
+        icon: UserCircle,
+        items: [
+            {
+                label: 'الفروع',
+                icon: UserCircle,
+                to: '/branches',
+                items: [{ label: 'اضافة فرع', to: '/branches/create' }],
+            },
+            {
+                label: 'المخازن',
+                icon: UserCircle,
+                to: '/storages',
+                items: [{ label: 'اضافة مخزن', to: '/storages/create' }],
             },
         ],
     },
 
     {
-        label: 'الديون',
+        label: 'POS',
         icon: UserCircle,
-        link: '/debt',
-        items: [
-            {
-                label: 'العملاء',
-                icon: UserCircle,
-                link: '/debt/clients',
-                items: [{ label: 'اضافة فرع', link: '/' }],
-            },
-            {
-                label: 'الموردين',
-                icon: UserCircle,
-                link: '/debt/storage',
-                items: [{ label: 'اضافة مخزن', link: '/' }],
-            },
-        ],
+        to: '/pos',
     },
 ];
 const Sidebar = ({ open }: { open: boolean }) => {

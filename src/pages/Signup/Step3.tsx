@@ -5,19 +5,16 @@ import {
     Group,
     NumberInput,
     PasswordInput,
-    Select,
     TextInput,
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { step1Schema } from './Schema';
-type Props = {
-    onNext: () => void;
-};
+import { step3Schema } from './Schema';
+import StepShell from './StepShell';
 
-const Step3 = (props: Props) => {
+const Step3 = (props: StepProps) => {
     const { classes } = useStyles();
     const form = useForm({
-        schema: yupResolver(step1Schema),
+        schema: yupResolver(step3Schema),
         initialValues: {
             name: '',
             phone: '',
@@ -26,13 +23,10 @@ const Step3 = (props: Props) => {
         },
     });
     return (
-        <Box className={classes.root}>
+        <StepShell>
             <form
                 className={classes.form}
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    props.onNext();
-                }}
+                onSubmit={form.onSubmit(props.onNext)}
             >
                 <Group direction="column" grow>
                     <TextInput
@@ -60,21 +54,17 @@ const Step3 = (props: Props) => {
                 </Group>
 
                 <Group grow mt="xl">
+                    <Button onClick={props.onPrev} variant="outline">
+                        Back
+                    </Button>
                     <Button type="submit">Next</Button>
                 </Group>
             </form>
-        </Box>
+        </StepShell>
     );
 };
 
 const useStyles = createStyles({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-    },
     form: {
         width: '100%',
         maxWidth: 550,

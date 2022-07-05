@@ -1,7 +1,7 @@
 import { Box, createStyles, Loader, Stack, Stepper, Text } from '@mantine/core';
 
 import Step1 from './Step1';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Step2 from './Step2';
 import Step3 from './Step3';
 
@@ -12,10 +12,6 @@ function Signup() {
         setActive((current) => (current < 3 ? current + 1 : current));
     const prevStep = () =>
         setActive((current) => (current > 0 ? current - 1 : current));
-
-    const handleSubmit = (e) => {
-        console.log(e);
-    };
 
     return (
         <Stack className={classes.root}>
@@ -30,6 +26,9 @@ function Signup() {
                         display: 'flex',
                         flexDirection: 'column',
                     },
+                    steps: {
+                        marginBottom: 32,
+                    },
                 }}
             >
                 <Stepper.Step
@@ -37,21 +36,21 @@ function Signup() {
                     description="Fill company's info"
                     allowStepSelect={active > 0 && active < 3}
                 >
-                    <Step1 onNext={nextStep} />
+                    <Step1 onNext={nextStep} onPrev={prevStep} />
                 </Stepper.Step>
                 <Stepper.Step
                     allowStepSelect={active > 1 && active < 3}
                     label="Fiscal year"
                     description="Define fiscal year"
                 >
-                    <Step2 onNext={nextStep} />
+                    <Step2 onNext={nextStep} onPrev={prevStep} />
                 </Stepper.Step>
                 <Stepper.Step
                     label="Admin Info"
                     description="Fill Admin Info"
                     allowStepSelect={active > 2 && active < 3}
                 >
-                    <Step3 onNext={nextStep} />
+                    <Step3 onNext={nextStep} onPrev={prevStep} />
                 </Stepper.Step>
                 <Stepper.Completed>
                     <Stack className={classes.loader} align="center">
