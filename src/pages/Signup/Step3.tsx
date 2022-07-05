@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     createStyles,
     Group,
@@ -7,27 +6,25 @@ import {
     PasswordInput,
     TextInput,
 } from '@mantine/core';
-import { useForm, yupResolver } from '@mantine/form';
-import { step3Schema } from './Schema';
+import { useEffect } from 'react';
+import { step3Keys } from './Schema';
 import StepShell from './StepShell';
+import validateKeys from './validateKeys';
 
 const Step3 = (props: StepProps) => {
     const { classes } = useStyles();
-    const form = useForm({
-        schema: yupResolver(step3Schema),
-        initialValues: {
-            name: '',
-            phone: '',
-            email: '',
-            password: '',
-        },
-    });
+    const { form } = props;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const validation = form.validate();
+        const isValid = validateKeys(validation.errors, step3Keys);
+        if (isValid) {
+            props.onNext();
+        }
+    };
     return (
         <StepShell>
-            <form
-                className={classes.form}
-                onSubmit={form.onSubmit(props.onNext)}
-            >
+            <form className={classes.form} onSubmit={handleSubmit}>
                 <Group direction="column" grow>
                     <TextInput
                         label="System manager name"

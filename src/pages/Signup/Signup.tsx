@@ -1,15 +1,53 @@
-import { Box, createStyles, Loader, Stack, Stepper, Text } from '@mantine/core';
+import { createStyles, Loader, Stack, Stepper, Text } from '@mantine/core';
 
 import Step1 from './Step1';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Step2 from './Step2';
 import Step3 from './Step3';
+import { useForm, yupResolver } from '@mantine/form';
+import { stepsSchema, initialValues } from './Schema';
+import Final from './Final';
 
+const steps = [
+    {
+        label: 'Basic Info',
+        description: "Fill company's info",
+        component: Step1,
+    },
+    {
+        label: 'Fiscal year',
+        description: 'Define fiscal year',
+        component: Step2,
+    },
+    {
+        label: 'Admin Info',
+        description: 'Fill admin info',
+        component: Step3,
+    },
+];
+
+const stepperStyles = {
+    content: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    steps: {
+        marginBottom: 32,
+    },
+};
 function Signup() {
     const { classes } = useStyles();
     const [active, setActive] = useState(0);
+    const form = useForm({
+        schema: yupResolver(stepsSchema),
+        initialValues,
+    });
+
     const nextStep = () =>
-        setActive((current) => (current < 3 ? current + 1 : current));
+        setActive((current) =>
+            current < steps.length ? current + 1 : current
+        );
     const prevStep = () =>
         setActive((current) => (current > 0 ? current - 1 : current));
 
@@ -20,50 +58,32 @@ function Signup() {
                 active={active}
                 onStepClick={setActive}
                 breakpoint="sm"
-                styles={{
-                    content: {
-                        flex: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                    },
-                    steps: {
-                        marginBottom: 32,
-                    },
-                }}
+                styles={stepperStyles as any}
             >
-                <Stepper.Step
-                    label="Basic Info"
-                    description="Fill company's info"
-                    allowStepSelect={active > 0 && active < 3}
-                >
-                    <Step1 onNext={nextStep} onPrev={prevStep} />
-                </Stepper.Step>
-                <Stepper.Step
-                    allowStepSelect={active > 1 && active < 3}
-                    label="Fiscal year"
-                    description="Define fiscal year"
-                >
-                    <Step2 onNext={nextStep} onPrev={prevStep} />
-                </Stepper.Step>
-                <Stepper.Step
-                    label="Admin Info"
-                    description="Fill Admin Info"
-                    allowStepSelect={active > 2 && active < 3}
-                >
-                    <Step3 onNext={nextStep} onPrev={prevStep} />
-                </Stepper.Step>
+                {steps.map((step, i) => (
+                    <Stepper.Step
+                        label={step.label}
+                        description={step.description}
+                        allowStepSelect={active > i && active < steps.length}
+                        key={i}
+                    >
+                        <step.component
+                            form={form}
+                            onNext={nextStep}
+                            onPrev={prevStep}
+                        />
+                    </Stepper.Step>
+                ))}
+
                 <Stepper.Completed>
-                    <Stack className={classes.loader} align="center">
-                        <Loader size="lg" />
-                        <Text>Please Wait...</Text>
-                    </Stack>
+                    <Final form={form} />
                 </Stepper.Completed>
             </Stepper>
         </Stack>
     );
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles({
     root: {
         minHeight: '100vh',
         alignItems: 'stretch',
@@ -76,10 +96,6 @@ const useStyles = createStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    loader: {
-        justifyContent: 'center',
-        flex: 1,
-    },
-}));
+});
 
 export default Signup;

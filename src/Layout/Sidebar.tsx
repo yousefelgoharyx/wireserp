@@ -61,7 +61,6 @@ const Sidebar = ({ open }: { open: boolean }) => {
             </Navbar.Section>
             <Navbar.Section>
                 <UserControl
-                    onClick={() => navigate('settings')}
                     source="https://avatars.githubusercontent.com/u/30435916?s=40&v=4"
                     name="Yousef"
                     email="yousefelgoharyx@gmail.com"

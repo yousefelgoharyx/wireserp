@@ -1,5 +1,23 @@
 import * as yup from 'yup';
-export const step1Schema = yup.object().shape({
+
+export const step1Keys = ['companyName', 'companyPhone', 'country', 'currency'];
+export const step2Keys = ['fiscalYear', 'startDate', 'endDate'];
+export const step3Keys = ['name', 'phone', 'email', 'password'];
+
+export const initialValues = {
+    companyName: '',
+    companyPhone: '',
+    country: '',
+    currency: '',
+    fiscalYear: '',
+    startDate: '',
+    endDate: '',
+    name: '',
+    phone: '',
+    email: '',
+    password: '',
+};
+export const stepsSchema = yup.object().shape({
     companyName: yup
         .string()
         .required('Name is required')
@@ -10,9 +28,6 @@ export const step1Schema = yup.object().shape({
         .required('Phone is required'),
     country: yup.string().required('Country is required'),
     currency: yup.string().required('Currency is required'),
-});
-
-export const step2Schema = yup.object().shape({
     fiscalYear: yup
         .number()
         .typeError('This field is required')
@@ -25,10 +40,6 @@ export const step2Schema = yup.object().shape({
         .date()
         .typeError('Choose a date')
         .required('This field is required'),
-    many: yup.boolean().required('This field is required'),
-});
-
-export const step3Schema = yup.object().shape({
     name: yup
         .string()
         .required('Name is required')

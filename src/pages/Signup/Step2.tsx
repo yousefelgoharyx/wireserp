@@ -1,35 +1,24 @@
-import {
-    Box,
-    Button,
-    createStyles,
-    Group,
-    NumberInput,
-    Select,
-    Switch,
-} from '@mantine/core';
+import { Button, createStyles, Group, NumberInput } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
-
-import { useForm, yupResolver } from '@mantine/form';
-import { step2Schema } from './Schema';
+import { step2Keys } from './Schema';
 import StepShell from './StepShell';
+import validateKeys from './validateKeys';
 
 const Step2 = (props: StepProps) => {
     const { classes } = useStyles();
-    const form = useForm({
-        schema: yupResolver(step2Schema),
-        initialValues: {
-            fiscalYear: '',
-            startDate: '',
-            endDate: '',
-            many: false,
-        },
-    });
+    const { form } = props;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const validation = form.validate();
+        const isValid = validateKeys(validation.errors, step2Keys);
+        if (isValid) {
+            props.onNext();
+            form.clearErrors();
+        }
+    };
     return (
         <StepShell>
-            <form
-                className={classes.form}
-                onSubmit={form.onSubmit(props.onNext)}
-            >
+            <form className={classes.form} onSubmit={handleSubmit}>
                 <Group direction="column" grow>
                     <NumberInput
                         label="Fiscal year"
@@ -46,13 +35,6 @@ const Step2 = (props: StepProps) => {
                         label="End Date"
                         placeholder="Select Date"
                         {...form.getInputProps('endDate')}
-                    />
-                    <Switch
-                        size="lg"
-                        label="Is there branches"
-                        onLabel="Yes"
-                        offLabel="No"
-                        {...form.getInputProps('many')}
                     />
                 </Group>
 

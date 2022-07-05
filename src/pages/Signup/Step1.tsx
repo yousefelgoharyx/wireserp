@@ -6,27 +6,25 @@ import {
     Select,
     TextInput,
 } from '@mantine/core';
-import { useForm, yupResolver } from '@mantine/form';
-import { step1Schema } from './Schema';
+import { step1Keys } from './Schema';
 import StepShell from './StepShell';
-
+import validateKeys from './validateKeys';
 const Step1 = (props: StepProps) => {
     const { classes } = useStyles();
-    const form = useForm({
-        schema: yupResolver(step1Schema),
-        initialValues: {
-            companyName: '',
-            companyPhone: '',
-            country: '',
-            currency: '',
-        },
-    });
+    const { form } = props;
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const validation = form.validate();
+        const isValid = validateKeys(validation.errors, step1Keys);
+        if (isValid) {
+            props.onNext();
+            form.clearErrors();
+        }
+    };
     return (
         <StepShell>
-            <form
-                className={classes.form}
-                onSubmit={form.onSubmit(props.onNext)}
-            >
+            <form className={classes.form} onSubmit={handleSubmit}>
                 <Group direction="column" grow>
                     <TextInput
                         label="Company name"

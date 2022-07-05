@@ -2,35 +2,69 @@ import {
     Avatar,
     createStyles,
     Group,
+    Menu,
     Text,
     UnstyledButton,
 } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
+import { Power, Search, Settings, UserCircle } from 'tabler-icons-react';
 
 type Props = {
     source: string;
     name: string;
     email: string;
-    onClick: () => void;
+};
+
+const UserMenu = () => {
+    const navigate = useNavigate();
+
+    return (
+        <Menu>
+            <Menu.Label>App</Menu.Label>
+            <Menu.Item icon={<Settings size={16} />}>Settings</Menu.Item>
+            <Menu.Item
+                rightSection={
+                    <Text size="xs" color="dimmed">
+                        Ctrl + F
+                    </Text>
+                }
+                icon={<Search size={16} />}
+            >
+                Search
+            </Menu.Item>
+            <Menu.Label>User</Menu.Label>
+            <Menu.Item icon={<UserCircle size={16} />}>Profile</Menu.Item>
+            <Menu.Item
+                color="red"
+                onClick={() => navigate('/login')}
+                icon={<Power size={16} />}
+            >
+                Logout
+            </Menu.Item>
+        </Menu>
+    );
 };
 
 const UserControl = (props: Props) => {
     const { classes } = useStyles();
     return (
-        <UnstyledButton onClick={props.onClick} className={classes.user}>
-            <Group noWrap>
-                <Avatar src={props.source} radius="xl" />
+        <>
+            <UnstyledButton className={classes.user}>
+                <Group noWrap className={classes.group}>
+                    <UserMenu />
+                    <Avatar src={props.source} radius="xl" />
+                    <div>
+                        <Text size="sm" weight={500}>
+                            {props.name}
+                        </Text>
 
-                <div>
-                    <Text size="sm" weight={500}>
-                        {props.name}
-                    </Text>
-
-                    <Text color="dimmed" className={classes.email}>
-                        {props.email}
-                    </Text>
-                </div>
-            </Group>
-        </UnstyledButton>
+                        <Text color="dimmed" className={classes.email}>
+                            {props.email}
+                        </Text>
+                    </div>
+                </Group>
+            </UnstyledButton>
+        </>
     );
 };
 
@@ -55,6 +89,9 @@ const useStyles = createStyles((theme) => ({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         fontSize: theme.fontSizes.xs,
+    },
+    group: {
+        width: '100%',
     },
 }));
 
