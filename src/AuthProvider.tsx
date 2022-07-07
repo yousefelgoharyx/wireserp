@@ -1,13 +1,15 @@
 import { useLocalStorage } from '@mantine/hooks';
 import axios from 'axios';
+import { LoginFormValues } from 'login';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SignupFormValues } from 'signup';
 type Context = {
-    user: any;
+    user: SignupFormValues;
     token: string;
     status: 'idle' | 'loading' | 'error';
     signup: (user: any) => void;
-    login: (user: any) => void;
+    login: (user: LoginFormValues) => void;
     logout: () => void;
 };
 
@@ -44,11 +46,19 @@ export const AuthProvider = ({ children }) => {
             setStatus('error');
         }
     };
-    const login = async (user) => {
+    const login = async (user: LoginFormValues) => {
         setStatus('loading');
         try {
-            const res = await axios.post('/api/auth/login', user);
-            setUser(res.data.user);
+            const res = await axios.post(
+                'http://erp.digitwires.com/api/auth/login',
+                user
+            );
+            console.log(res.data);
+
+            setUser({
+                email: user.email,
+                password: user.password,
+            });
             setToken(res.data.token);
             setStatus('idle');
         } catch (err) {

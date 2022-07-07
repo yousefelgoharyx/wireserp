@@ -9,6 +9,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Power, Search, Settings, UserCircle } from 'tabler-icons-react';
+import { useAuth } from '../AuthProvider';
 
 type Props = {
     source: string;
@@ -18,6 +19,7 @@ type Props = {
 
 const UserMenu = () => {
     const navigate = useNavigate();
+    const { logout } = useAuth();
     const SearchShortcut = (
         <Text size="xs" color="dimmed">
             Ctrl + F
@@ -43,11 +45,7 @@ const UserMenu = () => {
             <Menu.Item icon={<UserCircle size={16} />}>
                 {t('profile')}
             </Menu.Item>
-            <Menu.Item
-                color="red"
-                onClick={() => navigate('/login')}
-                icon={<Power size={16} />}
-            >
+            <Menu.Item color="red" onClick={logout} icon={<Power size={16} />}>
                 {t('logout')}
             </Menu.Item>
         </Menu>

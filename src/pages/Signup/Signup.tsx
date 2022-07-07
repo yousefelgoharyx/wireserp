@@ -8,6 +8,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import { stepsSchema, initialValues } from './Schema';
 import dayjs from 'dayjs';
 import { useAuth } from '../../AuthProvider';
+import { SignupFormValues } from 'signup';
 
 const steps = [
     {
@@ -41,7 +42,7 @@ function Signup() {
     const { classes } = useStyles();
     const [active, setActive] = useState(0);
     const { signup, status } = useAuth();
-    const form = useForm({
+    const form = useForm<SignupFormValues>({
         schema: yupResolver(stepsSchema),
         initialValues,
     });

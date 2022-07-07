@@ -3,7 +3,7 @@ import { DatePicker } from '@mantine/dates';
 import { step2Keys } from './Schema';
 import StepShell from './StepShell';
 import validateKeys from './validateKeys';
-import dayjs from 'dayjs';
+import { StepProps } from 'signup';
 const Step2 = (props: StepProps) => {
     const { classes } = useStyles();
     const { form } = props;

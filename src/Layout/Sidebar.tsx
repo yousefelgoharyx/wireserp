@@ -1,5 +1,4 @@
 import { Navbar, ScrollArea } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
 import { UserCircle } from 'tabler-icons-react';
 import { useAuth } from '../AuthProvider';
 import UserControl from '../components/UserControl';
@@ -50,7 +49,6 @@ const sidebar = [
     },
 ];
 const Sidebar = ({ open }: { open: boolean }) => {
-    const navigate = useNavigate();
     const { user } = useAuth();
     return (
         <Navbar

@@ -1,9 +1,23 @@
 import dayjs from 'dayjs';
 import * as yup from 'yup';
 
-export const step1Keys = ['companyName', 'companyPhone', 'country', 'currency'];
-export const step2Keys = ['fiscalYear', 'startDate', 'endDate'];
-export const step3Keys = ['name', 'phone', 'email', 'password'];
+export const step1Keys = [
+    'company_name',
+    'company_phone',
+    'company_country',
+    'company_currency',
+];
+export const step2Keys = [
+    'fiscal_year',
+    'fiscal_start_date',
+    'fiscal_end_date',
+];
+export const step3Keys = [
+    'manager_name',
+    'manager_phone',
+    'manager_email',
+    'manager_password',
+];
 
 export const initialValues = {
     company_name: '',
@@ -18,7 +32,6 @@ export const initialValues = {
     manager_email: '',
     manager_password: '',
 };
-console.log(initialValues);
 
 export const stepsSchema = yup.object().shape({
     company_name: yup

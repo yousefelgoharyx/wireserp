@@ -6,7 +6,7 @@ import {
     PasswordInput,
     TextInput,
 } from '@mantine/core';
-import { useEffect } from 'react';
+import { StepProps } from 'signup';
 import { step3Keys } from './Schema';
 import StepShell from './StepShell';
 import validateKeys from './validateKeys';

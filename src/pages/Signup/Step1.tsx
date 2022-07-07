@@ -6,6 +6,7 @@ import {
     Select,
     TextInput,
 } from '@mantine/core';
+import { StepProps } from 'signup';
 import { step1Keys } from './Schema';
 import StepShell from './StepShell';
 import validateKeys from './validateKeys';

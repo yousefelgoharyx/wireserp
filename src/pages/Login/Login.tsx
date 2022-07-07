@@ -16,10 +16,15 @@ import {
 import { Link } from 'react-router-dom';
 import schema from './Schema';
 import AuthForm from '../../components/AuthForm';
+import { LanguagePicker } from '../../components/LangPicker';
+import ThemeToggle from '../../components/ThemeToggle';
+import { LoginFormValues } from 'login';
+import { useAuth } from '../../AuthProvider';
 
-function Login(props: PaperProps<'div'>) {
+function Login() {
     const { classes } = useStyles();
-    const form = useForm({
+    const { login, status } = useAuth();
+    const form = useForm<LoginFormValues>({
         schema: yupResolver(schema),
         initialValues: {
             email: '',
@@ -27,26 +32,28 @@ function Login(props: PaperProps<'div'>) {
         },
     });
 
-    const handleSubmit = (e) => {
-        console.log(e);
-    };
-
+    const isLoading = status === 'loading';
+    const isError = status === 'error';
     return (
         <AuthForm>
+            <Group mb={16}>
+                <LanguagePicker />
+                <ThemeToggle />
+            </Group>
             <form
                 className={classes.form}
-                onSubmit={form.onSubmit(handleSubmit)}
+                onSubmit={form.onSubmit((v) => login(v))}
             >
                 <Group direction="column" grow>
                     <TextInput
-                        label="البريد الالكتروني"
-                        placeholder="بريدك الالكتروني"
+                        label="Email"
+                        placeholder="Enter your email..."
                         {...form.getInputProps('email')}
                     />
 
                     <PasswordInput
-                        label="الرقم السري"
-                        placeholder="رقمك السري"
+                        label="Password"
+                        placeholder="Enter your password..."
                         {...form.getInputProps('password')}
                     />
                 </Group>
@@ -59,9 +66,11 @@ function Login(props: PaperProps<'div'>) {
                         color="gray"
                         size="xs"
                     >
-                        ليس لديك حساب؟ سجل حساب جديد
+                        Don't have an account? Create one now!
                     </Anchor>
-                    <Button type="submit">دخول</Button>
+                    <Button loading={isLoading} type="submit">
+                        Login
+                    </Button>
                 </Group>
             </form>
         </AuthForm>

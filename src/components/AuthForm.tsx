@@ -49,7 +49,7 @@ export default function AuthenticationImage(props) {
                         mt="md"
                         mb={50}
                     >
-                        Welcome back to Mantine!
+                        Welcome to Wires ERP
                     </Title>
                     {props.children}
                 </Box>
