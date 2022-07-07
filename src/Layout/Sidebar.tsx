@@ -1,6 +1,7 @@
 import { Navbar, ScrollArea } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { UserCircle } from 'tabler-icons-react';
+import { useAuth } from '../AuthProvider';
 import UserControl from '../components/UserControl';
 import { SidebarLinks } from './SidebarLinks';
 
@@ -24,7 +25,7 @@ const sidebar = [
         ],
     },
     {
-        label: 'المنتجات',
+        label: 'الديون',
         icon: UserCircle,
         items: [
             {
@@ -50,6 +51,7 @@ const sidebar = [
 ];
 const Sidebar = ({ open }: { open: boolean }) => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     return (
         <Navbar
             hidden={!open}
@@ -61,9 +63,9 @@ const Sidebar = ({ open }: { open: boolean }) => {
             </Navbar.Section>
             <Navbar.Section>
                 <UserControl
-                    source="https://avatars.githubusercontent.com/u/30435916?s=40&v=4"
-                    name="Yousef"
-                    email="yousefelgoharyx@gmail.com"
+                    source="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
+                    name={user.manager_name}
+                    email={user.manager_email}
                 />
             </Navbar.Section>
         </Navbar>

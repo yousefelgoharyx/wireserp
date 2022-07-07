@@ -29,14 +29,14 @@ const Step1 = (props: StepProps) => {
                     <TextInput
                         label="Company name"
                         placeholder="Type..."
-                        {...form.getInputProps('companyName')}
+                        {...form.getInputProps('company_name')}
                     />
                     <NumberInput
                         label="Phone"
                         placeholder="Type..."
                         rightSectionWidth={70}
                         hideControls
-                        {...form.getInputProps('companyPhone')}
+                        {...form.getInputProps('company_phone')}
                     />
                     <Select
                         label="Country"
@@ -49,7 +49,7 @@ const Step1 = (props: StepProps) => {
                             { value: 'svelte', label: 'Svelte' },
                             { value: 'vue', label: 'Vue' },
                         ]}
-                        {...form.getInputProps('country')}
+                        {...form.getInputProps('company_country')}
                     />
 
                     <Select
@@ -63,7 +63,7 @@ const Step1 = (props: StepProps) => {
                             { value: 'svelte', label: 'Svelte' },
                             { value: 'vue', label: 'Vue' },
                         ]}
-                        {...form.getInputProps('currency')}
+                        {...form.getInputProps('company_currency')}
                     />
                 </Group>
 

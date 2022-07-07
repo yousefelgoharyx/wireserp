@@ -5,5 +5,11 @@
     "checks": "Checks",
     "add": "Add {{text}}",
     "product": "Product",
-    "product_plural": "Products"
+    "product_plural": "Products",
+    "app": "App",
+    "user": "User",
+    "search": "Search",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Lougout"
 }

@@ -6,6 +6,7 @@ import {
     Text,
     UnstyledButton,
 } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Power, Search, Settings, UserCircle } from 'tabler-icons-react';
 
@@ -17,29 +18,37 @@ type Props = {
 
 const UserMenu = () => {
     const navigate = useNavigate();
-
+    const SearchShortcut = (
+        <Text size="xs" color="dimmed">
+            Ctrl + F
+        </Text>
+    );
+    const { t } = useTranslation();
     return (
         <Menu>
-            <Menu.Label>App</Menu.Label>
-            <Menu.Item icon={<Settings size={16} />}>Settings</Menu.Item>
+            <Menu.Label>{t('app')}</Menu.Label>
             <Menu.Item
-                rightSection={
-                    <Text size="xs" color="dimmed">
-                        Ctrl + F
-                    </Text>
-                }
+                onClick={() => navigate('/settings')}
+                icon={<Settings size={16} />}
+            >
+                {t('settings')}
+            </Menu.Item>
+            <Menu.Item
+                rightSection={SearchShortcut}
                 icon={<Search size={16} />}
             >
-                Search
+                {t('search')}
             </Menu.Item>
-            <Menu.Label>User</Menu.Label>
-            <Menu.Item icon={<UserCircle size={16} />}>Profile</Menu.Item>
+            <Menu.Label>{t('user')}</Menu.Label>
+            <Menu.Item icon={<UserCircle size={16} />}>
+                {t('profile')}
+            </Menu.Item>
             <Menu.Item
                 color="red"
                 onClick={() => navigate('/login')}
                 icon={<Power size={16} />}
             >
-                Logout
+                {t('logout')}
             </Menu.Item>
         </Menu>
     );

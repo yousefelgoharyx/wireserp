@@ -9,7 +9,7 @@ export function theme({
     dir = 'rtl',
 }: Options): MantineThemeOverride {
     return {
-        fontFamily: 'Cairo',
+        fontFamily: 'Cairo, Helvetica, sans-serif',
         colorScheme,
         dir,
         primaryColor: 'teal',

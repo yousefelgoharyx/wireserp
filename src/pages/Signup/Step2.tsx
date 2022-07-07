@@ -3,7 +3,7 @@ import { DatePicker } from '@mantine/dates';
 import { step2Keys } from './Schema';
 import StepShell from './StepShell';
 import validateKeys from './validateKeys';
-
+import dayjs from 'dayjs';
 const Step2 = (props: StepProps) => {
     const { classes } = useStyles();
     const { form } = props;
@@ -24,17 +24,17 @@ const Step2 = (props: StepProps) => {
                         label="Fiscal year"
                         placeholder="Type..."
                         hideControls
-                        {...form.getInputProps('fiscalYear')}
+                        {...form.getInputProps('fiscal_year')}
                     />
                     <DatePicker
                         label="Start Date"
                         placeholder="Select Date"
-                        {...form.getInputProps('startDate')}
+                        {...form.getInputProps('fiscal_start_date')}
                     />
                     <DatePicker
                         label="End Date"
                         placeholder="Select Date"
-                        {...form.getInputProps('endDate')}
+                        {...form.getInputProps('fiscal_end_date')}
                     />
                 </Group>
 

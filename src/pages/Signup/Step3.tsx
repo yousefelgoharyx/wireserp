@@ -20,6 +20,7 @@ const Step3 = (props: StepProps) => {
         const isValid = validateKeys(validation.errors, step3Keys);
         if (isValid) {
             props.onNext();
+            props.handleSignup();
         }
     };
     return (
@@ -29,24 +30,24 @@ const Step3 = (props: StepProps) => {
                     <TextInput
                         label="System manager name"
                         placeholder="Enter..."
-                        {...form.getInputProps('name')}
+                        {...form.getInputProps('manager_name')}
                     />
                     <NumberInput
                         label="Phone"
                         placeholder="Enter..."
                         rightSectionWidth={70}
                         hideControls
-                        {...form.getInputProps('phone')}
+                        {...form.getInputProps('manager_phone')}
                     />
                     <TextInput
-                        label="email"
+                        label="Email"
                         placeholder="Enter..."
-                        {...form.getInputProps('email')}
+                        {...form.getInputProps('manager_email')}
                     />
                     <PasswordInput
-                        label="Country"
+                        label="Password"
                         placeholder="Choose"
-                        {...form.getInputProps('password')}
+                        {...form.getInputProps('manager_password')}
                     />
                 </Group>
 

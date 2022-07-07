@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Suspense, useContext, useEffect, useLayoutEffect } from 'react';
 import {
     ColorScheme,
     ColorSchemeProvider,
@@ -8,14 +8,6 @@ import { theme } from './theme/mantine';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { useLocalStorage } from '@mantine/hooks';
 import i18next from 'i18next';
-type LangDirMap = {
-    [key in Lang]: Dir;
-};
-const langDirMap: LangDirMap = {
-    ar: 'rtl',
-    en: 'ltr',
-};
-
 type Props = { children: React.ReactNode };
 
 const LangContext = React.createContext<[Lang, (lang: Lang) => void]>(null);
@@ -28,17 +20,16 @@ const AppProvider = (props: Props) => {
         getInitialValueInEffect: false,
     });
 
-    const [dir, setDir] = useLocalStorage<Dir>({
-        key: 'wireserp-dir',
-        defaultValue: 'rtl',
-        getInitialValueInEffect: false,
-    });
-
     const [lang, setLang] = useLocalStorage<Lang>({
         key: 'wireserp-lang',
         defaultValue: 'ar',
         getInitialValueInEffect: false,
     });
+    useLayoutEffect(() => {
+        i18next.changeLanguage(lang);
+    }, []);
+
+    const dir = i18next.dir(lang);
 
     const toggleColorScheme = () => {
         const nextScheme = colorScheme === 'dark' ? 'light' : 'dark';
@@ -47,7 +38,6 @@ const AppProvider = (props: Props) => {
 
     const updateLang = (lang: Lang) => {
         i18next.changeLanguage(lang);
-        setDir(langDirMap[lang]);
         setLang(lang);
     };
 

@@ -6,7 +6,8 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import { useForm, yupResolver } from '@mantine/form';
 import { stepsSchema, initialValues } from './Schema';
-import Final from './Final';
+import dayjs from 'dayjs';
+import { useAuth } from '../../AuthProvider';
 
 const steps = [
     {
@@ -39,6 +40,7 @@ const stepperStyles = {
 function Signup() {
     const { classes } = useStyles();
     const [active, setActive] = useState(0);
+    const { signup, status } = useAuth();
     const form = useForm({
         schema: yupResolver(stepsSchema),
         initialValues,
@@ -50,7 +52,16 @@ function Signup() {
         );
     const prevStep = () =>
         setActive((current) => (current > 0 ? current - 1 : current));
-
+    function handleSignup() {
+        const newForm: any = { ...form.values };
+        newForm.fiscal_start_date = dayjs(form.values.fiscal_start_date).format(
+            'YYYY-MM-DD'
+        );
+        newForm.fiscal_end_date = dayjs(form.values.fiscal_end_date).format(
+            'YYYY-MM-DD'
+        );
+        signup(newForm);
+    }
     return (
         <Stack className={classes.root}>
             <Stepper
@@ -71,12 +82,19 @@ function Signup() {
                             form={form}
                             onNext={nextStep}
                             onPrev={prevStep}
+                            handleSignup={handleSignup}
                         />
                     </Stepper.Step>
                 ))}
 
                 <Stepper.Completed>
-                    <Final form={form} />
+                    {status === 'loading' && (
+                        <Stack className={classes.loader} align="center">
+                            <Loader size="lg" />
+                            <Text>Please Wait...</Text>
+                        </Stack>
+                    )}
+                    {status === 'error' && <Text>Something went wrong</Text>}
                 </Stepper.Completed>
             </Stepper>
         </Stack>
@@ -95,6 +113,10 @@ const useStyles = createStyles({
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
+    },
+    loader: {
+        justifyContent: 'center',
+        flex: 1,
     },
 });
 
