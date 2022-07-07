@@ -1,12 +1,19 @@
-import { createStyles, Loader, Stack, Stepper, Text } from '@mantine/core';
+import {
+    Alert,
+    createStyles,
+    Loader,
+    Stack,
+    Stepper,
+    Text,
+} from '@mantine/core';
 
-import Step1 from './Step1';
 import { useState } from 'react';
+import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
+import dayjs from 'dayjs';
 import { useForm, yupResolver } from '@mantine/form';
 import { stepsSchema, initialValues } from './Schema';
-import dayjs from 'dayjs';
 import { useAuth } from '../../AuthProvider';
 import { SignupFormValues } from 'signup';
 
@@ -38,6 +45,7 @@ const stepperStyles = {
         marginBottom: 32,
     },
 };
+
 function Signup() {
     const { classes } = useStyles();
     const [active, setActive] = useState(0);
@@ -95,7 +103,11 @@ function Signup() {
                             <Text>Please Wait...</Text>
                         </Stack>
                     )}
-                    {status === 'error' && <Text>Something went wrong</Text>}
+                    {status === 'error' && (
+                        <Alert title="Oops">
+                            Something went wrong. Please try again later.
+                        </Alert>
+                    )}
                 </Stepper.Completed>
             </Stepper>
         </Stack>

@@ -1,4 +1,5 @@
 import {
+    Autocomplete,
     Button,
     createStyles,
     Group,
@@ -39,12 +40,31 @@ const Step3 = (props: StepProps) => {
                         hideControls
                         {...form.getInputProps('manager_phone')}
                     />
-                    <TextInput
+                    <Autocomplete
                         label="Email"
                         placeholder="Enter..."
+                        autoComplete="off"
+                        data={
+                            form.getInputProps('manager_email').value.trim()
+                                .length > 0 &&
+                            !form
+                                .getInputProps('manager_email')
+                                .value.includes('@')
+                                ? ['gmail.com', 'outlook.com', 'yahoo.com'].map(
+                                      (provider) =>
+                                          `${
+                                              form.getInputProps(
+                                                  'manager_email'
+                                              ).value
+                                          }@${provider}`
+                                  )
+                                : []
+                        }
                         {...form.getInputProps('manager_email')}
                     />
+
                     <PasswordInput
+                        autoComplete="off"
                         label="Password"
                         placeholder="Choose"
                         {...form.getInputProps('manager_password')}

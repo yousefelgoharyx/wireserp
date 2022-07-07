@@ -17,13 +17,11 @@ const AppProvider = (props: Props) => {
     const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
         key: 'wireserp-color-scheme',
         defaultValue: 'light',
-        getInitialValueInEffect: false,
     });
 
     const [lang, setLang] = useLocalStorage<Lang>({
         key: 'wireserp-lang',
         defaultValue: 'ar',
-        getInitialValueInEffect: false,
     });
     useLayoutEffect(() => {
         i18next.changeLanguage(lang);

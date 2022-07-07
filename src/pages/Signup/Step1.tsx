@@ -1,4 +1,5 @@
 import {
+    Alert,
     Button,
     createStyles,
     Group,
@@ -7,12 +8,21 @@ import {
     TextInput,
 } from '@mantine/core';
 import { StepProps } from 'signup';
+import { AlertCircle } from 'tabler-icons-react';
+import Selector from '../../components/Selector';
+import useContries, { formatCountries } from '../../hooks/useContries';
 import { step1Keys } from './Schema';
 import StepShell from './StepShell';
 import validateKeys from './validateKeys';
+import useCurrencies from '../../hooks/useCurrencies';
 const Step1 = (props: StepProps) => {
-    const { classes } = useStyles();
     const { form } = props;
+    const { classes } = useStyles();
+    const { data: countriesData, error } = useContries();
+    const cc = useCurrencies();
+    let countries = [];
+    let loading = !countriesData;
+    if (countriesData) countries = formatCountries(countriesData);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,6 +36,16 @@ const Step1 = (props: StepProps) => {
     return (
         <StepShell>
             <form className={classes.form} onSubmit={handleSubmit}>
+                {error && (
+                    <Alert
+                        mb={16}
+                        color="red"
+                        title="Error!"
+                        icon={<AlertCircle />}
+                    >
+                        You won't be able to continue your process now
+                    </Alert>
+                )}
                 <Group direction="column" grow>
                     <TextInput
                         label="Company name"
@@ -39,31 +59,24 @@ const Step1 = (props: StepProps) => {
                         hideControls
                         {...form.getInputProps('company_phone')}
                     />
-                    <Select
+                    <Selector
+                        autoComplete="off"
                         label="Country"
                         placeholder="Choose"
                         nothingFound="Nothing found"
                         searchable
-                        data={[
-                            { value: 'react', label: 'React' },
-                            { value: 'ng', label: 'Angular' },
-                            { value: 'svelte', label: 'Svelte' },
-                            { value: 'vue', label: 'Vue' },
-                        ]}
+                        loading={loading}
+                        data={countries}
                         {...form.getInputProps('company_country')}
                     />
 
-                    <Select
+                    <Selector
+                        autoComplete="off"
                         label="Currency"
                         placeholder="Choose"
-                        nothingFound="لا يوجد شيء"
+                        nothingFound="Nothing found"
                         searchable
-                        data={[
-                            { value: 'react', label: 'React' },
-                            { value: 'ng', label: 'Angular' },
-                            { value: 'svelte', label: 'Svelte' },
-                            { value: 'vue', label: 'Vue' },
-                        ]}
+                        data={cc}
                         {...form.getInputProps('company_currency')}
                     />
                 </Group>
