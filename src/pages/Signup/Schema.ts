@@ -64,7 +64,10 @@ export const stepsSchema = yup.object().shape({
         .number()
         .typeError('Phone is required')
         .required('Phone is required'),
-    manager_email: yup.string().required('Email is required'),
+    manager_email: yup
+        .string()
+        .required('Email is required')
+        .email('Invalid e-mail'),
     manager_password: yup
         .string()
         .required('Password is required')

@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     createStyles,
     Group,
@@ -9,7 +10,7 @@ import {
     Text,
     Title,
 } from '@mantine/core';
-import { Cash, Plus } from 'tabler-icons-react';
+import { Cash, Edit, Plus } from 'tabler-icons-react';
 import Page from '../components/Page';
 import Stat, { StatItem } from '../components/Stat';
 
@@ -46,7 +47,9 @@ const Home = () => {
             </Title>
             <SimpleGrid
                 breakpoints={[
-                    { maxWidth: 'md', cols: 2 },
+                    { maxWidth: 'lg', cols: 2 },
+                    { maxWidth: 'md', cols: 1 },
+                    { maxWidth: 'sm', cols: 3 },
                     { maxWidth: 'xs', cols: 1 },
                 ]}
                 cols={3}
@@ -80,10 +83,81 @@ const Home = () => {
                     <Text color="dimmed">AED</Text>
                 </Stat>
             </SimpleGrid>
+
+            <Title my={16} order={2}>
+                Shortcuts
+            </Title>
+            <SimpleGrid
+                breakpoints={[
+                    { maxWidth: 'lg', cols: 2 },
+                    { maxWidth: 'md', cols: 1 },
+                    { maxWidth: 'sm', cols: 2 },
+                    { maxWidth: 'xs', cols: 1 },
+                ]}
+                cols={3}
+            >
+                <Stack spacing={8}>
+                    <Paper p={12} shadow="sm">
+                        <Group spacing={8} align="center">
+                            <Plus />
+                            <Text weight={700}>Add</Text>
+                        </Group>
+                    </Paper>
+                    <Paper p={16} shadow="sm">
+                        <SimpleGrid cols={1}>
+                            <Button uppercase>Add category</Button>
+                            <Button uppercase>Add product</Button>
+                            <Button uppercase>Add customer</Button>
+                            <Button uppercase>Add supplier</Button>
+                            <Button uppercase>Add employee</Button>
+                        </SimpleGrid>
+                    </Paper>
+                </Stack>
+
+                <Stack spacing={8}>
+                    <Paper p={12} shadow="sm">
+                        <Group spacing={8} align="center">
+                            <Cash />
+                            <Text weight={700}>Pay</Text>
+                        </Group>
+                    </Paper>
+                    <Paper p={16} shadow="sm">
+                        <SimpleGrid cols={1}>
+                            <Button uppercase>
+                                Case payment to a supplier
+                            </Button>
+                            <Button uppercase>
+                                Cash payment to a customer
+                            </Button>
+                            <Button uppercase>
+                                Cash payment to an employee
+                            </Button>
+                        </SimpleGrid>
+                    </Paper>
+                </Stack>
+
+                <Stack spacing={8}>
+                    <Paper p={12} shadow="sm">
+                        <Group spacing={8} align="center">
+                            <Edit />
+                            <Text weight={700}>Record</Text>
+                        </Group>
+                    </Paper>
+                    <Paper p={16} shadow="sm">
+                        <SimpleGrid cols={1}>
+                            <Button uppercase>
+                                Batch registeration from a client
+                            </Button>
+                            <Button uppercase>
+                                Batch registeration from a supplier
+                            </Button>
+                            <Button uppercase>Record expense</Button>
+                        </SimpleGrid>
+                    </Paper>
+                </Stack>
+            </SimpleGrid>
         </Page>
     );
 };
-
-const useStyles = createStyles((theme) => ({}));
 
 export default Home;

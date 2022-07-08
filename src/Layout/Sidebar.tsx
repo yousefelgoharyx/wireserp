@@ -12,13 +12,11 @@ const sidebar = [
             {
                 label: 'الفروع',
                 icon: UserCircle,
-                to: '/branches',
                 items: [{ label: 'اضافة فرع', to: '/branches/create' }],
             },
             {
                 label: 'المخازن',
                 icon: UserCircle,
-                to: '/storages',
                 items: [{ label: 'اضافة مخزن', to: '/storages/create' }],
             },
         ],
@@ -30,13 +28,11 @@ const sidebar = [
             {
                 label: 'الفروع',
                 icon: UserCircle,
-                to: '/branches',
                 items: [{ label: 'اضافة فرع', to: '/branches/create' }],
             },
             {
                 label: 'المخازن',
                 icon: UserCircle,
-                to: '/storages',
                 items: [{ label: 'اضافة مخزن', to: '/storages/create' }],
             },
         ],

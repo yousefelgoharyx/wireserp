@@ -5,6 +5,7 @@ import {
     Stack,
     Text,
     ThemeIcon,
+    Tooltip,
 } from '@mantine/core';
 import { Icon } from 'tabler-icons-react';
 
@@ -28,7 +29,9 @@ const Stat = (props: Props) => {
                     <ThemeIcon variant="light">
                         <props.icon size={20} />
                     </ThemeIcon>
-                    <Text>{props.title}</Text>
+                    <Tooltip label={props.title} sx={{ overflow: 'hidden' }}>
+                        <Text className={classes.title}>{props.title}</Text>
+                    </Tooltip>
                 </Group>
             </Card.Section>
             <Stack align="center" spacing={4}>
@@ -56,6 +59,13 @@ const useStyles = createStyles((theme) => ({
         }`,
         padding: 16,
         marginBottom: 16,
+        flexWrap: 'nowrap',
+    },
+    title: {
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        cursor: 'pointer',
     },
 }));
 export default Stat;

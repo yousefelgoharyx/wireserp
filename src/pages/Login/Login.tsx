@@ -11,6 +11,7 @@ import {
     Anchor,
     Box,
     createStyles,
+    Alert,
 } from '@mantine/core';
 
 import { Link } from 'react-router-dom';
@@ -20,6 +21,7 @@ import { LanguagePicker } from '../../components/LangPicker';
 import ThemeToggle from '../../components/ThemeToggle';
 import { LoginFormValues } from 'login';
 import { useAuth } from '../../AuthProvider';
+import { AlertTriangle } from 'tabler-icons-react';
 
 function Login() {
     const { classes } = useStyles();
@@ -38,7 +40,6 @@ function Login() {
         <AuthForm>
             <Group mb={16}>
                 <LanguagePicker />
-                <ThemeToggle />
             </Group>
             <form
                 className={classes.form}
@@ -46,12 +47,14 @@ function Login() {
             >
                 <Group direction="column" grow>
                     <TextInput
+                        autoComplete="email"
                         label="Email"
                         placeholder="Enter your email..."
                         {...form.getInputProps('email')}
                     />
 
                     <PasswordInput
+                        autoComplete="password"
                         label="Password"
                         placeholder="Enter your password..."
                         {...form.getInputProps('password')}
@@ -72,6 +75,16 @@ function Login() {
                         Login
                     </Button>
                 </Group>
+                {isError && (
+                    <Alert
+                        icon={<AlertTriangle />}
+                        mt={16}
+                        color="red"
+                        title="Something went wrong!"
+                    >
+                        Please try again later.
+                    </Alert>
+                )}
             </form>
         </AuthForm>
     );
