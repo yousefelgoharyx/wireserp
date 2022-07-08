@@ -1,14 +1,18 @@
+import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import About from './pages/About';
-import Layout from './Layout/Layout';
 import AppProvider from './AppProvider';
-import Login from './pages/Login/Login';
-import Signup from './pages/Signup/Signup';
-import Settings from './pages/Settings/Settings';
-import Branches from './pages/Branches/Branches';
-import CreateBranch from './pages/Branches/CreateBranch';
+import Layout from './Layout/Layout';
 import { useAuth } from './AuthProvider';
+import { FullSpinner } from './components/Spinner';
+
+const Home = React.lazy(() => import('./pages/Home'));
+const About = React.lazy(() => import('./pages/About'));
+const Login = React.lazy(() => import('./pages/Login/Login'));
+const Signup = React.lazy(() => import('./pages/Signup/Signup'));
+const Settings = React.lazy(() => import('./pages/Settings/Settings'));
+const Branches = React.lazy(() => import('./pages/Branches/Branches'));
+const CreateBranch = React.lazy(() => import('./pages/Branches/CreateBranch'));
+
 function App() {
     const { user } = useAuth();
     return (
@@ -32,10 +36,13 @@ function App() {
                     <Route path="signup" element={<Signup />} />
                 </Routes>
             ) : (
-                <Routes>
-                    <Route index element={<Login />} />
-                    <Route path="signup" element={<Signup />} />
-                </Routes>
+                <Suspense fallback={<FullSpinner />}>
+                    <Routes>
+                        <Route index element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
+                        <Route path="*" element={<Login />} />
+                    </Routes>
+                </Suspense>
             )}
         </AppProvider>
     );

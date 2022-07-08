@@ -1,4 +1,4 @@
-import React, { Suspense, useContext, useEffect, useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import {
     ColorScheme,
     ColorSchemeProvider,

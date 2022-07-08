@@ -1,13 +1,16 @@
 import {
     AppShell,
+    Box,
     Burger,
     Header,
+    Loader,
     MediaQuery,
     Text,
     useMantineTheme,
 } from '@mantine/core';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 import Bar from './Bar';
 import Sidebar from './Sidebar';
 
@@ -28,7 +31,9 @@ const Layout = () => {
                 },
             })}
         >
-            <Outlet />
+            <Suspense fallback={<Spinner />}>
+                <Outlet />
+            </Suspense>
         </AppShell>
     );
 };
