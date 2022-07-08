@@ -1,4 +1,4 @@
-import { Box, createStyles } from '@mantine/core';
+import { Box, Container, createStyles } from '@mantine/core';
 import React from 'react';
 
 type Props = {
@@ -11,7 +11,11 @@ const useStyles = createStyles((theme) => ({
 }));
 const Page = (props: Props) => {
     const { classes } = useStyles();
-    return <Box className={classes.container}>{props.children}</Box>;
+    return (
+        <Container size="lg" className={classes.container}>
+            {props.children}
+        </Container>
+    );
 };
 
 export default Page;

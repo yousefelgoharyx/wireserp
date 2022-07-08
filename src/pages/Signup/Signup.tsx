@@ -56,11 +56,8 @@ function Signup() {
     });
 
     const nextStep = () =>
-        setActive((current) =>
-            current < steps.length ? current + 1 : current
-        );
-    const prevStep = () =>
-        setActive((current) => (current > 0 ? current - 1 : current));
+        setActive(active < steps.length ? active + 1 : active);
+    const prevStep = () => setActive(active > 0 ? active - 1 : active);
     function handleSignup() {
         const newForm: any = { ...form.values };
         newForm.fiscal_start_date = dayjs(form.values.fiscal_start_date).format(
