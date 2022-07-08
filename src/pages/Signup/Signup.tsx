@@ -1,5 +1,6 @@
 import {
     Alert,
+    Button,
     createStyles,
     Loader,
     Stack,
@@ -7,7 +8,7 @@ import {
     Text,
 } from '@mantine/core';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -49,7 +50,7 @@ const stepperStyles = {
 function Signup() {
     const { classes } = useStyles();
     const [active, setActive] = useState(0);
-    const { signup, status } = useAuth();
+    const { signup, status, errors } = useAuth();
     const form = useForm<SignupFormValues>({
         schema: yupResolver(stepsSchema),
         initialValues,
@@ -68,6 +69,10 @@ function Signup() {
         );
         signup(newForm);
     }
+    useEffect(() => {
+        console.log('render', errors, status);
+    });
+
     return (
         <Stack className={classes.root}>
             <Stepper
@@ -101,9 +106,12 @@ function Signup() {
                         </Stack>
                     )}
                     {status === 'error' && (
-                        <Alert title="Oops">
-                            Something went wrong. Please try again later.
-                        </Alert>
+                        <>
+                            <Alert mb={16} color="red" title="Oops!">
+                                {errors.alert}
+                            </Alert>
+                            <Button onClick={prevStep}>Back</Button>
+                        </>
                     )}
                 </Stepper.Completed>
             </Stepper>
@@ -116,7 +124,7 @@ const useStyles = createStyles({
         minHeight: '100vh',
         alignItems: 'stretch',
         padding: 32,
-        maxWidth: 992,
+        maxWidth: 768,
         margin: '0 auto',
     },
     stepper: {

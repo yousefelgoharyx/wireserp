@@ -25,7 +25,7 @@ import { AlertTriangle } from 'tabler-icons-react';
 
 function Login() {
     const { classes } = useStyles();
-    const { login, status } = useAuth();
+    const { login, status, errors } = useAuth();
     const form = useForm<LoginFormValues>({
         schema: yupResolver(schema),
         initialValues: {
@@ -36,6 +36,7 @@ function Login() {
 
     const isLoading = status === 'loading';
     const isError = status === 'error';
+
     return (
         <AuthForm>
             <Group mb={16}>
@@ -80,9 +81,9 @@ function Login() {
                         icon={<AlertTriangle />}
                         mt={16}
                         color="red"
-                        title="Something went wrong!"
+                        title="Oops!"
                     >
-                        Please try again later.
+                        {errors.alert || 'Something went wrong!'}
                     </Alert>
                 )}
             </form>

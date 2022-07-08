@@ -8,6 +8,7 @@ type Context = {
     user: SignupFormValues;
     token: string;
     status: 'idle' | 'loading' | 'error';
+    errors: any;
     signup: (user: any) => void;
     login: (user: LoginFormValues) => void;
     logout: () => void;
@@ -30,8 +31,10 @@ export const AuthProvider = ({ children }) => {
         getInitialValueInEffect: false,
     });
     const [status, setStatus] = useState<Context['status']>('idle');
+    const [errors, setErrors] = useState(null);
     const navigate = useNavigate();
     const signup = async (user) => {
+        setErrors(null);
         setStatus('loading');
         try {
             const res = await axios.post(
@@ -44,16 +47,17 @@ export const AuthProvider = ({ children }) => {
             navigate('/');
         } catch (err) {
             setStatus('error');
+            setErrors(err.response.data);
         }
     };
     const login = async (user: LoginFormValues) => {
+        setErrors(null);
         setStatus('loading');
         try {
             const res = await axios.post(
                 'http://erp.digitwires.com/api/auth/login',
                 user
             );
-            console.log(res.data);
 
             setUser({
                 email: user.email,
@@ -63,6 +67,7 @@ export const AuthProvider = ({ children }) => {
             setStatus('idle');
         } catch (err) {
             setStatus('error');
+            setErrors(err.response.data);
         }
     };
     const logout = () => {
@@ -72,7 +77,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ status, login, logout, signup, token, user }}
+            value={{ errors, status, login, logout, signup, token, user }}
         >
             {children}
         </AuthContext.Provider>
