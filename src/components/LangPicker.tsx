@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     createStyles,
     UnstyledButton,
@@ -62,7 +62,6 @@ const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({
 
 export function LanguagePicker() {
     const [lang, setLang] = useLang();
-
     const [opened, setOpened] = useState(false);
     const { classes } = useStyles({ opened });
     const [selected, setSelected] = useState(langs.find((l) => l.id === lang));

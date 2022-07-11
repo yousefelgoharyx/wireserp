@@ -1,11 +1,4 @@
-import {
-    Button,
-    Group,
-    Input,
-    InputWrapper,
-    Text,
-    TextInput,
-} from '@mantine/core';
+import { Button, Group, TextInput } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import FormShell from '../components/FormShell';

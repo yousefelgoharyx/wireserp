@@ -1,4 +1,4 @@
-import { Box, Container, createStyles } from '@mantine/core';
+import { Container, createStyles } from '@mantine/core';
 import React from 'react';
 
 type Props = {

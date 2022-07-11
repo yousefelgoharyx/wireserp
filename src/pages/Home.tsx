@@ -1,7 +1,5 @@
 import {
-    Box,
     Button,
-    createStyles,
     Group,
     Paper,
     RingProgress,

@@ -1,11 +1,4 @@
-import {
-    Button,
-    Divider,
-    Group,
-    Stack,
-    TextInput,
-    useMantineTheme,
-} from '@mantine/core';
+import { Button, Group, Stack, TextInput } from '@mantine/core';
 import FormDivider from '../../components/FormDivider';
 import FormGroup from '../../components/FormGroup';
 import FormShell from '../../components/FormShell';
@@ -13,7 +6,6 @@ import FormShell from '../../components/FormShell';
 type Props = {};
 
 const CreateBranch = (props: Props) => {
-    const theme = useMantineTheme();
     return (
         <div>
             <FormShell title="اضافة منتج">

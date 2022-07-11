@@ -1,18 +1,10 @@
-import {
-    Box,
-    createStyles,
-    Divider,
-    Paper,
-    Title,
-    useMantineTheme,
-} from '@mantine/core';
+import { Box, createStyles, Paper, Title } from '@mantine/core';
 
 type Props = {
     title: string;
     children: React.ReactNode;
 };
 const FormShell = (props: Props) => {
-    const theme = useMantineTheme();
     const { classes } = useStyles();
     return (
         <Paper radius="md" className={classes.root}>

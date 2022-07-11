@@ -4,7 +4,6 @@ import {
     createStyles,
     Group,
     NumberInput,
-    Select,
     TextInput,
 } from '@mantine/core';
 import { StepProps } from 'signup';
@@ -15,6 +14,7 @@ import { step1Keys } from './Schema';
 import StepShell from './StepShell';
 import validateKeys from './validateKeys';
 import useCurrencies from '../../hooks/useCurrencies';
+
 const Step1 = (props: StepProps) => {
     const { form } = props;
     const { classes } = useStyles();

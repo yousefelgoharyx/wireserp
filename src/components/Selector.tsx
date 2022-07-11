@@ -2,13 +2,11 @@ import {
     Avatar,
     Group,
     Loader,
-    ScrollArea,
     Select,
     SelectProps,
     Text,
 } from '@mantine/core';
-import { useVirtual } from '@tanstack/react-virtual';
-import { forwardRef, useRef } from 'react';
+import { forwardRef } from 'react';
 interface SelectorProps extends SelectProps {
     loading?: boolean;
 }
@@ -18,21 +16,24 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
     image?: string;
 }
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-    ({ image, label, description, ...others }: ItemProps, ref) => (
-        <div ref={ref} {...others}>
-            <Group noWrap>
-                {image && <Avatar src={image} />}
-                <div>
-                    <Text size="sm">{label}</Text>
-                    {description && (
-                        <Text size="xs" color="dimmed">
-                            {description}
-                        </Text>
-                    )}
-                </div>
-            </Group>
-        </div>
-    )
+    (props: ItemProps, ref) => {
+        const { image, label, description, ...others } = props;
+        return (
+            <div ref={ref} {...others}>
+                <Group noWrap>
+                    {image && <Avatar src={image} />}
+                    <div>
+                        <Text size="sm">{label}</Text>
+                        {description && (
+                            <Text size="xs" color="dimmed">
+                                {description}
+                            </Text>
+                        )}
+                    </div>
+                </Group>
+            </div>
+        );
+    }
 );
 
 const Selector = (props: SelectorProps) => {
