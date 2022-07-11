@@ -2,14 +2,9 @@ import { useForm, yupResolver } from '@mantine/form';
 import {
     TextInput,
     PasswordInput,
-    Text,
-    Paper,
     Group,
-    PaperProps,
     Button,
-    Divider,
     Anchor,
-    Box,
     createStyles,
     Alert,
 } from '@mantine/core';
@@ -18,7 +13,6 @@ import { Link } from 'react-router-dom';
 import schema from './Schema';
 import AuthForm from '../../components/AuthForm';
 import { LanguagePicker } from '../../components/LangPicker';
-import ThemeToggle from '../../components/ThemeToggle';
 import { LoginFormValues } from 'login';
 import { useAuth } from '../../AuthProvider';
 import { AlertTriangle } from 'tabler-icons-react';
@@ -79,11 +73,11 @@ function Login() {
                 {isError && (
                     <Alert
                         icon={<AlertTriangle />}
-                        mt={16}
+                        my={16}
                         color="red"
                         title="Oops!"
                     >
-                        {errors.alert || 'Something went wrong!'}
+                        {errors?.alert || '500 Internal server error'}
                     </Alert>
                 )}
             </form>

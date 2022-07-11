@@ -36,16 +36,6 @@ const Step1 = (props: StepProps) => {
     return (
         <StepShell>
             <form className={classes.form} onSubmit={handleSubmit}>
-                {error && (
-                    <Alert
-                        mb={16}
-                        color="red"
-                        title="Error!"
-                        icon={<AlertCircle />}
-                    >
-                        You won't be able to continue your process now
-                    </Alert>
-                )}
                 <Group direction="column" grow>
                     <TextInput
                         label="Company name"
@@ -69,6 +59,16 @@ const Step1 = (props: StepProps) => {
                         data={countries}
                         {...form.getInputProps('company_country')}
                     />
+                    {error && (
+                        <Alert
+                            mb={16}
+                            color="red"
+                            title="Couldn't fetch countries"
+                            icon={<AlertCircle />}
+                        >
+                            You won't be able to complete signup right now
+                        </Alert>
+                    )}
 
                     <Selector
                         autoComplete="off"
@@ -82,7 +82,9 @@ const Step1 = (props: StepProps) => {
                 </Group>
 
                 <Group grow mt="xl">
-                    <Button type="submit">Next</Button>
+                    <Button disabled={error} type="submit">
+                        Next
+                    </Button>
                 </Group>
             </form>
         </StepShell>

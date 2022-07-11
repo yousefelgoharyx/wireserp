@@ -8,7 +8,7 @@ import {
     Text,
 } from '@mantine/core';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -36,6 +36,8 @@ const steps = [
     },
 ];
 
+const sLength = steps.length;
+
 const stepperStyles = {
     content: {
         flex: 1,
@@ -51,14 +53,15 @@ function Signup() {
     const { classes } = useStyles();
     const [active, setActive] = useState(0);
     const { signup, status, errors } = useAuth();
+
     const form = useForm<SignupFormValues>({
         schema: yupResolver(stepsSchema),
         initialValues,
     });
 
-    const nextStep = () =>
-        setActive(active < steps.length ? active + 1 : active);
+    const nextStep = () => setActive(active < sLength ? active + 1 : active);
     const prevStep = () => setActive(active > 0 ? active - 1 : active);
+
     function handleSignup() {
         const newForm: any = { ...form.values };
         newForm.fiscal_start_date = dayjs(form.values.fiscal_start_date).format(
@@ -69,9 +72,6 @@ function Signup() {
         );
         signup(newForm);
     }
-    useEffect(() => {
-        console.log('render', errors, status);
-    });
 
     return (
         <Stack className={classes.root}>
@@ -108,7 +108,7 @@ function Signup() {
                     {status === 'error' && (
                         <>
                             <Alert mb={16} color="red" title="Oops!">
-                                {errors.alert}
+                                {errors?.alert || '500 Internal server error'}
                             </Alert>
                             <Button onClick={prevStep}>Back</Button>
                         </>

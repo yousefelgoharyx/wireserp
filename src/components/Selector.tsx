@@ -2,11 +2,13 @@ import {
     Avatar,
     Group,
     Loader,
+    ScrollArea,
     Select,
     SelectProps,
     Text,
 } from '@mantine/core';
-import { forwardRef } from 'react';
+import { useVirtual } from '@tanstack/react-virtual';
+import { forwardRef, useRef } from 'react';
 interface SelectorProps extends SelectProps {
     loading?: boolean;
 }
@@ -32,6 +34,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
         </div>
     )
 );
+
 const Selector = (props: SelectorProps) => {
     const { loading = false, ...rest } = props;
     return (
