@@ -7,7 +7,7 @@ import {
     createStyles,
 } from '@mantine/core';
 import { Icon as TablerIcon } from 'tabler-icons-react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Chevron from '../components/Chevron';
 import LeveledIcon from '../components/LeveledIcon';
 

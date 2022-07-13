@@ -3,9 +3,10 @@ import axios from 'axios';
 import { LoginFormValues } from 'login';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SignupFormValues } from 'signup';
+import { User } from 'signup';
+
 type Context = {
-    user: SignupFormValues;
+    user: User;
     token: string;
     status: 'idle' | 'loading' | 'error';
     errors: any;
@@ -20,12 +21,12 @@ export function useAuth() {
     return useContext(AuthContext);
 }
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useLocalStorage({
+    const [user, setUser] = useLocalStorage<User>({
         key: 'user',
         defaultValue: null,
         getInitialValueInEffect: false,
     });
-    const [token, setToken] = useLocalStorage({
+    const [token, setToken] = useLocalStorage<string>({
         key: 'token',
         defaultValue: null,
         getInitialValueInEffect: false,
@@ -37,11 +38,11 @@ export const AuthProvider = ({ children }) => {
         setErrors(null);
         setStatus('loading');
         try {
-            const res = await axios.post(
-                'http://erp.digitwires.com/api/auth/register',
+            const res = await axios.post<User>(
+                'https://erp.digitwires.com/api/auth/register',
                 user
             );
-            setUser(user);
+            setUser(res.data);
             setToken(res.data.token);
             setStatus('idle');
             navigate('/');
@@ -54,15 +55,12 @@ export const AuthProvider = ({ children }) => {
         setErrors(null);
         setStatus('loading');
         try {
-            const res = await axios.post(
-                'http://erp.digitwires.com/api/auth/login',
+            const res = await axios.post<User>(
+                'https://erp.digitwires.com/api/auth/login',
                 user
             );
 
-            setUser({
-                email: user.email,
-                password: user.password,
-            });
+            setUser(res.data);
             setToken(res.data.token);
             setStatus('idle');
         } catch (err) {

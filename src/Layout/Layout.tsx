@@ -1,13 +1,4 @@
-import {
-    AppShell,
-    Box,
-    Burger,
-    Header,
-    Loader,
-    MediaQuery,
-    Text,
-    useMantineTheme,
-} from '@mantine/core';
+import { AppShell } from '@mantine/core';
 import { Suspense, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Spinner from '../components/Spinner';

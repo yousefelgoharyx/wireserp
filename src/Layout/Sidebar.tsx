@@ -58,8 +58,8 @@ const Sidebar = ({ open }: { open: boolean }) => {
             <Navbar.Section>
                 <UserControl
                     source="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
-                    name={user.manager_name}
-                    email={user.manager_email}
+                    name={user.full_name}
+                    email={user.email}
                 />
             </Navbar.Section>
         </Navbar>

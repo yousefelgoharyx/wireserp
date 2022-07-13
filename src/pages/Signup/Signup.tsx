@@ -17,6 +17,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import { stepsSchema, initialValues } from './Schema';
 import { useAuth } from '../../AuthProvider';
 import { SignupFormValues } from 'signup';
+import { useLang } from '../../AppProvider';
 
 const steps = [
     {
@@ -53,7 +54,7 @@ function Signup() {
     const { classes } = useStyles();
     const [active, setActive] = useState(0);
     const { signup, status, errors } = useAuth();
-
+    const [lang] = useLang();
     const form = useForm<SignupFormValues>({
         schema: yupResolver(stepsSchema),
         initialValues,
@@ -108,7 +109,9 @@ function Signup() {
                     {status === 'error' && (
                         <>
                             <Alert mb={16} color="red" title="Oops!">
-                                {errors?.alert || '500 Internal server error'}
+                                {errors
+                                    ? errors[`alert_${lang}`]
+                                    : 'Internal server error'}
                             </Alert>
                             <Button onClick={prevStep}>Back</Button>
                         </>

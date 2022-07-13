@@ -20,4 +20,17 @@ declare module 'signup' {
         manager_email: string;
         manager_password: string;
     };
+
+    export type User = {
+        branch_id: number;
+        company_id: number;
+        email: string;
+        full_name: string;
+        id: number;
+        image: string;
+        phone: string;
+        role: string;
+        status: string;
+        token: string;
+    };
 }

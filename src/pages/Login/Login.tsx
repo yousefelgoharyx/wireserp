@@ -16,10 +16,12 @@ import { LanguagePicker } from '../../components/LangPicker';
 import { LoginFormValues } from 'login';
 import { useAuth } from '../../AuthProvider';
 import { AlertTriangle } from 'tabler-icons-react';
+import { useLang } from '../../AppProvider';
 
 function Login() {
     const { classes } = useStyles();
     const { login, status, errors } = useAuth();
+    const [lang] = useLang();
     const form = useForm<LoginFormValues>({
         schema: yupResolver(schema),
         initialValues: {
@@ -77,7 +79,9 @@ function Login() {
                         color="red"
                         title="Oops!"
                     >
-                        {errors?.alert || '500 Internal server error'}
+                        {errors
+                            ? errors[`alert_${lang}`]
+                            : 'Internal server error'}
                     </Alert>
                 )}
             </form>
