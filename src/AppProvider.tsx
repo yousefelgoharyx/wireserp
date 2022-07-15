@@ -8,6 +8,7 @@ import { theme } from './theme/mantine';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { useLocalStorage } from '@mantine/hooks';
 import i18next from 'i18next';
+import { NotificationsProvider } from '@mantine/notifications';
 type Props = { children: React.ReactNode };
 
 const LangContext = React.createContext<[Lang, (lang: Lang) => void]>(null);
@@ -60,7 +61,9 @@ const AppProvider = (props: Props) => {
                         emotionOptions={emotion}
                         theme={theme({ colorScheme, dir })}
                     >
-                        {props.children}
+                        <NotificationsProvider>
+                            {props.children}
+                        </NotificationsProvider>
                     </MantineProvider>
                 </div>
             </ColorSchemeProvider>

@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/core';
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 interface Props extends JSX.Element {
     children: React.ReactNode;
@@ -9,7 +9,6 @@ const Form = ({ children, ...rest }: Props) => {
     const { classes } = useStyles();
     return (
         <form className={classes.form} {...rest}>
-            {' '}
             {children}
         </form>
     );

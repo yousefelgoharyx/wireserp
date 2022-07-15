@@ -32,8 +32,6 @@ function App() {
                         </Route>
                         <Route path="*" element={<CreateBranch />} />
                     </Route>
-                    <Route path="login" element={<Login />} />
-                    <Route path="signup" element={<Signup />} />
                 </Routes>
             ) : (
                 <Suspense fallback={<FullSpinner />}>

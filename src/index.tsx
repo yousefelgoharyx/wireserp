@@ -5,12 +5,22 @@ import './i18n';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AuthProvider from './AuthProvider';
+import { QueryClient, QueryClientProvider } from 'react-query';
 const root = ReactDOM.createRoot(document.getElementById('root')!);
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            suspense: true,
+        },
+    },
+});
 root.render(
     <React.StrictMode>
         <BrowserRouter>
             <AuthProvider>
-                <App />
+                <QueryClientProvider client={queryClient}>
+                    <App />
+                </QueryClientProvider>
             </AuthProvider>
         </BrowserRouter>
     </React.StrictMode>

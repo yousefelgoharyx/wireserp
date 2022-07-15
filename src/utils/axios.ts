@@ -1,6 +1,10 @@
 import axios from 'axios';
+
 const instance = axios.create({
-    baseURL: 'http://erp.digitwires.com/api/auth/register',
+    baseURL: 'https://erp.digitwires.com/api',
+    headers: {
+        Authorization: JSON.parse(localStorage.getItem('token')),
+    },
 });
 
 export default instance;

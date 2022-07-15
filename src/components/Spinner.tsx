@@ -3,7 +3,7 @@ import { Group, Loader } from '@mantine/core';
 const Spinner = () => {
     return (
         <Group sx={{ height: '100%' }} position="center" align="center">
-            <Loader size="xl" />
+            <Loader size="lg" />
         </Group>
     );
 };

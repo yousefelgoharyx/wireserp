@@ -12,7 +12,10 @@ const sidebar = [
             {
                 label: 'الفروع',
                 icon: UserCircle,
-                items: [{ label: 'اضافة فرع', to: '/branches/create' }],
+                items: [
+                    { label: 'اضافة فرع', to: '/branches/create' },
+                    { label: 'جميع الفروع', to: '/branches' },
+                ],
             },
             {
                 label: 'المخازن',
