@@ -30,7 +30,7 @@ const Read = () => {
     const [updateModal, setUpdateModal] = useState<boolean>(false);
     const [page, setPage] = useState(1);
     const { data, remove, isRemoving } = useSubCategories();
-    const selectedId = useRef<number | null>(data[0].id);
+    const selectedId = useRef<number | null>();
 
     async function handleDelete() {
         await remove(selectedId.current);

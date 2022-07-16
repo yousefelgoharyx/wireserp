@@ -30,7 +30,7 @@ const ReadBranches = () => {
     const [updateModal, setUpdateModal] = useState<boolean>(false);
     const [page, setPage] = useState(1);
     const { data: branches, remove, isRemoving } = useBranches();
-    const selectedId = useRef<number | null>(branches[0].id);
+    const selectedId = useRef<number | null>();
 
     async function handleRemove() {
         await remove(selectedId.current);
