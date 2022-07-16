@@ -10,7 +10,7 @@ const Layout = () => {
     return (
         <AppShell
             header={<Bar opened={opened} onMenu={() => setOpened(!opened)} />}
-            navbar={<Sidebar open={opened} />}
+            navbar={<Sidebar hide={() => setOpened(false)} open={opened} />}
             fixed
             navbarOffsetBreakpoint="sm"
             styles={(theme) => ({

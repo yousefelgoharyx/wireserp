@@ -19,6 +19,7 @@ type SidebarDropdownProps = {
     to?: string;
     opened: boolean;
     toggle: () => void;
+    hide: () => void;
 };
 const SidebarDropdown = (props: SidebarDropdownProps) => {
     const { level, icon: Icon, label, items, opened, toggle } = props;
@@ -45,12 +46,18 @@ const SidebarDropdown = (props: SidebarDropdownProps) => {
                         icon={item.icon}
                         items={item.items}
                         label={item.label}
+                        hide={props.hide}
                     />
                 );
             }
 
             return (
-                <NavLink className={classes.link} to={item.to} key={item.label}>
+                <NavLink
+                    onClick={props.hide}
+                    className={classes.link}
+                    to={item.to}
+                    key={item.label}
+                >
                     {item.label}
                 </NavLink>
             );
@@ -92,6 +99,7 @@ export const SidebarLinks = (props) => {
                 icon={item.icon}
                 key={item.label}
                 to={item.to}
+                hide={props.hide}
             />
         );
     });

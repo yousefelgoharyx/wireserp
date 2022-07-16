@@ -3,9 +3,7 @@ import {
     Bucket,
     BuildingStore,
     BuildingWarehouse,
-    GitBranch,
     LayoutGrid,
-    Switch,
     Switch2,
     UserCircle,
 } from 'tabler-icons-react';
@@ -15,7 +13,7 @@ import { SidebarLinks } from './SidebarLinks';
 
 const sidebar = [
     {
-        label: 'المنتجات',
+        label: 'المتجر',
         icon: BuildingStore,
         items: [
             {
@@ -71,7 +69,9 @@ const sidebar = [
         to: '/pos',
     },
 ];
-const Sidebar = ({ open }: { open: boolean }) => {
+
+type Props = { open: boolean; hide: () => void };
+const Sidebar = ({ open, hide }: Props) => {
     const { user } = useAuth();
     return (
         <Navbar
@@ -80,7 +80,7 @@ const Sidebar = ({ open }: { open: boolean }) => {
             hiddenBreakpoint="sm"
         >
             <Navbar.Section grow component={ScrollArea}>
-                <SidebarLinks items={sidebar} />
+                <SidebarLinks hide={hide} items={sidebar} />
             </Navbar.Section>
             <Navbar.Section>
                 <UserControl
