@@ -2,15 +2,13 @@ import { Button, Group, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import FormDivider from '../../components/FormDivider';
 import FormShell from '../../components/FormShell';
-import { Branch } from 'branches';
-import { showNotification } from '@mantine/notifications';
-import getApiError from '../../utils/getApiError';
-import useCreateBranch from './api/useCreateBranch';
-import createSchema from './schemas/createSchema';
+import { BranchForm } from 'branches';
+import branchSchema from './schemas/schema';
+import { useBranches } from './BranchesProvider';
 const CreateBranch = () => {
-    const branches = useCreateBranch();
-    const form = useForm<Branch>({
-        schema: yupResolver(createSchema),
+    const { createBranch, isCreating } = useBranches();
+    const form = useForm<BranchForm>({
+        schema: yupResolver(branchSchema),
         initialValues: {
             branch_name: '',
             branch_phone: '',
@@ -19,26 +17,9 @@ const CreateBranch = () => {
         },
     });
 
-    const handleSubmit = async (values) => {
-        try {
-            await branches.mutateAsync(values);
-            showNotification({
-                title: 'Success',
-                message: 'Added branch successfully',
-            });
-        } catch (error) {
-            console.log(error.config.headers.Authorization);
-
-            showNotification({
-                title: 'Something went wrong!',
-                message: getApiError(error.response.data),
-                color: 'red',
-            });
-        }
-    };
     return (
         <FormShell title="Add Branch">
-            <form onSubmit={form.onSubmit(handleSubmit)}>
+            <form onSubmit={form.onSubmit(createBranch)}>
                 <Stack>
                     <Group grow>
                         <TextInput
@@ -67,7 +48,7 @@ const CreateBranch = () => {
                     </Group>
                     <FormDivider />
                     <Group>
-                        <Button loading={branches.isLoading} type="submit">
+                        <Button loading={isCreating} type="submit">
                             Add
                         </Button>
                     </Group>

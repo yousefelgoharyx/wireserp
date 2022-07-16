@@ -7,6 +7,7 @@ import {
     Group,
     Avatar,
     Text,
+    LoadingOverlay,
 } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
@@ -31,10 +32,10 @@ export default function TableSelection(props: TableSelectionProps) {
         return (
             <tr key={item.id}>
                 {columns.map((column) => (
-                    <td>{item[column.selector]}</td>
+                    <td key={column.selector}>{item[column.selector]}</td>
                 ))}
-                {actions.map((action) => (
-                    <td>{action.cell(item)}</td>
+                {actions.map((action, i) => (
+                    <td key={i}>{action.cell(item)}</td>
                 ))}
             </tr>
         );
@@ -51,7 +52,7 @@ export default function TableSelection(props: TableSelectionProps) {
                 <thead>
                     <tr>
                         {columns.map((col) => (
-                            <th>{col.header}</th>
+                            <th key={col.selector}>{col.header}</th>
                         ))}
                         <th>Actions</th>
                     </tr>

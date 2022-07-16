@@ -1,20 +1,11 @@
-import {
-    ActionIcon,
-    Button,
-    Group,
-    Modal,
-    Paper,
-    Text,
-    Title,
-} from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
-import { BranchColumn, BranchTable } from 'branches';
+import { ActionIcon, Group, Paper } from '@mantine/core';
+import { BranchColumn } from 'branches';
 import { useRef, useState } from 'react';
 import { EditCircle, Trash } from 'tabler-icons-react';
 import Table from '../../components/Table';
-import getApiError from '../../utils/getApiError';
-import useBranches from './api/useBranches';
-import useDeleteBranch from './api/useDeleteBranch';
+import { useBranches } from './BranchesProvider';
+import DeleteBranch from './DeleteBranch';
+import UpdateBranch from './UpdateBranch';
 const columns: BranchColumn[] = [
     { header: 'ID', selector: 'id' },
     { header: 'Name', selector: 'branch_name' },
@@ -44,65 +35,38 @@ function getActions({ onDelete, onEdit }) {
 }
 const ReadBranches = () => {
     const [deleteModal, setDeleteModal] = useState(false);
-    const selectedRow = useRef<BranchTable>();
-    const { data } = useBranches();
-    const deleteOwner = useDeleteBranch();
-
-    async function handleDelete() {
-        try {
-            await deleteOwner.mutateAsync(selectedRow.current.id);
-            showNotification({
-                title: 'Success',
-                message: 'Deleted branch successfully',
-            });
-        } catch (error) {
-            showNotification({
-                title: 'Something went wrong!',
-                message: getApiError(error.response.data),
-                color: 'red',
-            });
-        }
-        setDeleteModal(false);
-    }
+    const [updateModal, setUpdateModal] = useState(false);
+    const selectedId = useRef<number | null>(null);
+    const { branches } = useBranches();
 
     function onDelete(row) {
+        selectedId.current = row.id;
         setDeleteModal(true);
-        selectedRow.current = row;
     }
     function onEdit(row) {
-        setDeleteModal(true);
-        selectedRow.current = row;
+        selectedId.current = row.id;
+        setUpdateModal(true);
     }
     const actions = getActions({ onDelete, onEdit });
+
     return (
         <Paper>
-            <Modal
-                centered
-                opened={deleteModal}
-                onClose={() => setDeleteModal(false)}
-                withCloseButton={false}
-            >
-                <Title mb={4} order={4}>
-                    Confirmation
-                </Title>
-                <Text>Are you sure you want to delete this branch</Text>
-                <Group mt={16}>
-                    <Button
-                        loading={deleteOwner.isLoading}
-                        color="red"
-                        onClick={handleDelete}
-                    >
-                        Delete
-                    </Button>
-                    <Button
-                        variant="light"
-                        onClick={() => setDeleteModal(false)}
-                    >
-                        Cancel
-                    </Button>
-                </Group>
-            </Modal>
-            <Table actions={actions} columns={columns} data={data} />
+            {deleteModal && (
+                <DeleteBranch
+                    selectedId={selectedId.current}
+                    isOpen={deleteModal}
+                    requestClose={() => setDeleteModal(false)}
+                />
+            )}
+            {updateModal && (
+                <UpdateBranch
+                    selectedId={selectedId.current}
+                    isOpen={updateModal}
+                    requestClose={() => setUpdateModal(false)}
+                />
+            )}
+
+            <Table actions={actions} columns={columns} data={branches} />
         </Paper>
     );
 };
