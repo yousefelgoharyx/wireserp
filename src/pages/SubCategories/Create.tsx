@@ -1,17 +1,24 @@
-import { Button, Group, SimpleGrid, Stack, TextInput } from '@mantine/core';
+import {
+    Button,
+    Group,
+    Select,
+    SimpleGrid,
+    Stack,
+    TextInput,
+} from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import FormDivider from '../../components/FormDivider';
 import FormShell from '../../components/FormShell';
-import { useCategories } from './CategoriesContext';
-import { CategoryFormValues } from 'categories';
+import { useSubCategories } from './SubCategoriesContext';
 import schema from './schemas/schema';
+import { SubCategoryFormValues } from 'subcategories';
 const Create = () => {
-    const { create, isCreating } = useCategories();
-    const form = useForm<CategoryFormValues>({
+    const { create, isCreating, categories } = useSubCategories();
+    const form = useForm<SubCategoryFormValues>({
         schema: yupResolver(schema),
         initialValues: {
-            category_name: '',
-            type: '',
+            category_id: undefined,
+            sub_category_name: '',
         },
     });
 
@@ -24,14 +31,19 @@ const Create = () => {
                         breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
                     >
                         <TextInput
+                            required
                             label="Category Name"
                             placeholder="Type..."
-                            {...form.getInputProps('category_name')}
+                            {...form.getInputProps('sub_category_name')}
                         />
-                        <TextInput
-                            label="Category Type"
-                            placeholder="Type..."
-                            {...form.getInputProps('type')}
+                        <Select
+                            label="Category"
+                            placeholder="Select Category"
+                            data={categories.map((cat) => ({
+                                label: cat.category_name,
+                                value: cat.id.toString(),
+                            }))}
+                            {...form.getInputProps('category_id')}
                         />
                     </SimpleGrid>
 

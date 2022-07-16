@@ -6,6 +6,7 @@ import { useAuth } from './AuthProvider';
 import { FullSpinner } from './components/Spinner';
 import Products from './pages/Products/Products';
 import Categories from './pages/Categories/Categories';
+import SubCategories from './pages/SubCategories/SubCategories';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const About = React.lazy(() => import('./pages/About'));
@@ -37,6 +38,9 @@ function App() {
                         </Route>
                         <Route path="categories">
                             <Route index element={<Categories />} />
+                        </Route>
+                        <Route path="sub-categories">
+                            <Route index element={<SubCategories />} />
                         </Route>
                         <Route path="*" element={<CreateBranch />} />
                     </Route>

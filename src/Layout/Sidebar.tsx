@@ -29,6 +29,14 @@ const sidebar = [
                 icon: UserCircle,
                 items: [{ label: 'جميع المنتجات', to: '/products' }],
             },
+            {
+                label: 'الفروع',
+                icon: UserCircle,
+                items: [
+                    { label: 'الرئيسية', to: '/categories' },
+                    { label: 'الفرعية', to: '/sub-categories' },
+                ],
+            },
         ],
     },
     {

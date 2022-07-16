@@ -1,24 +1,25 @@
-import { Button, Group, Modal, Stack, TextInput } from '@mantine/core';
+import { Button, Group, Modal, Select, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { Category } from 'categories';
 import FormDivider from '../../components/FormDivider';
-import { useCategories } from './CategoriesContext';
+import { useSubCategories } from './SubCategoriesContext';
 import branchSchema from './schemas/schema';
+import { SubCategory } from 'subcategories';
 type Props = {
     isOpen: boolean;
     requestClose: () => void;
     selectedId: number;
 };
 const Update = (props: Props) => {
-    const { get, update, isUptading } = useCategories();
+    const { get, update, isUptading, categories } = useSubCategories();
 
-    const form = useForm<Category>({
+    const form = useForm<SubCategory>({
         schema: yupResolver(branchSchema),
         initialValues: get(props.selectedId),
     });
+    console.log(form);
 
-    async function handleUpdate(category: Category) {
-        await update(category);
+    async function handleUpdate(data: SubCategory) {
+        await update(data);
         props.requestClose();
     }
 
@@ -32,10 +33,18 @@ const Update = (props: Props) => {
             <form onSubmit={form.onSubmit(handleUpdate)}>
                 <Stack>
                     <TextInput
-                        label="Name"
-                        {...form.getInputProps('category_name')}
+                        label="Category Name"
+                        placeholder="Type..."
+                        {...form.getInputProps('sub_category_name')}
                     />
-                    <TextInput label="Type" {...form.getInputProps('type')} />
+                    <Select
+                        label="Category"
+                        data={categories.map((cat) => ({
+                            label: cat.category_name,
+                            value: cat.id.toString(),
+                        }))}
+                        {...form.getInputProps('category_id')}
+                    />
 
                     <FormDivider />
                     <Group>

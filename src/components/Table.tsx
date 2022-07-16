@@ -32,9 +32,14 @@ export default function TableSelection(props: TableSelectionProps) {
     const rows = data.map((item) => {
         return (
             <tr key={item.id}>
-                {columns.map((column) => (
-                    <td key={column.selector}>{item[column.selector]}</td>
-                ))}
+                {columns.map((column) => {
+                    let value;
+                    const props = column.selector.split('.');
+                    props.forEach((prop) => {
+                        value = value ? value[prop] : item[prop];
+                    });
+                    return <td key={column.selector}>{value}</td>;
+                })}
                 {actions.map((action, i) => (
                     <td key={i}>{action.cell(item)}</td>
                 ))}
