@@ -1,5 +1,14 @@
 import { Navbar, ScrollArea } from '@mantine/core';
-import { UserCircle } from 'tabler-icons-react';
+import {
+    Bucket,
+    BuildingStore,
+    BuildingWarehouse,
+    GitBranch,
+    LayoutGrid,
+    Switch,
+    Switch2,
+    UserCircle,
+} from 'tabler-icons-react';
 import { useAuth } from '../AuthProvider';
 import UserControl from '../components/UserControl';
 import { SidebarLinks } from './SidebarLinks';
@@ -7,17 +16,17 @@ import { SidebarLinks } from './SidebarLinks';
 const sidebar = [
     {
         label: 'المنتجات',
-        icon: UserCircle,
+        icon: BuildingStore,
         items: [
             {
                 label: 'الفروع',
-                icon: UserCircle,
+                icon: Switch2,
                 items: [{ label: 'جميع الفروع', to: '/branches' }],
             },
 
             {
                 label: 'المخازن',
-                icon: UserCircle,
+                icon: BuildingWarehouse,
                 items: [
                     { label: 'المخازن', to: '/storages' },
                     { label: 'التحويل', to: '/storages/transfer' },
@@ -26,12 +35,12 @@ const sidebar = [
             },
             {
                 label: 'المنتجات',
-                icon: UserCircle,
+                icon: Bucket,
                 items: [{ label: 'جميع المنتجات', to: '/products' }],
             },
             {
-                label: 'الفروع',
-                icon: UserCircle,
+                label: 'الفئات',
+                icon: LayoutGrid,
                 items: [
                     { label: 'الرئيسية', to: '/categories' },
                     { label: 'الفرعية', to: '/sub-categories' },
