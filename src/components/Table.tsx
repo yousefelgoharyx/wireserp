@@ -8,6 +8,7 @@ import {
     Avatar,
     Text,
     LoadingOverlay,
+    Box,
 } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({

@@ -1,13 +1,13 @@
 import { Button, Group, Modal, Text, Title } from '@mantine/core';
-import { useBranches } from './BranchesProvider';
+import { useCategories } from './CategoriesContext';
 
 type Props = {
     isOpen: boolean;
     requestClose: () => void;
     selectedId: number;
 };
-const DeleteBranch = (props: Props) => {
-    const { remove, isRemoving } = useBranches();
+const Delete = (props: Props) => {
+    const { remove, isRemoving } = useCategories();
 
     async function handleDelete() {
         await remove(props.selectedId);
@@ -37,4 +37,4 @@ const DeleteBranch = (props: Props) => {
     );
 };
 
-export default DeleteBranch;
+export default Delete;

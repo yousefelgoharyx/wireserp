@@ -1,33 +1,33 @@
 declare module 'branches' {
-    type BranchForm = {
+    interface BranchFormValues {
         branch_name: string;
         branch_phone: string;
         branch_address: string;
         commercial_registration_number: string;
-    };
-    type Branch = {
+    }
+    interface Branch extends BranchFormValues {
         id: number;
-        branch_name: string;
-        branch_phone: string;
-        branch_address: string;
-        commercial_registration_number: string;
         company_id: number;
-    };
+    }
 
     type BranchColumn = {
         header: string;
-        selector: keyof BranchTable;
+        selector: keyof Branch;
     };
 
-    type BranchesContextType = {
-        isDeleting: boolean;
+    type Context = {
+        isRemoving: boolean;
         isCreating: boolean;
         isFetching: boolean;
         isUptading: boolean;
-        branches: BranchTable[];
-        deleteBranch: (id: number) => void;
-        createBranch: (branch: Branch) => void;
-        updateBranch: (branch: Branch) => void;
-        getBranch: (id: number) => BranchTable;
+        branches: Branch[];
+        remove: (id: number) => void;
+        create: (branch: Branch) => void;
+        update: (branch: Branch) => void;
+        get: (id: number) => Branch;
+    };
+
+    type ProivderProps = {
+        children: React.ReactNode;
     };
 }

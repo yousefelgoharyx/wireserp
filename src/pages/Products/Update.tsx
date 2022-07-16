@@ -1,24 +1,24 @@
 import { Button, Group, Modal, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { Branch } from 'branches';
+import { Product } from 'products';
 import FormDivider from '../../components/FormDivider';
-import { useBranches } from './BranchesProvider';
+import { useProducts } from './ProductsProvider';
 import branchSchema from './schemas/schema';
 type Props = {
     isOpen: boolean;
     requestClose: () => void;
     selectedId: number;
 };
-const UpdateBranch = (props: Props) => {
-    const { get, update, isUptading } = useBranches();
+const Update = (props: Props) => {
+    const { get, update, isUptading } = useProducts();
 
-    const form = useForm<Branch>({
+    const form = useForm<Product>({
         schema: yupResolver(branchSchema),
         initialValues: get(props.selectedId),
     });
 
-    async function handleUpdate(branch: Branch) {
-        await update(branch);
+    async function handleUpdate(product: Product) {
+        await update(product);
         props.requestClose();
     }
 
@@ -31,7 +31,7 @@ const UpdateBranch = (props: Props) => {
         >
             <form onSubmit={form.onSubmit(handleUpdate)}>
                 <Stack>
-                    <TextInput
+                    {/* <TextInput
                         required
                         label="Name"
                         {...form.getInputProps('branch_name')}
@@ -51,7 +51,7 @@ const UpdateBranch = (props: Props) => {
                         {...form.getInputProps(
                             'commercial_registration_number'
                         )}
-                    />
+                    /> */}
                     <FormDivider />
                     <Group>
                         <Button loading={isUptading} type="submit">
@@ -67,4 +67,4 @@ const UpdateBranch = (props: Props) => {
     );
 };
 
-export default UpdateBranch;
+export default Update;

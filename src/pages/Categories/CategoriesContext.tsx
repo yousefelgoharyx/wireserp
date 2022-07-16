@@ -1,44 +1,49 @@
 import { showNotification } from '@mantine/notifications';
 import React, { useContext } from 'react';
 import getApiError from '../../utils/getApiError';
-import { Branch, Context, ProivderProps, BranchFormValues } from 'branches';
 import instance from '../../utils/axios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+    Category,
+    CategoryFormValues,
+    Context,
+    ProivderProps,
+} from 'categories';
 
-const BranchesContext = React.createContext<Context>(null);
+const CategoriesContext = React.createContext<Context>(null);
 
 // Handlers
-function updateHandler(newBranch: Branch) {
-    return instance.post('/edit-branch', newBranch);
+function updateHandler(category: Category) {
+    return instance.post('/edit-category', category);
 }
-function createHanlder(newBranch: BranchFormValues) {
-    return instance.post('/add-branch', newBranch);
+function createHanlder(category: CategoryFormValues) {
+    return instance.post('/add-category', category);
 }
 
 function deleteHandler(id: number) {
-    return instance.post('/delete-branch', {
-        branch_id: id,
+    return instance.post('/delete-category', {
+        cat_id: id,
     });
 }
 async function readHandler() {
-    const response = await instance.post<Branch[]>('/branches');
+    const response = await instance.post<Category[]>('/categories');
     return response.data;
 }
 
-const BranchesProvider = (props: ProivderProps) => {
+const CategoriesProvider = (props: ProivderProps) => {
     const queryClient = useQueryClient();
-    const invalidate = () => queryClient.invalidateQueries(['branches']);
+    const invalidate = () => queryClient.invalidateQueries(['categories']);
     const mutationOptions = { onSuccess: invalidate };
 
-    const query = useQuery('branches', readHandler);
+    const query = useQuery('categories', readHandler);
     const createOwner = useMutation(createHanlder, mutationOptions);
     const updateOwner = useMutation(updateHandler, mutationOptions);
     const deleteOwner = useMutation(deleteHandler, mutationOptions);
-    const { data: branches, isFetching } = query;
+    const { data, isFetching } = query;
 
-    const create = async (branch: Branch) => {
+    const create = async (category: CategoryFormValues) => {
         try {
-            await createOwner.mutateAsync(branch);
+            await createOwner.mutateAsync(category);
             showNotification({
                 title: 'Success',
                 message: 'Added branch successfully',
@@ -52,14 +57,14 @@ const BranchesProvider = (props: ProivderProps) => {
         }
     };
 
-    const update = async (branch: Branch) => {
-        const newBranch = { ...branch, branch_id: branch.id };
-        delete newBranch.id;
+    const update = async (category: Category) => {
+        const newCat = { ...category, cat_id: category.id };
+        delete newCat.id;
         try {
-            await updateOwner.mutateAsync(newBranch);
+            await updateOwner.mutateAsync(newCat);
             showNotification({
                 title: 'Success',
-                message: 'Updated branch successfully',
+                message: 'Updated Category successfully',
             });
         } catch (error) {
             showNotification({
@@ -74,7 +79,7 @@ const BranchesProvider = (props: ProivderProps) => {
             await deleteOwner.mutateAsync(id);
             showNotification({
                 title: 'Success',
-                message: 'Deleted branch successfully',
+                message: 'Deleted category successfully',
             });
         } catch (error) {
             showNotification({
@@ -85,8 +90,8 @@ const BranchesProvider = (props: ProivderProps) => {
         }
     }
 
-    function get(id: number): Branch {
-        const branch = branches.find((b) => b.id === id);
+    function get(id: number): Category {
+        const branch = data.find((b) => b.id === id);
 
         // If there is a branch with the given id, return it
         if (branch) {
@@ -100,19 +105,17 @@ const BranchesProvider = (props: ProivderProps) => {
         // if there is no branch with the given id, return an empty branch
         // this is because the update modal is mounted in all cases needing a branch to work with
         return {
-            id: 0,
-            branch_address: '',
-            branch_name: '',
-            branch_phone: '',
-            commercial_registration_number: '',
+            category_name: '',
             company_id: 0,
+            id: 0,
+            type: '',
         };
     }
     return (
-        <BranchesContext.Provider
+        <CategoriesContext.Provider
             value={{
                 get,
-                branches,
+                data,
                 isCreating: createOwner.isLoading,
                 isRemoving: deleteOwner.isLoading,
                 isUptading: updateOwner.isLoading,
@@ -123,9 +126,9 @@ const BranchesProvider = (props: ProivderProps) => {
             }}
         >
             {props.children}
-        </BranchesContext.Provider>
+        </CategoriesContext.Provider>
     );
 };
 
-export const useBranches = () => useContext(BranchesContext);
-export default BranchesProvider;
+export const useCategories = () => useContext(CategoriesContext);
+export default CategoriesProvider;

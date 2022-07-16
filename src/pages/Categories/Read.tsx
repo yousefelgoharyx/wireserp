@@ -2,10 +2,10 @@ import { ActionIcon, Group, Pagination, Paper } from '@mantine/core';
 import { useRef, useState } from 'react';
 import { EditCircle, Trash } from 'tabler-icons-react';
 import Table from '../../components/Table';
-import { useBranches } from './BranchesProvider';
+import { useCategories } from './CategoriesContext';
 import { columns } from './data';
-import DeleteBranch from './DeleteBranch';
-import UpdateBranch from './UpdateBranch';
+import Delete from './Delete';
+import Update from './Update';
 
 function getActions({ onDelete, onEdit }) {
     return [
@@ -25,12 +25,12 @@ function getActions({ onDelete, onEdit }) {
 }
 
 const LIMIT = 5;
-const ReadBranches = () => {
+const Read = () => {
     const [deleteModal, setDeleteModal] = useState<boolean>(false);
     const [updateModal, setUpdateModal] = useState<boolean>(false);
     const [page, setPage] = useState(1);
     const selectedId = useRef<number | null>(null);
-    const { branches } = useBranches();
+    const { data } = useCategories();
 
     function onDelete(row) {
         selectedId.current = row.id;
@@ -42,18 +42,18 @@ const ReadBranches = () => {
     }
     const actions = getActions({ onDelete, onEdit });
 
-    const totalPages = Math.ceil(branches.length / LIMIT);
+    const totalPages = Math.ceil(data.length / LIMIT);
     if (page > totalPages) setPage(totalPages);
     return (
         <>
             <Paper>
-                <DeleteBranch
+                <Delete
                     key={deleteModal.toString() + '1'}
                     selectedId={selectedId.current}
                     isOpen={deleteModal}
                     requestClose={() => setDeleteModal(false)}
                 />
-                <UpdateBranch
+                <Update
                     key={updateModal.toString() + '2'}
                     selectedId={selectedId.current}
                     isOpen={updateModal}
@@ -63,14 +63,14 @@ const ReadBranches = () => {
                 <Table
                     actions={actions}
                     columns={columns}
-                    data={branches.slice((page - 1) * LIMIT, page * LIMIT)}
+                    data={data.slice((page - 1) * LIMIT, page * LIMIT)}
                 />
             </Paper>
-            {branches.length > 0 && (
+            {data.length > 0 && (
                 <Pagination page={page} onChange={setPage} total={totalPages} />
             )}
         </>
     );
 };
 
-export default ReadBranches;
+export default Read;

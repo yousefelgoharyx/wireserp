@@ -1,13 +1,13 @@
-import { Button, Group, Stack, TextInput } from '@mantine/core';
+import { Button, Group, SimpleGrid, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import FormDivider from '../../components/FormDivider';
 import FormShell from '../../components/FormShell';
-import { BranchForm } from 'branches';
+import { BranchFormValues } from 'branches';
 import branchSchema from './schemas/schema';
 import { useBranches } from './BranchesProvider';
 const CreateBranch = () => {
-    const { createBranch, isCreating } = useBranches();
-    const form = useForm<BranchForm>({
+    const { create, isCreating } = useBranches();
+    const form = useForm<BranchFormValues>({
         schema: yupResolver(branchSchema),
         initialValues: {
             branch_name: '',
@@ -19,9 +19,12 @@ const CreateBranch = () => {
 
     return (
         <FormShell title="Add Branch">
-            <form onSubmit={form.onSubmit(createBranch)}>
+            <form onSubmit={form.onSubmit(create)}>
                 <Stack>
-                    <Group grow>
+                    <SimpleGrid
+                        cols={2}
+                        breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
+                    >
                         <TextInput
                             required
                             label="Name"
@@ -32,8 +35,6 @@ const CreateBranch = () => {
                             label="Phone"
                             {...form.getInputProps('branch_phone')}
                         />
-                    </Group>
-                    <Group grow>
                         <TextInput
                             required
                             label="Address"
@@ -45,7 +46,8 @@ const CreateBranch = () => {
                                 'commercial_registration_number'
                             )}
                         />
-                    </Group>
+                    </SimpleGrid>
+
                     <FormDivider />
                     <Group>
                         <Button loading={isCreating} type="submit">

@@ -12,15 +12,22 @@ const sidebar = [
             {
                 label: 'الفروع',
                 icon: UserCircle,
-                items: [
-                    { label: 'اضافة فرع', to: '/branches/create' },
-                    { label: 'جميع الفروع', to: '/branches' },
-                ],
+                items: [{ label: 'جميع الفروع', to: '/branches' }],
             },
+
             {
                 label: 'المخازن',
                 icon: UserCircle,
-                items: [{ label: 'اضافة مخزن', to: '/storages/create' }],
+                items: [
+                    { label: 'المخازن', to: '/storages' },
+                    { label: 'التحويل', to: '/storages/transfer' },
+                    { label: 'الجرد', to: '/storages/transfer' },
+                ],
+            },
+            {
+                label: 'المنتجات',
+                icon: UserCircle,
+                items: [{ label: 'جميع المنتجات', to: '/products' }],
             },
         ],
     },
