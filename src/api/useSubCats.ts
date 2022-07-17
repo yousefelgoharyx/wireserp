@@ -42,4 +42,7 @@ const useSubCats = () => {
     };
 };
 
+export const useSubCatsList = () => {
+    return useQuery('subcategories', fetcher);
+};
 export default useSubCats;

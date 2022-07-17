@@ -2,29 +2,29 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import instance from '../utils/axios';
 
 async function fetcher() {
-    const response = await instance.post<Branch[]>('/branches');
+    const response = await instance.post<Product[]>('/products');
     return response.data;
 }
 
 function deleteCategory(id: number) {
-    return instance.post('/delete-branch', { branch_id: id });
+    return instance.post('/delete-product', { product_id: id });
 }
 
-function createCategory(cat: BranchFormValues) {
-    return instance.post('/add-branch', cat);
+function createCategory(cat: FormData) {
+    return instance.post('/add-product', cat);
 }
 
-function updateCategory(cat: BranchUpdate) {
-    return instance.post('/edit-branch', cat);
+function updateCategory(cat: ProductUpdate) {
+    return instance.post('/edit-product', cat);
 }
 
-const useBranches = () => {
+const useProducts = () => {
     const queryClient = useQueryClient();
-    const query = useQuery('branches', fetcher);
+    const query = useQuery('products', fetcher);
 
     const options = {
         onSuccess: () => {
-            queryClient.invalidateQueries('branches');
+            queryClient.invalidateQueries('products');
         },
     };
     const deleteOwner = useMutation(deleteCategory, options);
@@ -42,8 +42,7 @@ const useBranches = () => {
     };
 };
 
-export const useBranchesList = () => {
-    return useQuery('branches', fetcher);
+export const useProductsList = () => {
+    return useQuery('products', fetcher);
 };
-
-export default useBranches;
+export default useProducts;

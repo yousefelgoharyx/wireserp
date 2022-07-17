@@ -26,4 +26,7 @@ const useWarehouses = () => {
     };
 };
 
+export const useWarehousesList = () => {
+    return useQuery('warehouses', fetcher);
+};
 export default useWarehouses;

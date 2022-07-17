@@ -1,4 +1,4 @@
-import { Group, Pagination, Paper, Table } from '@mantine/core';
+import { Group, Pagination, Paper, ScrollArea, Table } from '@mantine/core';
 import {
     ColumnDef,
     flexRender,
@@ -43,43 +43,67 @@ const DataGrid = (props: DataGridProps) => {
     return (
         <>
             <Paper>
-                <Table striped verticalSpacing="md" horizontalSpacing="md">
-                    <thead>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => (
-                                    <th key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody>
-                        {table.getRowModel().rows.map((row) => {
-                            return (
-                                <tr key={row.id}>
-                                    {row.getVisibleCells().map((cell) => {
-                                        return (
-                                            <td key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext()
-                                                )}
-                                            </td>
-                                        );
-                                    })}
+                <ScrollArea>
+                    <Table striped verticalSpacing="md" horizontalSpacing="md">
+                        <thead>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <tr
+                                    style={{ display: 'flex' }}
+                                    key={headerGroup.id}
+                                >
+                                    {headerGroup.headers.map((header) => (
+                                        <th
+                                            {...{
+                                                key: header.id,
+                                                colSpan: header.colSpan,
+                                                style: {
+                                                    width: header.getSize(),
+                                                },
+                                            }}
+                                        >
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                      header.column.columnDef
+                                                          .header,
+                                                      header.getContext()
+                                                  )}
+                                        </th>
+                                    ))}
                                 </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
+                            ))}
+                        </thead>
+                        <tbody>
+                            {table.getRowModel().rows.map((row) => {
+                                return (
+                                    <tr
+                                        style={{ display: 'flex' }}
+                                        key={row.id}
+                                    >
+                                        {row.getVisibleCells().map((cell) => {
+                                            return (
+                                                <td
+                                                    {...{
+                                                        key: cell.id,
+                                                        style: {
+                                                            width: cell.column.getSize(),
+                                                        },
+                                                    }}
+                                                >
+                                                    {flexRender(
+                                                        cell.column.columnDef
+                                                            .cell,
+                                                        cell.getContext()
+                                                    )}
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                </ScrollArea>
             </Paper>
             <Group>
                 {table.getRowModel().rows.length > 0 && (

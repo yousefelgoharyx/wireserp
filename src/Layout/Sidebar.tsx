@@ -34,7 +34,10 @@ const sidebar = [
             {
                 label: 'المنتجات',
                 icon: Bucket,
-                items: [{ label: 'جميع المنتجات', to: '/products' }],
+                items: [
+                    { label: 'اضافة منتج', to: '/products/add' },
+                    { label: 'جميع المنتجات', to: '/products' },
+                ],
             },
             {
                 label: 'الفئات',

@@ -1,17 +1,14 @@
-import { Stack } from '@mantine/core';
-import Provider from './Provider';
-import Create from './components/Create';
-import Read from './components/View';
+import { Group, Stack } from '@mantine/core';
+import ProductsForm from './ProductsForm';
+import ProductsTable from './ProductsTable';
 
-const Products = () => {
+const SubCats = () => {
     return (
-        <Provider>
-            <Stack spacing={16}>
-                <Create />
-                <Read />
-            </Stack>
-        </Provider>
+        <Stack>
+            <ProductsForm />
+            {/* <ProductsTable /> */}
+        </Stack>
     );
 };
 
-export default Products;
+export default SubCats;

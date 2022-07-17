@@ -42,4 +42,8 @@ const useCategories = () => {
     };
 };
 
+export const useCategoriesList = () => {
+    return useQuery('categories', fetcher);
+};
+
 export default useCategories;

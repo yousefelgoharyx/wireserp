@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-const productSchema = yup.object().shape({
+const schema = yup.object().shape({
     warehouse_id: yup.string().required('Warehouse is required'),
     warehouse_balance: yup.string().required('Warehouse balance is required'),
     barcode: yup.string().required('Barcode is required'),
@@ -13,9 +13,12 @@ const productSchema = yup.object().shape({
     category: yup.string().required('Category is required'),
     sub_category: yup.string().required('Sub category is required'),
     description: yup.string(),
-    image: yup.object().shape({
-        name: yup.string(),
-    }),
+    image: yup
+        .object()
+        .shape({
+            name: yup.string(),
+        })
+        .nullable(),
 });
 
-export default productSchema;
+export default schema;
