@@ -27,8 +27,8 @@ const sidebar = [
                 icon: BuildingWarehouse,
                 items: [
                     { label: 'المخازن', to: '/warehouses' },
-                    { label: 'التحويل', to: '/storages/transfer' },
-                    { label: 'الجرد', to: '/storages/transfer' },
+                    { label: 'تحويل منتج', to: '/storages/transfer' },
+                    { label: 'جرد المخازن', to: '/storages/transfer' },
                 ],
             },
             {
@@ -40,8 +40,8 @@ const sidebar = [
                 label: 'الفئات',
                 icon: LayoutGrid,
                 items: [
-                    { label: 'الرئيسية', to: '/categories' },
-                    { label: 'الفرعية', to: '/sub-categories' },
+                    { label: 'الفئات الرئيسية', to: '/categories' },
+                    { label: 'الفئات الفرعية', to: '/sub-categories' },
                 ],
             },
         ],

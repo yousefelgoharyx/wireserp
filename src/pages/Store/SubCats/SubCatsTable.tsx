@@ -17,7 +17,7 @@ const SubCatsTable = () => {
     const tableData: SubCategoryTable[] = subcats.map((subcat) => {
         return {
             id: subcat.id,
-            category: subcat.category?.category_name,
+            category: subcat.category?.category_name || '-',
             name: subcat.sub_category_name,
         };
     });

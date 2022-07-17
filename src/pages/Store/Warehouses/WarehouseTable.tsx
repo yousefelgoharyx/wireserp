@@ -2,7 +2,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRef } from 'react';
-import useGetBranches from '../../../api/useBranches';
+import useBranches from '../../../api/useBranches';
 import useWarehouses from '../../../api/useWarehouses';
 import DataGrid from '../../../components/DataGrid';
 import DeleteModal from '../../../components/DeleteModal';
@@ -12,14 +12,14 @@ import { columns } from './columns';
 
 const WarehouseTable = () => {
     const { data: warehouses, remove, isRemoving } = useWarehouses();
-    const { data: branches } = useGetBranches();
+    const { data: branches } = useBranches();
     const [opened, handlers] = useDisclosure(false);
     const selectedId = useRef<number | null>(null);
 
     const tableData: WarehouseTable[] = warehouses.map((warehouse) => {
         return {
             id: warehouse.id,
-            branch: find(warehouse.branch_id, branches).branch_name,
+            branch: find(warehouse.branch_id, branches)?.branch_name ?? 'NaN',
             warehouse_name: warehouse.warehouse_name,
         };
     });

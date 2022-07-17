@@ -2,10 +2,11 @@ export default function find<T extends { id: number }>(
     id: number,
     data: T[]
 ): T {
-    const item = data.find((b) => b.id === id);
+    const item = data.find((b) => Number(b.id) === Number(id));
 
-    Object.keys(item).forEach((key) => {
-        if (item[key] === null) item[key] = undefined;
-    });
+    item &&
+        Object.keys(item).forEach((key) => {
+            if (item[key] === null) item[key] = undefined;
+        });
     return item;
 }

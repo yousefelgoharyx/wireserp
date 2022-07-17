@@ -7,7 +7,7 @@ async function fetcher() {
 }
 
 function deleteCategory(id: number) {
-    return instance.post('/delete-branch', { cat_id: id });
+    return instance.post('/delete-branch', { branch_id: id });
 }
 
 function createCategory(cat: BranchFormValues) {
