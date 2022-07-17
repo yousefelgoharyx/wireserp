@@ -1,5 +1,6 @@
+import { Anchor, Image } from '@mantine/core';
 import { ColumnDef } from '@tanstack/react-table';
-
+const companyId = JSON.parse(localStorage.getItem('user')).company_id;
 export const columns: ColumnDef<ProductTable>[] = [
     {
         accessorKey: 'id',
@@ -62,5 +63,13 @@ export const columns: ColumnDef<ProductTable>[] = [
     {
         accessorKey: 'image',
         header: 'Image',
+        cell: (row) => {
+            const src = `https://erp.digitwires.com/storage/products/company-${companyId}/${row.row.original.image}`;
+            return (
+                <Anchor target="_blank" href={src}>
+                    <Image width={32} height={32} src={src} />
+                </Anchor>
+            );
+        },
     },
 ];

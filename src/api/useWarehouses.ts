@@ -1,3 +1,4 @@
+import { SelectItem } from '@mantine/core';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import instance from '../utils/axios';
 
@@ -29,4 +30,13 @@ const useWarehouses = () => {
 export const useWarehousesList = () => {
     return useQuery('warehouses', fetcher);
 };
+
+export function WarehousesToSelectItems(warehouses: Warehouse[]): SelectItem[] {
+    return warehouses.map(
+        (warehouse): SelectItem => ({
+            label: warehouse.warehouse_name,
+            value: warehouse.id.toString(),
+        })
+    );
+}
 export default useWarehouses;

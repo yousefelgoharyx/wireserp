@@ -3,18 +3,23 @@ import {
     Group,
     Modal,
     NumberInput,
-    ScrollArea,
     Select,
     Stack,
     TextInput,
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
-import { FORMERR } from 'dns';
-import { useCategoriesList } from '../../../api/useCategories';
+import {
+    CatsToSelectItems,
+    useCategoriesList,
+} from '../../../api/useCategories';
 import useProducts from '../../../api/useProducts';
-import { useSubCatsList } from '../../../api/useSubCats';
-import { useWarehousesList } from '../../../api/useWarehouses';
+import { SubcatsToSelectItems, useSubCatsList } from '../../../api/useSubCats';
+import { units } from '../../../api/useUnits';
+import {
+    useWarehousesList,
+    WarehousesToSelectItems,
+} from '../../../api/useWarehouses';
 import FormDivider from '../../../components/FormDivider';
 import find from '../../../utils/find';
 import getApiError from '../../../utils/getApiError';
@@ -24,28 +29,7 @@ type Props = {
     requestClose: () => void;
     selectedId: number;
 };
-type Units = {
-    name: string;
-    value: Unit;
-}[];
-const units: Units = [
-    {
-        name: 'Unit',
-        value: 'unit',
-    },
-    {
-        name: 'Kilogram',
-        value: 'kg',
-    },
-    {
-        name: 'Gram',
-        value: 'gm',
-    },
-    {
-        name: 'Ton',
-        value: 'ton',
-    },
-];
+
 const ProductUpdate = (props: Props) => {
     const { data: cats } = useCategoriesList();
     const { data: subcats } = useSubCatsList();
@@ -56,6 +40,7 @@ const ProductUpdate = (props: Props) => {
         schema: yupResolver(schema),
         initialValues: find(props.selectedId, products),
     });
+
     async function handleSubmit(values: Product) {
         const newProduct: ProductUpdate = {
             product_id: values.id,
@@ -101,25 +86,14 @@ const ProductUpdate = (props: Props) => {
                     <Select
                         label="Unit"
                         placeholder="Select Unit"
-                        data={units.map((unit) => ({
-                            label: unit.name,
-                            value: unit.value,
-                        }))}
+                        data={units}
                         {...form.getInputProps('product_unit')}
                     />
                     <Select
                         label="Warehouse"
                         placeholder="Select Warehouse"
-                        data={warehouses.map((warehouse) => ({
-                            label: warehouse.warehouse_name,
-                            value: warehouse.id.toString(),
-                        }))}
-                        defaultValue={warehouses
-                            .find(
-                                (warehouse) =>
-                                    warehouse.id === form.values.warehouse_id
-                            )
-                            .id.toString()}
+                        data={WarehousesToSelectItems(warehouses)}
+                        defaultValue={form.values.warehouse_id.toString()}
                         {...form.getInputProps('warehouse_id')}
                     />
                     <NumberInput
@@ -157,28 +131,19 @@ const ProductUpdate = (props: Props) => {
                     <Select
                         label="Category"
                         placeholder="Select category"
-                        data={cats.map((cat) => ({
-                            label: cat.category_name,
-                            value: cat.id.toString(),
-                        }))}
-                        defaultValue={cats
-                            .find((cat) => cat.id === form.values.category)
-                            .id.toString()}
+                        data={CatsToSelectItems(cats)}
+                        defaultValue={form.values.category.toString()}
                         {...form.getInputProps('category')}
                     />
                     <Select
                         label="Sub Category"
                         placeholder="Select sub category"
-                        data={subcats.map((subcat) => ({
-                            label: subcat.sub_category_name,
-                            value: subcat.id.toString(),
-                        }))}
-                        defaultValue={subcats
-                            .find(
-                                (subcat) =>
-                                    subcat.id === form.values.sub_category
-                            )
-                            .id.toString()}
+                        data={SubcatsToSelectItems(
+                            Number(form.values.category),
+                            subcats
+                        )}
+                        defaultValue={form.values.sub_category.toString()}
+                        disabled={!form.values.category}
                         {...form.getInputProps('sub_category')}
                     />
                     <NumberInput

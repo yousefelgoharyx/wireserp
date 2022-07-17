@@ -10,38 +10,23 @@ import {
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
-import { useCategoriesList } from '../../../api/useCategories';
+import {
+    CatsToSelectItems,
+    useCategoriesList,
+} from '../../../api/useCategories';
 import useProducts from '../../../api/useProducts';
-import { useSubCatsList } from '../../../api/useSubCats';
-import { useWarehousesList } from '../../../api/useWarehouses';
+import { SubcatsToSelectItems, useSubCatsList } from '../../../api/useSubCats';
+import { units } from '../../../api/useUnits';
+
+import {
+    useWarehousesList,
+    WarehousesToSelectItems,
+} from '../../../api/useWarehouses';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
 import getApiError from '../../../utils/getApiError';
 import schema from './schema';
-
-type Units = {
-    name: string;
-    value: Unit;
-}[];
-const units: Units = [
-    {
-        name: 'Unit',
-        value: 'unit',
-    },
-    {
-        name: 'Kilogram',
-        value: 'kg',
-    },
-    {
-        name: 'Gram',
-        value: 'gm',
-    },
-    {
-        name: 'Ton',
-        value: 'ton',
-    },
-];
 
 function getFormData(object) {
     const formData = new FormData();
@@ -116,19 +101,13 @@ const ProductsForm = () => {
                         <Select
                             label="Unit"
                             placeholder="Select Unit"
-                            data={units.map((unit) => ({
-                                label: unit.name,
-                                value: unit.value,
-                            }))}
+                            data={units}
                             {...form.getInputProps('product_unit')}
                         />
                         <Select
                             label="Warehouse"
                             placeholder="Select Warehouse"
-                            data={warehouses.map((warehouse) => ({
-                                label: warehouse.warehouse_name,
-                                value: warehouse.id.toString(),
-                            }))}
+                            data={WarehousesToSelectItems(warehouses)}
                             {...form.getInputProps('warehouse_id')}
                         />
                         <NumberInput
@@ -166,19 +145,17 @@ const ProductsForm = () => {
                         <Select
                             label="Category"
                             placeholder="Select category"
-                            data={cats.map((cat) => ({
-                                label: cat.category_name,
-                                value: cat.id.toString(),
-                            }))}
+                            data={CatsToSelectItems(cats)}
                             {...form.getInputProps('category')}
                         />
                         <Select
+                            disabled={!form.values.category}
                             label="Sub Category"
                             placeholder="Select sub category"
-                            data={subcats.map((subcat) => ({
-                                label: subcat.sub_category_name,
-                                value: subcat.id.toString(),
-                            }))}
+                            data={SubcatsToSelectItems(
+                                Number(form.values.category),
+                                subcats
+                            )}
                             {...form.getInputProps('sub_category')}
                         />
                         <NumberInput

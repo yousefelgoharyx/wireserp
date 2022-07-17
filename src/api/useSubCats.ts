@@ -1,3 +1,4 @@
+import { SelectItem } from '@mantine/core';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import instance from '../utils/axios';
 
@@ -45,4 +46,19 @@ const useSubCats = () => {
 export const useSubCatsList = () => {
     return useQuery('subcategories', fetcher);
 };
+
+export function SubcatsToSelectItems(
+    id: number,
+    subcats: SubCategory[]
+): SelectItem[] {
+    return subcats
+        .filter((subcat) => Number(subcat.category_id) === id)
+        .map(
+            (subcat): SelectItem => ({
+                label: subcat.sub_category_name,
+                value: subcat.id.toString(),
+            })
+        );
+}
+
 export default useSubCats;

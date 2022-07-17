@@ -12,7 +12,7 @@ interface ProductFormValues {
     category: number;
     sub_category: number;
     description: string; // not required
-    image?: File; // not required
+    image?: File | string; // not required
 }
 
 interface Product extends ProductFormValues {
@@ -39,5 +39,5 @@ type ProductTable = {
     category: string;
     sub_category: string;
     description: string; // not required
-    image?: File; // not required
+    image?: File | string; // not required
 };
