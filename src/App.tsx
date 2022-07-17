@@ -5,8 +5,6 @@ import Layout from './Layout/Layout';
 import { useAuth } from './AuthProvider';
 import { FullSpinner } from './components/Spinner';
 import Products from './pages/Store/Products/Products';
-import Categories from './pages/Store/Categories/Categories';
-import SubCategories from './pages/Store/SubCategories/SubCategories';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const About = React.lazy(() => import('./pages/About'));
@@ -14,6 +12,11 @@ const Login = React.lazy(() => import('./pages/Login/Login'));
 const Signup = React.lazy(() => import('./pages/Signup/Signup'));
 const Settings = React.lazy(() => import('./pages/Settings/Settings'));
 const Branches = React.lazy(() => import('./pages/Store/Branches/Branches'));
+const Cats = React.lazy(() => import('./pages/Store/Cats/Cats'));
+const SubCats = React.lazy(() => import('./pages/Store/SubCats/SubCats'));
+const Warehouses = React.lazy(
+    () => import('./pages/Store/Warehouses/Warehouses')
+);
 
 function App() {
     const { user } = useAuth();
@@ -36,10 +39,13 @@ function App() {
                             <Route index element={<Products />} />
                         </Route>
                         <Route path="categories">
-                            <Route index element={<Categories />} />
+                            <Route index element={<Cats />} />
                         </Route>
                         <Route path="sub-categories">
-                            <Route index element={<SubCategories />} />
+                            <Route index element={<SubCats />} />
+                        </Route>
+                        <Route path="warehouses">
+                            <Route index element={<Warehouses />} />
                         </Route>
                     </Route>
                 </Routes>

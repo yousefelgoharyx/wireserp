@@ -1,16 +1,16 @@
 import { Stack } from '@mantine/core';
-import ProductsProvider from './ProductsProvider';
-import Create from './Create';
-import Read from './Read';
+import Provider from './Provider';
+import Create from './components/Create';
+import Read from './components/View';
 
 const Products = () => {
     return (
-        <ProductsProvider>
+        <Provider>
             <Stack spacing={16}>
                 <Create />
                 <Read />
             </Stack>
-        </ProductsProvider>
+        </Provider>
     );
 };
 

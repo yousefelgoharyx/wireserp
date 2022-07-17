@@ -4,6 +4,8 @@ import {
     ColorSchemeProvider,
     MantineProvider,
 } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+
 import { theme } from './theme/mantine';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { useLocalStorage } from '@mantine/hooks';
@@ -26,7 +28,7 @@ const AppProvider = (props: Props) => {
     });
     useLayoutEffect(() => {
         i18next.changeLanguage(lang);
-    }, []);
+    }, [lang]);
 
     const dir = i18next.dir(lang);
 
@@ -36,7 +38,6 @@ const AppProvider = (props: Props) => {
     };
 
     const updateLang = (lang: Lang) => {
-        i18next.changeLanguage(lang);
         setLang(lang);
     };
 
@@ -62,7 +63,7 @@ const AppProvider = (props: Props) => {
                         theme={theme({ colorScheme, dir })}
                     >
                         <NotificationsProvider>
-                            {props.children}
+                            <ModalsProvider>{props.children}</ModalsProvider>
                         </NotificationsProvider>
                     </MantineProvider>
                 </div>

@@ -15,4 +15,5 @@ declare global {
         create: (data: T) => void;
         update: (data: T) => void;
     }
+    type Unit = 'unit' | 'gm' | 'kg' | 'ton';
 }

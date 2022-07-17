@@ -1,15 +1,4 @@
-import React, { useState } from 'react';
-import {
-    createStyles,
-    Table,
-    Checkbox,
-    ScrollArea,
-    Group,
-    Avatar,
-    Text,
-    LoadingOverlay,
-    Box,
-} from '@mantine/core';
+import { createStyles, Table, ScrollArea } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
     rowSelected: {
@@ -17,6 +6,12 @@ const useStyles = createStyles((theme) => ({
             theme.colorScheme === 'dark'
                 ? theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.2)
                 : theme.colors[theme.primaryColor][0],
+    },
+    tr: {
+        display: 'flex',
+    },
+    th: {
+        flex: '1 0 auto',
     },
 }));
 
@@ -28,7 +23,7 @@ interface TableSelectionProps {
 
 export default function TableSelection(props: TableSelectionProps) {
     const { data, columns, actions } = props;
-
+    const { classes } = useStyles();
     const rows = data.map((item) => {
         return (
             <tr key={item.id}>
@@ -56,11 +51,13 @@ export default function TableSelection(props: TableSelectionProps) {
                 verticalSpacing="md"
             >
                 <thead>
-                    <tr>
+                    <tr className={classes.tr}>
                         {columns.map((col) => (
-                            <th key={col.selector}>{col.header}</th>
+                            <th className={classes.th} key={col.selector}>
+                                {col.header}
+                            </th>
                         ))}
-                        <th>Actions</th>
+                        <th className={classes.th}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>

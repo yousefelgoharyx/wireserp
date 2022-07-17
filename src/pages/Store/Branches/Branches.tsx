@@ -1,17 +1,14 @@
 import { Stack } from '@mantine/core';
-import Provider from './Provider';
-import Create from './components/Create';
-import View from './components/View';
+import BranchesForm from './BranchesForm';
+import BranchesTable from './BranchesTable';
 
-const Branches = () => {
+const Cats = () => {
     return (
-        <Provider>
-            <Stack spacing={16}>
-                <Create />
-                <View />
-            </Stack>
-        </Provider>
+        <Stack>
+            <BranchesForm />
+            <BranchesTable />
+        </Stack>
     );
 };
 
-export default Branches;
+export default Cats;

@@ -15,7 +15,4 @@ interface BranchUpdate extends BranchFormValues {
     company_id: number;
 }
 
-type BranchColumn = {
-    header: string;
-    selector: keyof Branch;
-};
+type BranchTable = Branch;
