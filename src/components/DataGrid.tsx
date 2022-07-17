@@ -27,6 +27,10 @@ const DataGrid = (props: DataGridProps) => {
                 pageSize: 5,
             },
         },
+        defaultColumn: {
+            size: 150,
+            maxSize: 700,
+        },
     });
     let pageCount = table.getPageCount();
     if (table.getRowModel().rows.length > 0) {
@@ -48,7 +52,7 @@ const DataGrid = (props: DataGridProps) => {
                         <thead>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <tr
-                                    style={{ display: 'flex' }}
+                                    style={{ display: 'flex', flex: 1 }}
                                     key={headerGroup.id}
                                 >
                                     {headerGroup.headers.map((header) => (
@@ -58,6 +62,8 @@ const DataGrid = (props: DataGridProps) => {
                                                 colSpan: header.colSpan,
                                                 style: {
                                                     width: header.getSize(),
+                                                    display: 'flex',
+                                                    flex: 1,
                                                 },
                                             }}
                                         >
@@ -77,7 +83,7 @@ const DataGrid = (props: DataGridProps) => {
                             {table.getRowModel().rows.map((row) => {
                                 return (
                                     <tr
-                                        style={{ display: 'flex' }}
+                                        style={{ display: 'flex', flex: 1 }}
                                         key={row.id}
                                     >
                                         {row.getVisibleCells().map((cell) => {
@@ -87,6 +93,8 @@ const DataGrid = (props: DataGridProps) => {
                                                         key: cell.id,
                                                         style: {
                                                             width: cell.column.getSize(),
+                                                            display: 'flex',
+                                                            flex: 1,
                                                         },
                                                     }}
                                                 >

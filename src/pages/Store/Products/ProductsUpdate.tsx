@@ -58,6 +58,7 @@ const ProductUpdate = (props: Props) => {
                 title: 'Error',
             });
         }
+        props.requestClose();
     }
     return (
         <Modal
