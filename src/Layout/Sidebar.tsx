@@ -27,8 +27,8 @@ const sidebar = [
                 icon: BuildingWarehouse,
                 items: [
                     { label: 'المخازن', to: '/warehouses' },
-                    { label: 'تحويل منتج', to: '/storages/transfer' },
-                    { label: 'جرد المخازن', to: '/storages/transfer' },
+                    { label: 'تحويل منتج', to: '/warehouses/transfer' },
+                    { label: 'جرد المخازن', to: '/warehouses/transfer' },
                 ],
             },
             {

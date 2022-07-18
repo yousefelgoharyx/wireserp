@@ -7,6 +7,7 @@ import { FullSpinner } from './components/Spinner';
 import Products from './pages/Store/Products/Products';
 import ProductsTable from './pages/Store/Products/ProductsTable';
 import ProductsForm from './pages/Store/Products/ProductsForm';
+import Transfer from './pages/Store/Warehouses/Transfer';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const About = React.lazy(() => import('./pages/About'));
@@ -49,6 +50,7 @@ function App() {
                         </Route>
                         <Route path="warehouses">
                             <Route index element={<Warehouses />} />
+                            <Route path="transfer" element={<Transfer />} />
                         </Route>
                     </Route>
                 </Routes>

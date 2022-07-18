@@ -26,9 +26,11 @@ const ProductsTable = () => {
 
     const tableData: ProductTable[] = products.map((product) => ({
         ...product,
-        category: find(product.category, cats).category_name,
-        sub_category: find(product.sub_category, subcats).sub_category_name,
-        warehouse: find(product.warehouse_id, warehouses).warehouse_name,
+        category: find(product.category, cats)?.category_name || 'N/A',
+        sub_category:
+            find(product.sub_category, subcats)?.sub_category_name || 'N/A',
+        warehouse:
+            find(product.warehouse_id, warehouses)?.warehouse_name || 'N/A',
     }));
     const cols: ColumnDef<ProductTable>[] = [
         ...columns,
