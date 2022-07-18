@@ -18,7 +18,18 @@ export const transferScheme = yup.object().shape({
         .typeError('Choose a Products')
         .required('Product is required'),
     date: yup.date().typeError('Choose a date').required('Date is required'),
-    note: yup.string().required('Notes is required'),
+    notes: yup.string().required('Notes is required'),
 });
 
+export const inventorySchema = yup.object().shape({
+    warehouse_id: yup.string(),
+    from: yup
+        .date()
+        .typeError('Choose a date')
+        .required('From warehouse is required'),
+    to: yup
+        .date()
+        .typeError('Choose a date')
+        .required('To warehouse is required'),
+});
 export default schema;

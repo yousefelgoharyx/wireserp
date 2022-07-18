@@ -15,6 +15,7 @@ const Layout = () => {
             navbarOffsetBreakpoint="sm"
             styles={(theme) => ({
                 main: {
+                    width: '100%',
                     backgroundColor:
                         theme.colorScheme === 'dark'
                             ? theme.colors.dark[8]

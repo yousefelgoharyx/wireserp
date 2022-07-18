@@ -14,7 +14,6 @@ import find from '../../../utils/find';
 import { useCategoriesList } from '../../../api/useCategories';
 import { useSubCatsList } from '../../../api/useSubCats';
 import { useWarehousesList } from '../../../api/useWarehouses';
-
 const ProductsTable = () => {
     const { data: cats } = useCategoriesList();
     const { data: subcats } = useSubCatsList();

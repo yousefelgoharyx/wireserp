@@ -8,6 +8,7 @@ import Products from './pages/Store/Products/Products';
 import ProductsTable from './pages/Store/Products/ProductsTable';
 import ProductsForm from './pages/Store/Products/ProductsForm';
 import Transfer from './pages/Store/Warehouses/Transfer';
+import Inventory from './pages/Store/Warehouses/Inventory';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const About = React.lazy(() => import('./pages/About'));
@@ -51,6 +52,7 @@ function App() {
                         <Route path="warehouses">
                             <Route index element={<Warehouses />} />
                             <Route path="transfer" element={<Transfer />} />
+                            <Route path="inventory" element={<Inventory />} />
                         </Route>
                     </Route>
                 </Routes>

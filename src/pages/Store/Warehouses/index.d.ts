@@ -23,10 +23,34 @@ interface TransferFormValues {
     to_warehouse: string;
     product_id: string;
     date: Date;
-    note: string;
+    notes: string;
     quantity: number;
 }
 
 interface KosomAhmedIbrahim extends Omit<TransferFormValues, 'date'> {
     date: string;
+}
+
+interface InventoryFormValues {
+    warehouse_id: number;
+    from: Date;
+    to: Date;
+}
+interface TransferItem {
+    id: number;
+    from_warehouse: string;
+    to_warehouse: string;
+    product_name: string;
+    quantity: number;
+    date: string;
+    notes: string;
+}
+
+interface InventoryItem {
+    id: number;
+    barcode: number;
+    total_price: 40;
+    warehouse_balance: number;
+    salings: number;
+    buyings: number;
 }

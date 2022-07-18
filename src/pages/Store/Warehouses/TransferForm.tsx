@@ -10,7 +10,6 @@ import { DatePicker } from '@mantine/dates';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
 import {
     productsToSelectItems,
     useProductsList,
@@ -37,7 +36,7 @@ const TransferForm = () => {
             from_warehouse: null,
             to_warehouse: null,
             product_id: null,
-            note: '',
+            notes: '',
             quantity: 1,
         },
     });
@@ -48,7 +47,7 @@ const TransferForm = () => {
             date: dayjs(values.date).format('YYYY-MM-DD'),
         };
         try {
-            await transferOwner.mutateAsync(newValues);
+            await transferOwner.transfer(newValues);
             showNotification({
                 message: 'Transfer success',
             });
@@ -120,12 +119,15 @@ const TransferForm = () => {
                             placeholder="Type..."
                             autosize
                             maxRows={4}
-                            {...form.getInputProps('note')}
+                            {...form.getInputProps('notes')}
                         />
                     </FormGrid>
                     <FormDivider />
                     <Group>
-                        <Button loading={transferOwner.isLoading} type="submit">
+                        <Button
+                            loading={transferOwner.isTransfering}
+                            type="submit"
+                        >
                             Transfer
                         </Button>
                     </Group>

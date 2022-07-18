@@ -61,9 +61,14 @@ const DataGrid = (props: DataGridProps) => {
                                                 key: header.id,
                                                 colSpan: header.colSpan,
                                                 style: {
-                                                    width: header.getSize(),
-                                                    display: 'flex',
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
                                                     flex: 1,
+                                                    width:
+                                                        header.column.id ===
+                                                        'id'
+                                                            ? 50
+                                                            : header.column.getSize(),
                                                 },
                                             }}
                                         >
@@ -92,8 +97,14 @@ const DataGrid = (props: DataGridProps) => {
                                                     {...{
                                                         key: cell.id,
                                                         style: {
-                                                            width: cell.column.getSize(),
-                                                            display: 'flex',
+                                                            width:
+                                                                cell.column
+                                                                    .id === 'id'
+                                                                    ? 50
+                                                                    : cell.column.getSize(),
+                                                            overflow: 'hidden',
+                                                            textOverflow:
+                                                                'ellipsis',
                                                             flex: 1,
                                                         },
                                                     }}

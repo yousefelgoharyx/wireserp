@@ -28,7 +28,7 @@ const sidebar = [
                 items: [
                     { label: 'المخازن', to: '/warehouses' },
                     { label: 'تحويل منتج', to: '/warehouses/transfer' },
-                    { label: 'جرد المخازن', to: '/warehouses/transfer' },
+                    { label: 'جرد المخازن', to: '/warehouses/inventory' },
                 ],
             },
             {
