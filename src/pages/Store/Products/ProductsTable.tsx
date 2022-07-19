@@ -70,8 +70,8 @@ const ProductsTable = () => {
             <DeleteModal
                 isOpen={deleteOpened}
                 requestClose={deleteHandlers.close}
-                title="Delete warehouse"
-                text="Are you sure you want to delete this warehouse?"
+                title="Delete product"
+                text="Are you sure you want to delete this product?"
                 loading={isRemoving}
                 onConfirm={handleDelete}
             />

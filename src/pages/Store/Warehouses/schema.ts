@@ -22,7 +22,7 @@ export const transferScheme = yup.object().shape({
 });
 
 export const inventorySchema = yup.object().shape({
-    warehouse_id: yup.string(),
+    warehouse_id: yup.string().typeError('Select a warehouse').nullable(),
     from: yup
         .date()
         .typeError('Choose a date')

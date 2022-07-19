@@ -45,7 +45,10 @@ const Inventory = () => {
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <Stack>
                         <Select
-                            data={WarehousesToSelectItems(warehouses)}
+                            data={[
+                                ...WarehousesToSelectItems(warehouses),
+                                {label: "All warehouses", value: null}
+                            ]}
                             placeholder="Select a warehouse"
                             label="Warehouse"
                             {...form.getInputProps('warehouse_id')}

@@ -79,7 +79,7 @@ const ProductsForm = () => {
     }
 
     return (
-        <FormShell title="Add Sub category">
+        <FormShell title="Add Product">
             <form onSubmit={form.onSubmit(handleSubmit)}>
                 <Stack>
                     <FormGrid>

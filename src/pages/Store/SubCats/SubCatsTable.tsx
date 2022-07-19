@@ -63,8 +63,8 @@ const SubCatsTable = () => {
             <DeleteModal
                 isOpen={deleteOpened}
                 requestClose={deleteHandlers.close}
-                title="Delete warehouse"
-                text="Are you sure you want to delete this warehouse?"
+                title="Delete sub category"
+                text="Are you sure you want to delete this sub category?"
                 loading={isRemoving}
                 onConfirm={handleDelete}
             />

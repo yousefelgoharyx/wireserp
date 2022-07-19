@@ -55,8 +55,8 @@ const CatsTable = () => {
             <DeleteModal
                 isOpen={deleteOpened}
                 requestClose={deleteHandlers.close}
-                title="Delete warehouse"
-                text="Are you sure you want to delete this warehouse?"
+                title="Delete category"
+                text="Are you sure you want to delete this category?"
                 loading={isRemoving}
                 onConfirm={handleDelete}
             />

@@ -77,7 +77,7 @@ const TransferForm = () => {
     );
 
     return (
-        <FormShell title="Transfer">
+        <FormShell title="Transfer between warehouses">
             <form onSubmit={form.onSubmit(handleSubmit)}>
                 <Stack>
                     <FormGrid>

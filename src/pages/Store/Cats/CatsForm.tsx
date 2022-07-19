@@ -23,7 +23,7 @@ const CatsForm = () => {
             await create(values);
             showNotification({
                 title: 'Success',
-                message: 'Warehouse created successfully',
+                message: 'Category created successfully',
             });
         } catch (error) {
             showNotification({
@@ -34,7 +34,7 @@ const CatsForm = () => {
         }
     }
     return (
-        <FormShell title="Add Warehouse">
+        <FormShell title="Add Category">
             <form onSubmit={form.onSubmit(handleSubmit)}>
                 <Stack>
                     <FormGrid>
