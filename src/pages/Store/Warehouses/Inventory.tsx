@@ -51,8 +51,8 @@ const Inventory = () => {
                     <Stack>
                         <Select
                             data={[
-                                ...WarehousesToSelectItems(warehouses),
-                                {label: "All warehouses", value: null}
+                                {label: "All warehouses", value: null},
+                                ...WarehousesToSelectItems(warehouses)
                             ]}
                             placeholder="Select a warehouse"
                             label="Warehouse"
