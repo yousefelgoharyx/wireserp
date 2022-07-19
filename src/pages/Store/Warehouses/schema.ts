@@ -29,12 +29,10 @@ export const inventorySchema = yup.object().shape({
     from_date: yup
         .date()
         .typeError('Choose a date')
-        .required('From warehouse is required')
         .nullable(),
     to_date: yup
         .date()
         .typeError('Choose a date')
-        .required('To warehouse is required')
         .nullable(),
 });
 export default schema;
