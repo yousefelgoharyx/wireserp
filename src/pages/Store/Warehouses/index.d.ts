@@ -33,8 +33,8 @@ interface KosomAhmedIbrahim extends Omit<TransferFormValues, 'date'> {
 
 interface InventoryFormValues {
     warehouse_id: number;
-    from: Date;
-    to: Date;
+    from_date: Date;
+    to_date: Date;
 }
 interface TransferItem {
     id: number;

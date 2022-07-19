@@ -24,8 +24,8 @@ const Inventory = () => {
     const form = useForm<InventoryFormValues>({
         schema: yupResolver(inventorySchema),
         initialValues: {
-            from: new Date(),
-            to: new Date(),
+            from_date: null,
+            to_date: null,
             warehouse_id: null,
         },
     });
@@ -33,8 +33,8 @@ const Inventory = () => {
     async function handleSubmit(values: InventoryFormValues) {
         const newValues = {
             ...values,
-            from: dayjs(values.from).format('YYYY-MM-DD'),
-            to: dayjs(values.to).format('YYYY-MM-DD'),
+            from_date: dayjs(values.from).format('YYYY-MM-DD'),
+            to_date: dayjs(values.to).format('YYYY-MM-DD'),
         }
         try {
             await get(newValues);
