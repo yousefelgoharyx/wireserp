@@ -1,6 +1,6 @@
 import { Button, Group, Modal, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import useCategories from '../../../api/useCategories';
+import useCategories from '../../../api/store/useCategories';
 import FormDivider from '../../../components/FormDivider';
 import find from '../../../utils/find';
 import schema from './schema';

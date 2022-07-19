@@ -1,4 +1,4 @@
-import useTransfer from '../../../api/useTransfer';
+import useTransfer from '../../../api/store/useTransfer';
 import DataGrid from '../../../components/DataGrid';
 import { transferListCols } from './columns';
 

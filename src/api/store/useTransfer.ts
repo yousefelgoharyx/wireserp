@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import instance from '../utils/axios';
+import instance from '../../utils/axios';
 
 async function transfer(values: KosomAhmedIbrahim) {
     return instance.post('/transfer-warehouses', values);

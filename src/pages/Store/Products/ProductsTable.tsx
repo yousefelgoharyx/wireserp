@@ -6,14 +6,14 @@ import DeleteModal from '../../../components/DeleteModal';
 import EditDelete from '../../../components/EditDelete';
 import CatsUpdate from './ProductsUpdate';
 import { columns } from './columns';
-import useProducts from '../../../api/useProducts';
+import useProducts from '../../../api/store/useProducts';
 import { Stack } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import getApiError from '../../../utils/getApiError';
 import find from '../../../utils/find';
-import { useCategoriesList } from '../../../api/useCategories';
-import { useSubCatsList } from '../../../api/useSubCats';
-import { useWarehousesList } from '../../../api/useWarehouses';
+import { useCategoriesList } from '../../../api/store/useCategories';
+import { useSubCatsList } from '../../../api/store/useSubCats';
+import { useWarehousesList } from '../../../api/store/useWarehouses';
 const ProductsTable = () => {
     const { data: cats } = useCategoriesList();
     const { data: subcats } = useSubCatsList();

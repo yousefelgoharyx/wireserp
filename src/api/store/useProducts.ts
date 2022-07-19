@@ -1,31 +1,31 @@
 import { SelectItem } from '@mantine/core';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import instance from '../utils/axios';
+import instance from '../../utils/axios';
 
 async function fetcher() {
-    const response = await instance.post<Category[]>('/categories');
+    const response = await instance.post<Product[]>('/products');
     return response.data;
 }
 
 function deleteCategory(id: number) {
-    return instance.post('/delete-category', { cat_id: id });
+    return instance.post('/delete-product', { product_id: id });
 }
 
-function createCategory(cat: CategoryFormValues) {
-    return instance.post('/add-category', cat);
+function createCategory(cat: FormData) {
+    return instance.post('/add-product', cat);
 }
 
-function updateCategory(cat: CategoryUpdate) {
-    return instance.post('/edit-category', cat);
+function updateCategory(cat: ProductUpdate) {
+    return instance.post('/edit-product', cat);
 }
 
-const useCategories = () => {
+const useProducts = () => {
     const queryClient = useQueryClient();
-    const query = useQuery('categories', fetcher);
+    const query = useQuery('products', fetcher);
 
     const options = {
         onSuccess: () => {
-            queryClient.invalidateQueries('categories');
+            queryClient.invalidateQueries('products');
         },
     };
     const deleteOwner = useMutation(deleteCategory, options);
@@ -43,17 +43,16 @@ const useCategories = () => {
     };
 };
 
-export const useCategoriesList = () => {
-    return useQuery('categories', fetcher);
+export const useProductsList = () => {
+    return useQuery('products', fetcher);
 };
 
-export function CatsToSelectItems(cats: Category[]): SelectItem[] {
-    return cats.map(
-        (cat): SelectItem => ({
-            label: cat.category_name,
-            value: cat.id.toString(),
+export function productsToSelectItems(products: Product[]): SelectItem[] {
+    return products.map(
+        (product): SelectItem => ({
+            label: product.product_name,
+            value: product.id.toString(),
         })
     );
 }
-
-export default useCategories;
+export default useProducts;

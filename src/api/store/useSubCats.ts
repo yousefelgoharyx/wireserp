@@ -1,6 +1,6 @@
 import { SelectItem } from '@mantine/core';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import instance from '../utils/axios';
+import instance from '../../utils/axios';
 
 async function fetcher() {
     const response = await instance.post<SubCategory[]>('/sub-categories');

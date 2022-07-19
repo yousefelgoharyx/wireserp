@@ -3,11 +3,11 @@ import { DatePicker } from '@mantine/dates';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import React, { Suspense } from 'react';
-import useInventory from '../../../api/useInventory';
+import useInventory from '../../../api/store/useInventory';
 import {
     useWarehousesList,
     WarehousesToSelectItems,
-} from '../../../api/useWarehouses';
+} from '../../../api/store/useWarehouses';
 import DataGrid from '../../../components/DataGrid';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
@@ -33,9 +33,13 @@ const Inventory = () => {
     async function handleSubmit(values: InventoryFormValues) {
         const newValues = {
             ...values,
-            from_date: values.from_date ? dayjs(values.from_date).format('YYYY-MM-DD') : null,
-            to_date: values.to_date ? dayjs(values.to_date).format('YYYY-MM-DD') : null,
-        }
+            from_date: values.from_date
+                ? dayjs(values.from_date).format('YYYY-MM-DD')
+                : null,
+            to_date: values.to_date
+                ? dayjs(values.to_date).format('YYYY-MM-DD')
+                : null,
+        };
         try {
             await get(newValues);
         } catch (error) {
@@ -51,8 +55,8 @@ const Inventory = () => {
                     <Stack>
                         <Select
                             data={[
-                                {label: "All warehouses", value: null},
-                                ...WarehousesToSelectItems(warehouses)
+                                { label: 'All warehouses', value: null },
+                                ...WarehousesToSelectItems(warehouses),
                             ]}
                             placeholder="Select a warehouse"
                             label="Warehouse"

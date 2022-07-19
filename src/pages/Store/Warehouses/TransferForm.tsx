@@ -13,12 +13,12 @@ import dayjs from 'dayjs';
 import {
     productsToSelectItems,
     useProductsList,
-} from '../../../api/useProducts';
-import useTransfer from '../../../api/useTransfer';
+} from '../../../api/store/useProducts';
+import useTransfer from '../../../api/store/useTransfer';
 import {
     useWarehousesList,
     WarehousesToSelectItems,
-} from '../../../api/useWarehouses';
+} from '../../../api/store/useWarehouses';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';

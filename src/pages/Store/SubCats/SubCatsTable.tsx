@@ -7,7 +7,7 @@ import DeleteModal from '../../../components/DeleteModal';
 import EditDelete from '../../../components/EditDelete';
 import CatsUpdate from './SubCatsUpdate';
 import { columns } from './columns';
-import useSubCats from '../../../api/useSubCats';
+import useSubCats from '../../../api/store/useSubCats';
 
 const SubCatsTable = () => {
     const { data: subcats, remove, isRemoving } = useSubCats();

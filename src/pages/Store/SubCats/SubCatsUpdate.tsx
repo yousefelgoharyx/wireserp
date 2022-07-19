@@ -1,8 +1,8 @@
 import { Button, Group, Modal, Select, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
-import useCategories from '../../../api/useCategories';
-import useSubCats from '../../../api/useSubCats';
+import useCategories from '../../../api/store/useCategories';
+import useSubCats from '../../../api/store/useSubCats';
 import FormDivider from '../../../components/FormDivider';
 import find from '../../../utils/find';
 import getApiError from '../../../utils/getApiError';

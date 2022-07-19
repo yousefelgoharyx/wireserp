@@ -1,6 +1,6 @@
 import { Button, Group, Modal, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import useBranches from '../../../api/useBranches';
+import useBranches from '../../../api/store/useBranches';
 import FormDivider from '../../../components/FormDivider';
 import find from '../../../utils/find';
 import schema from './schema';
@@ -32,13 +32,13 @@ const CatsUpdate = (props: Props) => {
         try {
             await update(branchUpdate);
             showNotification({
-                message: "Branch updated successfully"
-            })
+                message: 'Branch updated successfully',
+            });
         } catch (error) {
             showNotification({
                 message: getApiError(error.response.data),
-                color: 'red'
-            })
+                color: 'red',
+            });
         }
         props.requestClose();
     }

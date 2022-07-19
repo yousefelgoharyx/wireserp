@@ -2,7 +2,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRef } from 'react';
-import useBranches from '../../../api/useBranches';
+import useBranches from '../../../api/store/useBranches';
 import DataGrid from '../../../components/DataGrid';
 import DeleteModal from '../../../components/DeleteModal';
 import EditDelete from '../../../components/EditDelete';

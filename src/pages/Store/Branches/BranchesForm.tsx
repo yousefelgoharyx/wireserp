@@ -1,7 +1,7 @@
 import { Button, Group, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
-import useBranches from '../../../api/useBranches';
+import useBranches from '../../../api/store/useBranches';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';

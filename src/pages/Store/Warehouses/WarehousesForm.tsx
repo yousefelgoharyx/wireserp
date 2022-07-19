@@ -3,7 +3,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { useMemo } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import useGetBranches from '../../../api/useBranches';
+import useGetBranches from '../../../api/store/useBranches';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';

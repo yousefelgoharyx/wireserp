@@ -13,15 +13,18 @@ import { showNotification } from '@mantine/notifications';
 import {
     CatsToSelectItems,
     useCategoriesList,
-} from '../../../api/useCategories';
-import useProducts from '../../../api/useProducts';
-import { SubcatsToSelectItems, useSubCatsList } from '../../../api/useSubCats';
+} from '../../../api/store/useCategories';
+import useProducts from '../../../api/store/useProducts';
+import {
+    SubcatsToSelectItems,
+    useSubCatsList,
+} from '../../../api/store/useSubCats';
 import { units } from '../../../api/useUnits';
 
 import {
     useWarehousesList,
     WarehousesToSelectItems,
-} from '../../../api/useWarehouses';
+} from '../../../api/store/useWarehouses';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
