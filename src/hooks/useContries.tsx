@@ -1,31 +1,32 @@
 import type { SelectItem } from '@mantine/core';
 import axios from 'axios';
-import useSWR from 'swr';
-
-const COUNTRIES_API = 'https://restcountries.com/v3.1/all?fields=name';
-async function countriesFetcher(url) {
-    const response = await axios.get(url);
+import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+const COUNTRIES_API = 'https://erp.digitwires.com/api/countries';
+interface Country {
+    id: number;
+    name_ar: string;
+    name_en: string;
+}
+async function fetcher() {
+    const response = await axios.get<Country[]>(COUNTRIES_API);
     return response.data;
 }
-export const formatCountries = (data: any): SelectItem[] => {
-    return data.map((item) => {
-        let description = item.name.common;
-        let nativeNamesKeys = Object.keys(item.name.nativeName);
-        if (nativeNamesKeys.length > 0) {
-            description = item.name.nativeName[nativeNamesKeys[0]].official;
-        }
 
-        return {
-            value: item.name.common,
-            label: item.name.common,
-            description,
-        };
-    });
-};
 const useContries = () => {
-    const swr = useSWR(COUNTRIES_API, countriesFetcher);
+    const query = useQuery('countries', fetcher);
+    const { i18n } = useTranslation();
+    console.log(query);
 
-    return swr;
+    return {
+        ...query,
+        countriesSelect: query.data.map((item) => {
+            return {
+                value: item.name_en,
+                label: item[`name_${i18n.language}`],
+            };
+        }),
+    };
 };
 
 export default useContries;

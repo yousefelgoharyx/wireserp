@@ -6,17 +6,11 @@ async function fetcher() {
     return response.data;
 }
 
-function deleteCategory(id: number) {
-    return instance.post('/delete-branch', { branch_id: id });
-}
+const remove = (id: number) =>
+    instance.post('/delete-branch', { branch_id: id });
 
-function createCategory(cat: BranchFormValues) {
-    return instance.post('/add-branch', cat);
-}
-
-function updateCategory(cat: BranchUpdate) {
-    return instance.post('/edit-branch', cat);
-}
+const create = (cat: BranchFormValues) => instance.post('/add-branch', cat);
+const update = (cat: BranchUpdate) => instance.post('/edit-branch', cat);
 
 const useBranches = () => {
     const queryClient = useQueryClient();
@@ -27,9 +21,9 @@ const useBranches = () => {
             queryClient.invalidateQueries('branches');
         },
     };
-    const deleteOwner = useMutation(deleteCategory, options);
-    const createOwner = useMutation(createCategory, options);
-    const updateOwner = useMutation(updateCategory, options);
+    const deleteOwner = useMutation(remove, options);
+    const createOwner = useMutation(create, options);
+    const updateOwner = useMutation(update, options);
 
     return {
         ...query,

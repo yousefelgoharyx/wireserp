@@ -54,14 +54,17 @@ const sidebar = [
         icon: UserCircle,
         items: [
             {
-                label: 'الفروع',
+                label: 'العملاء',
                 icon: UserCircle,
-                items: [{ label: 'اضافة فرع', to: '/branches/create' }],
+                items: [
+                    { label: 'اضافة عميل', to: '/clients/create' },
+                    { label: 'جميع العملاء', to: '/clients' },
+                ],
             },
             {
-                label: 'المخازن',
+                label: 'الموردين',
                 icon: UserCircle,
-                items: [{ label: 'اضافة مخزن', to: '/storages/create' }],
+                items: [{ label: 'اضافة مخزن', to: '/suppliers' }],
             },
         ],
     },

@@ -9,7 +9,7 @@ import {
 import { StepProps } from 'signup';
 import { AlertCircle } from 'tabler-icons-react';
 import Selector from '../../components/Selector';
-import useContries, { formatCountries } from '../../hooks/useContries';
+import useContries from '../../hooks/useContries';
 import { step1Keys } from './Schema';
 import StepShell from './StepShell';
 import validateKeys from './validateKeys';
@@ -18,11 +18,8 @@ import useCurrencies from '../../hooks/useCurrencies';
 const Step1 = (props: StepProps) => {
     const { form } = props;
     const { classes } = useStyles();
-    const { data: countriesData, error } = useContries();
+    const { isError, isLoading, countriesSelect } = useContries();
     const cc = useCurrencies();
-    let countries = [];
-    let loading = !countriesData;
-    if (countriesData) countries = formatCountries(countriesData);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -55,11 +52,11 @@ const Step1 = (props: StepProps) => {
                         placeholder="Choose"
                         nothingFound="Nothing found"
                         searchable
-                        loading={loading}
-                        data={countries}
+                        loading={isLoading}
+                        data={countriesSelect}
                         {...form.getInputProps('company_country')}
                     />
-                    {error && (
+                    {isError && (
                         <Alert
                             mb={16}
                             color="red"
@@ -82,7 +79,7 @@ const Step1 = (props: StepProps) => {
                 </Group>
 
                 <Group grow mt="xl">
-                    <Button disabled={error} type="submit">
+                    <Button disabled={isError} type="submit">
                         Next
                     </Button>
                 </Group>
