@@ -33,8 +33,8 @@ const Inventory = () => {
     async function handleSubmit(values: InventoryFormValues) {
         const newValues = {
             ...values,
-            from_date: dayjs(values.from).format('YYYY-MM-DD'),
-            to_date: dayjs(values.to).format('YYYY-MM-DD'),
+            from_date: dayjs(values.from_date).format('YYYY-MM-DD'),
+            to_date: dayjs(values.to_date).format('YYYY-MM-DD'),
         }
         try {
             await get(newValues);

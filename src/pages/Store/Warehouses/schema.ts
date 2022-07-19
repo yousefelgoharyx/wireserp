@@ -26,12 +26,12 @@ export const inventorySchema = yup.object().shape({
         .string()
         .typeError('Select a warehouse')
         .nullable(),
-    from: yup
+    from_date: yup
         .date()
         .typeError('Choose a date')
         .required('From warehouse is required')
         .nullable(),
-    to: yup
+    to_date: yup
         .date()
         .typeError('Choose a date')
         .required('To warehouse is required')
