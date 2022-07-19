@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import instance from '../utils/axios';
 
-async function getInventory(values: InventoryFormValues) {
+async function getInventory(values: any) {
     const response = await instance.post<InventoryItem[]>(
         '/warehouse-inventory',
         values

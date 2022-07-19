@@ -16,7 +16,7 @@ import Spinner from '../../../components/Spinner';
 import getApiError from '../../../utils/getApiError';
 import { inventoryListCols } from './columns';
 import { inventorySchema } from './schema';
-
+import dayjs from 'dayjs';
 const Inventory = () => {
     const { data: warehouses } = useWarehousesList();
     const { get, isGetting, data } = useInventory();
@@ -31,8 +31,13 @@ const Inventory = () => {
     });
 
     async function handleSubmit(values: InventoryFormValues) {
+        const newValues = {
+            ...values,
+            form: dayjs(values.from).format('YYYY-MM-DD'),
+            form: dayjs(values.to).format('YYYY-MM-DD'),
+        }
         try {
-            await get(values);
+            await get(newValues);
         } catch (error) {
             showNotification({
                 message: getApiError(error.response.data),
