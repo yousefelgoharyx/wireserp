@@ -1,6 +1,6 @@
 import { Anchor, Image, Text } from '@mantine/core';
 import { ColumnDef } from '@tanstack/react-table';
-const companyId = JSON.parse(localStorage.getItem('user')).company_id;
+const companyId = JSON.parse(localStorage.getItem('user'))?.company_id;
 export const columns: ColumnDef<ProductTable>[] = [
     {
         accessorKey: 'id',
