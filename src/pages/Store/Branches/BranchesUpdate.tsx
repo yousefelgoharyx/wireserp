@@ -4,6 +4,8 @@ import useBranches from '../../../api/useBranches';
 import FormDivider from '../../../components/FormDivider';
 import find from '../../../utils/find';
 import schema from './schema';
+import { showNotification } from '@mantine/notifications';
+import getApiError from '../../../utils/getApiError';
 type Props = {
     isOpen: boolean;
     requestClose: () => void;
@@ -27,7 +29,17 @@ const CatsUpdate = (props: Props) => {
                 branch.commercial_registration_number,
             company_id: branch.company_id,
         };
-        await update(branchUpdate);
+        try {
+            await update(branchUpdate);
+            showNotification({
+                message: "Branch updated successfully"
+            })
+        } catch (error) {
+            showNotification({
+                message: getApiError(error.response.data),
+                color: 'red'
+            })
+        }
         props.requestClose();
     }
 

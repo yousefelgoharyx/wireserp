@@ -25,7 +25,7 @@ const CatsForm = () => {
             await create(values);
             showNotification({
                 title: 'Success',
-                message: 'Warehouse created successfully',
+                message: 'Branch created successfully',
             });
         } catch (error) {
             showNotification({
@@ -36,7 +36,7 @@ const CatsForm = () => {
         }
     }
     return (
-        <FormShell title="Add Warehouse">
+        <FormShell title="Add Branches">
             <form onSubmit={form.onSubmit(handleSubmit)}>
                 <Stack>
                     <FormGrid>

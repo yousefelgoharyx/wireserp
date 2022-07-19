@@ -20,7 +20,7 @@ const CatsTable = () => {
             await remove(selectedId.current);
             showNotification({
                 title: 'Success',
-                message: 'Category deleted successfully',
+                message: 'Branch deleted successfully',
             });
         } catch (error) {
             showNotification({
@@ -55,8 +55,8 @@ const CatsTable = () => {
             <DeleteModal
                 isOpen={deleteOpened}
                 requestClose={deleteHandlers.close}
-                title="Delete warehouse"
-                text="Are you sure you want to delete this warehouse?"
+                title="Delete branch"
+                text="Are you sure you want to delete this branch?"
                 loading={isRemoving}
                 onConfirm={handleDelete}
             />
