@@ -41,7 +41,7 @@ const Inventory = () => {
     }
     return (
         <Stack>
-            <FormShell title="Inventory">
+            <FormShell title="Warehouse Inventory">
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <Stack>
                         <Select
