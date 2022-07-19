@@ -62,12 +62,12 @@ const Inventory = () => {
                             <DatePicker
                                 label="From"
                                 placeholder="Select Date"
-                                {...form.getInputProps('from')}
+                                {...form.getInputProps('from_date')}
                             />
                             <DatePicker
                                 label="To"
                                 placeholder="Select Date"
-                                {...form.getInputProps('to')}
+                                {...form.getInputProps('to_date')}
                             />
                         </FormGrid>
                         <FormDivider />
