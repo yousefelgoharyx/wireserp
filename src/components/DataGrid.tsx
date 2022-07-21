@@ -1,35 +1,61 @@
-import { Group, Pagination, Paper, ScrollArea, Table } from '@mantine/core';
+import {
+    ActionIcon,
+    Group,
+    Pagination,
+    Paper,
+    ScrollArea,
+    Stack,
+    Table,
+    Text,
+    TextInput,
+    UnstyledButton,
+} from '@mantine/core';
 import {
     ColumnDef,
+    FilterFn,
     flexRender,
     getCoreRowModel,
+    getFacetedRowModel,
     getFilteredRowModel,
     getPaginationRowModel,
+    getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { useRef } from 'react';
+import { rankItem } from '@tanstack/match-sorter-utils';
+import { useRef, useState } from 'react';
+import { SortAscending, SortDescending } from 'tabler-icons-react';
 
 interface DataGridProps {
     data: any[];
     columns: ColumnDef<any>[];
 }
 
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+    const itemRank = rankItem(row.getValue(columnId), value);
+    addMeta({ itemRank });
+    return itemRank.passed;
+};
+
 const DataGrid = (props: DataGridProps) => {
     const pageIndex = useRef<number>(0);
+    const [globalFilter, setGlobalFilter] = useState('');
     const table = useReactTable({
         data: props.data,
         columns: props.columns,
+        state: {
+            globalFilter,
+        },
+        globalFilterFn: fuzzyFilter,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFacetedRowModel: getFacetedRowModel(),
+        onGlobalFilterChange: setGlobalFilter,
         initialState: {
             pagination: {
                 pageSize: 5,
             },
-        },
-        defaultColumn: {
-            size: 150,
-            maxSize: 700,
         },
     });
     let pageCount = table.getPageCount();
@@ -46,39 +72,57 @@ const DataGrid = (props: DataGridProps) => {
 
     return (
         <>
+            <Group grow style={{ maxWidth: 320 }}>
+                <TextInput
+                    placeholder="Search..."
+                    value={globalFilter ?? ''}
+                    onChange={(e) => setGlobalFilter(String(e.target.value))}
+                />
+            </Group>
             <Paper>
                 <ScrollArea>
                     <Table striped verticalSpacing="md" horizontalSpacing="md">
                         <thead>
                             {table.getHeaderGroups().map((headerGroup) => (
-                                <tr
-                                    style={{ display: 'flex', flex: 1 }}
-                                    key={headerGroup.id}
-                                >
+                                <tr key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => (
                                         <th
-                                            {...{
-                                                key: header.id,
-                                                colSpan: header.colSpan,
-                                                style: {
-                                                    overflow: 'hidden',
-                                                    textOverflow: 'ellipsis',
-                                                    flex: 1,
-                                                    width:
-                                                        header.column.id ===
-                                                        'id'
-                                                            ? 50
-                                                            : header.column.getSize(),
-                                                },
-                                            }}
+                                            key={header.id}
+                                            colSpan={header.colSpan}
+                                            style={{ width: header.getSize() }}
                                         >
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext()
-                                                  )}
+                                            <Group
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    userSelect: 'none',
+                                                }}
+                                                grow
+                                                align="flex-start"
+                                                position="apart"
+                                                onClick={header.column.getToggleSortingHandler()}
+                                            >
+                                                {header.isPlaceholder
+                                                    ? null
+                                                    : flexRender(
+                                                          header.column
+                                                              .columnDef.header,
+                                                          header.getContext()
+                                                      )}
+                                                {{
+                                                    asc: (
+                                                        <SortAscending
+                                                            size={20}
+                                                        />
+                                                    ),
+                                                    desc: (
+                                                        <SortDescending
+                                                            size={20}
+                                                        />
+                                                    ),
+                                                }[
+                                                    header.column.getIsSorted() as string
+                                                ] ?? null}
+                                            </Group>
                                         </th>
                                     ))}
                                 </tr>
@@ -87,33 +131,22 @@ const DataGrid = (props: DataGridProps) => {
                         <tbody>
                             {table.getRowModel().rows.map((row) => {
                                 return (
-                                    <tr
-                                        style={{ display: 'flex', flex: 1 }}
-                                        key={row.id}
-                                    >
+                                    <tr key={row.id}>
                                         {row.getVisibleCells().map((cell) => {
                                             return (
                                                 <td
-                                                    {...{
-                                                        key: cell.id,
-                                                        style: {
-                                                            width:
-                                                                cell.column
-                                                                    .id === 'id'
-                                                                    ? 50
-                                                                    : cell.column.getSize(),
-                                                            overflow: 'hidden',
-                                                            textOverflow:
-                                                                'ellipsis',
-                                                            flex: 1,
-                                                        },
+                                                    key={cell.id}
+                                                    style={{
+                                                        width: cell.column.getSize(),
                                                     }}
                                                 >
-                                                    {flexRender(
-                                                        cell.column.columnDef
-                                                            .cell,
-                                                        cell.getContext()
-                                                    )}
+                                                    <div>
+                                                        {flexRender(
+                                                            cell.column
+                                                                .columnDef.cell,
+                                                            cell.getContext()
+                                                        )}
+                                                    </div>
                                                 </td>
                                             );
                                         })}

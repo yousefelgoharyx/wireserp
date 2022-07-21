@@ -1,10 +1,7 @@
 import * as yup from 'yup';
 const schema: yup.SchemaOf<ClientFormValues> = yup.object().shape({
     c_name: yup.string().required('Name is required'),
-    releated_user: yup
-        .string()
-        .typeError('Select a user')
-        .required('User is required'),
+    releated_user: yup.string().typeError('Select a user').nullable(),
     indebt_type: yup.mixed().oneOf(['for', 'on']),
     indebt_amount: yup
         .number()

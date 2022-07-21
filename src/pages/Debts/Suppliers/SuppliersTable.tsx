@@ -3,21 +3,20 @@ import { useDisclosure } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRef } from 'react';
-import useClients from '../../../api/debts/useClients';
+import useSuppliers from '../../../api/debts/useSuppliers';
 import DataGrid from '../../../components/DataGrid';
 import DeleteModal from '../../../components/DeleteModal';
 import EditDelete from '../../../components/EditDelete';
-import CatsUpdate from './ClientsUpdate';
 import { columns } from './columns';
+import SuppliersUpdate from './SuppliersUpdate';
 
-import useUsers from '../../../api/useUsers';
-const ClientsTable = () => {
+const SuppliersTable = () => {
     const [deleteOpened, deleteHandlers] = useDisclosure(false);
     const [editOpened, editHandler] = useDisclosure(false);
     const selectedId = useRef<number | null>(null);
-    const { data: clients, remove, isRemoving } = useClients();
+    const { data: clients, remove, isRemoving } = useSuppliers();
 
-    const cols: ColumnDef<Client>[] = [
+    const cols: ColumnDef<Supplier>[] = [
         ...columns,
         {
             id: 'select',
@@ -62,7 +61,7 @@ const ClientsTable = () => {
                 onConfirm={handleDelete}
             />
             {editOpened && (
-                <CatsUpdate
+                <SuppliersUpdate
                     isOpen={editOpened}
                     requestClose={editHandler.close}
                     selectedId={selectedId.current}
@@ -75,4 +74,4 @@ const ClientsTable = () => {
     );
 };
 
-export default ClientsTable;
+export default SuppliersTable;

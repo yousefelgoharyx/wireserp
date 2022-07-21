@@ -2,20 +2,20 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import instance from '../../utils/axios';
 
 async function fetcher() {
-    const response = await instance.post<Client[]>('/clients');
+    const response = await instance.post<Supplier[]>('/suppliers');
     return response.data;
 }
 
-const remove = (id: number) => instance.post('/delete-client', { id });
-const create = (c: ClientFormValues) => instance.post('/add-client', c);
-const update = (c: Client) => instance.post('/edit-client', c);
+const remove = (id: number) => instance.post('/delete-supplier', { id });
+const create = (c: SupplierFormValues) => instance.post('/add-supplier', c);
+const update = (c: Supplier) => instance.post('/edit-supplier', c);
 
-const useClients = () => {
+const useSuppliers = () => {
     const queryClient = useQueryClient();
-    const query = useQuery('clients', fetcher);
+    const query = useQuery('suppliers', fetcher);
 
     const options = {
-        onSuccess: () => queryClient.invalidateQueries('clients'),
+        onSuccess: () => queryClient.invalidateQueries('suppliers'),
     };
     const deleteOwner = useMutation(remove, options);
     const createOwner = useMutation(create, options);
@@ -32,8 +32,8 @@ const useClients = () => {
     };
 };
 
-export const useClientsList = () => {
-    return useQuery('clients', fetcher);
+export const useSuppliersList = () => {
+    return useQuery('suppliers', fetcher);
 };
 
-export default useClients;
+export default useSuppliers;

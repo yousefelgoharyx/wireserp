@@ -4,6 +4,7 @@ import {
     BuildingStore,
     BuildingWarehouse,
     LayoutGrid,
+    ReportMoney,
     Switch2,
     UserCircle,
 } from 'tabler-icons-react';
@@ -51,7 +52,7 @@ const sidebar = [
     },
     {
         label: 'الديون',
-        icon: UserCircle,
+        icon: ReportMoney,
         items: [
             {
                 label: 'العملاء',
@@ -64,7 +65,10 @@ const sidebar = [
             {
                 label: 'الموردين',
                 icon: UserCircle,
-                items: [{ label: 'اضافة مخزن', to: '/suppliers' }],
+                items: [
+                    { label: 'اضافة مورد', to: '/suppliers/create' },
+                    { label: 'جميع الموردين', to: '/suppliers' },
+                ],
             },
         ],
     },

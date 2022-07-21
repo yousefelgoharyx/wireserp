@@ -1,7 +1,7 @@
 import { Text } from '@mantine/core';
 import { ColumnDef } from '@tanstack/react-table';
 
-export const columns: ColumnDef<Client>[] = [
+export const columns: ColumnDef<Supplier>[] = [
     {
         accessorKey: 'id',
         header: 'ID',
@@ -9,13 +9,10 @@ export const columns: ColumnDef<Client>[] = [
     },
 
     {
-        accessorKey: 'c_name',
+        accessorKey: 's_name',
         header: 'Name',
     },
-    {
-        accessorKey: 'releated_user',
-        header: 'User',
-    },
+
     {
         id: 'Indebtedness',
         header: 'Indebtedness',
@@ -25,30 +22,29 @@ export const columns: ColumnDef<Client>[] = [
                 {table.row.original.indebt_amount}
             </Text>
         ),
-        enableMultiSort: true,
     },
     {
         accessorKey: 'deal_type',
         header: 'Deal type',
     },
     {
-        accessorKey: 'c_phone',
+        accessorKey: 's_phone',
         header: 'Phone',
     },
     {
-        accessorKey: 'c_address',
+        accessorKey: 's_address',
         header: 'Address',
     },
     {
-        accessorKey: 'c_tax_number',
+        accessorKey: 's_tax_number',
         header: 'Tax Number',
     },
     {
-        accessorKey: 'c_company',
+        accessorKey: 's_company',
         header: 'Company',
     },
     {
-        accessorKey: 'c_notes',
+        accessorKey: 's_notes',
         header: 'Notes',
     },
 ];

@@ -2,6 +2,7 @@ import { Button, Group, Modal, Stack } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import useClients from '../../../api/debts/useClients';
+import useSuppliers from '../../../api/debts/useSuppliers';
 import FormDivider from '../../../components/FormDivider';
 import find from '../../../utils/find';
 import Inputs from './Inputs';
@@ -11,14 +12,14 @@ type Props = {
     requestClose: () => void;
     selectedId: number;
 };
-const ClientUpdate = (props: Props) => {
-    const { data: clients, update, isUpdating } = useClients();
-    const form = useForm<Client>({
+const SuppliersUpdate = (props: Props) => {
+    const { data: clients, update, isUpdating } = useSuppliers();
+    const form = useForm<Supplier>({
         schema: yupResolver(schema),
         initialValues: find(props.selectedId, clients),
     });
 
-    async function handleUpdate(values: Client) {
+    async function handleUpdate(values: Supplier) {
         try {
             await update(values);
             showNotification({
@@ -56,4 +57,4 @@ const ClientUpdate = (props: Props) => {
     );
 };
 
-export default ClientUpdate;
+export default SuppliersUpdate;

@@ -4,6 +4,7 @@ export const columns: ColumnDef<WarehouseTable>[] = [
     {
         accessorKey: 'id',
         header: 'ID',
+        size: 80,
     },
 
     {
@@ -20,6 +21,7 @@ export const transferListCols: ColumnDef<TransferItem>[] = [
     {
         accessorKey: 'id',
         header: 'ID',
+        size: 80,
     },
 
     {
@@ -53,6 +55,7 @@ export const inventoryListCols: ColumnDef<InventoryItem>[] = [
     {
         accessorKey: 'id',
         header: 'ID',
+        size: 80,
     },
     {
         accessorKey: 'barcode',

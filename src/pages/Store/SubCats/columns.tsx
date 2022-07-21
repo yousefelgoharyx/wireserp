@@ -4,6 +4,7 @@ export const columns: ColumnDef<SubCategoryTable>[] = [
     {
         accessorKey: 'id',
         header: 'ID',
+        size: 80,
     },
 
     {
