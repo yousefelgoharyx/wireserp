@@ -1,14 +1,10 @@
 import {
-    ActionIcon,
     Group,
     Pagination,
     Paper,
     ScrollArea,
-    Stack,
     Table,
-    Text,
     TextInput,
-    UnstyledButton,
 } from '@mantine/core';
 import {
     ColumnDef,

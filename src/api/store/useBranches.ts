@@ -1,3 +1,4 @@
+import { SelectItem } from '@mantine/core';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import instance from '../../utils/axios';
 
@@ -37,7 +38,16 @@ const useBranches = () => {
 };
 
 export const useBranchesList = () => {
-    return useQuery('branches', fetcher);
+    const query = useQuery('branches', fetcher);
+    return {
+        ...query,
+        branchesSelect: query.data.map(
+            (branch): SelectItem => ({
+                label: branch.branch_name,
+                value: branch.id.toString(),
+            })
+        ),
+    };
 };
 
 export default useBranches;

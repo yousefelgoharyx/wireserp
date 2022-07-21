@@ -13,12 +13,11 @@ import ClientsForm from './pages/Debts/Clients/ClientsForm';
 import ClientsTable from './pages/Debts/Clients/ClientsTable';
 import SuppliersTable from './pages/Debts/Suppliers/SuppliersTable';
 import SuppliersForm from './pages/Debts/Suppliers/SuppliersForm';
+import Safes from './pages/Finance/Safes/Safes';
 
 const Home = React.lazy(() => import('./pages/Home'));
-const About = React.lazy(() => import('./pages/About'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const Signup = React.lazy(() => import('./pages/Signup/Signup'));
-const Settings = React.lazy(() => import('./pages/Settings/Settings'));
 const Branches = React.lazy(() => import('./pages/Store/Branches/Branches'));
 const Cats = React.lazy(() => import('./pages/Store/Cats/Cats'));
 const SubCats = React.lazy(() => import('./pages/Store/SubCats/SubCats'));
@@ -63,6 +62,9 @@ function App() {
                         <Route path="suppliers">
                             <Route index element={<SuppliersTable />} />
                             <Route path="create" element={<SuppliersForm />} />
+                        </Route>
+                        <Route path="safes">
+                            <Route index element={<Safes />} />
                         </Route>
                     </Route>
                 </Routes>

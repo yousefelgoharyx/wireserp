@@ -74,6 +74,29 @@ const sidebar = [
     },
 
     {
+        label: 'الماليات',
+        icon: ReportMoney,
+        items: [
+            {
+                label: 'الخزائن',
+                icon: UserCircle,
+                items: [
+                    { label: 'اضافة خزنة', to: '/safes' },
+                    { label: 'التحويل بين الخزائن', to: '/safes/transfer' },
+                ],
+            },
+            {
+                label: 'البنوك',
+                icon: UserCircle,
+                items: [
+                    { label: 'اضافة مورد', to: '/suppliers/create' },
+                    { label: 'جميع الموردين', to: '/suppliers' },
+                ],
+            },
+        ],
+    },
+
+    {
         label: 'POS',
         icon: UserCircle,
         to: '/pos',
