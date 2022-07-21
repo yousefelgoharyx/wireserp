@@ -81,7 +81,7 @@ const sidebar = [
                 label: 'الخزائن',
                 icon: UserCircle,
                 items: [
-                    { label: 'اضافة خزنة', to: '/safes' },
+                    { label: 'حميع الخزائن', to: '/safes' },
                     { label: 'التحويل بين الخزائن', to: '/safes/transfer' },
                 ],
             },

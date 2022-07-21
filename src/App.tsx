@@ -14,6 +14,7 @@ import ClientsTable from './pages/Debts/Clients/ClientsTable';
 import SuppliersTable from './pages/Debts/Suppliers/SuppliersTable';
 import SuppliersForm from './pages/Debts/Suppliers/SuppliersForm';
 import Safes from './pages/Finance/Safes/Safes';
+import SafesTransfer from './pages/Finance/Safes/SafesTransfer';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
@@ -65,6 +66,10 @@ function App() {
                         </Route>
                         <Route path="safes">
                             <Route index element={<Safes />} />
+                            <Route
+                                path="transfer"
+                                element={<SafesTransfer />}
+                            />
                         </Route>
                     </Route>
                 </Routes>

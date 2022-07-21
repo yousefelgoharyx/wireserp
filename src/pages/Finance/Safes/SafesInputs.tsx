@@ -6,7 +6,6 @@ type Props = {
 };
 const Inputs = ({ form }: Props) => {
     const { branchesSelect } = useBranchesList();
-    console.log(form);
 
     return (
         <>
@@ -20,10 +19,9 @@ const Inputs = ({ form }: Props) => {
                 placeholder="Select branch"
                 data={branchesSelect}
                 defaultValue={form.values.branch_id?.toString()}
-                onChange={(value) =>
-                    form.setFieldValue('branch_id', Number(value))
-                }
                 {...form.getInputProps('branch_id')}
+                onChange={(v) => form.setFieldValue('branch_id', +v)}
+                value={form.values.branch_id?.toString() ?? null}
             />
 
             <NumberInput
@@ -32,7 +30,11 @@ const Inputs = ({ form }: Props) => {
                 hideControls
                 {...form.getInputProps('safe_balance')}
             />
-            <TextInput
+            <Select
+                data={[
+                    { label: 'Main', value: 'Main' },
+                    { label: 'Sub', value: 'Sub' },
+                ]}
                 label="Safe type"
                 placeholder="type"
                 {...form.getInputProps('safe_type')}

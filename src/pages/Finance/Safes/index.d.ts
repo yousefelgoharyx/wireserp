@@ -12,8 +12,8 @@ interface Safe extends SafeFormValues {
 }
 
 interface SafeTransferFormValues {
-    from_safe: number;
-    to_safe: number;
+    from_safe_id: number;
+    to_safe_id: number;
     amount: number;
     notes: string;
 }

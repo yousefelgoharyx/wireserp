@@ -25,3 +25,29 @@ export const columns: ColumnDef<Safe>[] = [
         header: 'Type',
     },
 ];
+
+export const transferColumns: ColumnDef<SafeTransfer>[] = [
+    {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 80,
+    },
+
+    {
+        accessorKey: 'from_safe',
+        header: 'From Safe',
+    },
+    {
+        accessorKey: 'to_safe',
+        header: 'To Safe',
+    },
+
+    {
+        accessorKey: 'amount',
+        header: 'Amount',
+    },
+    {
+        accessorKey: 'notes',
+        header: 'Notes',
+    },
+];
