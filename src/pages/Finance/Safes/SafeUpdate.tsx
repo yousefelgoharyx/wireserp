@@ -13,6 +13,7 @@ import useSafes from '../../../api/finance/useSafes';
 import { useBranchesList } from '../../../api/store/useBranches';
 import FormDivider from '../../../components/FormDivider';
 import find from '../../../utils/find';
+import Inputs from './SafesInputs';
 import schema from './schema';
 type Props = {
     isOpen: boolean;
@@ -50,7 +51,8 @@ const SafeUpdate = (props: Props) => {
         >
             <form onSubmit={form.onSubmit(handleUpdate)}>
                 <Stack>
-                    <TextInput
+                    <Inputs form={form} />
+                    {/* <TextInput
                         label="Safe name"
                         placeholder="Name"
                         {...form.getInputProps('safe_name')}
@@ -76,7 +78,7 @@ const SafeUpdate = (props: Props) => {
                         label="Safe type"
                         placeholder="type"
                         {...form.getInputProps('safe_type')}
-                    />
+                    /> */}
                     <FormDivider />
                     <Group>
                         <Button loading={isUpdating} type="submit">

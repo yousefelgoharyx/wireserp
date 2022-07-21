@@ -19,10 +19,11 @@ const Inputs = ({ form }: Props) => {
                 label="Branch"
                 placeholder="Select branch"
                 data={branchesSelect}
-                {...form.getInputProps('branch_id')}
+                defaultValue={form.values.branch_id?.toString()}
                 onChange={(value) =>
                     form.setFieldValue('branch_id', Number(value))
                 }
+                {...form.getInputProps('branch_id')}
             />
 
             <NumberInput

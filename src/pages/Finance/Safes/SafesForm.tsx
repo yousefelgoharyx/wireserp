@@ -13,6 +13,7 @@ import { useBranchesList } from '../../../api/store/useBranches';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
+import Inputs from './SafesInputs';
 import schema from './schema';
 
 const SafeForm = () => {
@@ -21,13 +22,12 @@ const SafeForm = () => {
         initialValues: {
             safe_name: '',
             branch_id: null,
-            safe_balance: null,
+            safe_balance: undefined,
             safe_type: '',
         },
     });
 
     const { create, isCreating } = useSafes();
-    const { branchesSelect } = useBranchesList();
     async function handleSubmit(values: SafeFormValues) {
         try {
             await create(values);
@@ -47,32 +47,7 @@ const SafeForm = () => {
             <form onSubmit={form.onSubmit(handleSubmit)}>
                 <Stack>
                     <FormGrid>
-                        <TextInput
-                            label="Safe name"
-                            placeholder="Name"
-                            {...form.getInputProps('safe_name')}
-                        />
-                        <Select
-                            label="Branch"
-                            placeholder="Select branch"
-                            data={branchesSelect}
-                            {...form.getInputProps('branch_id')}
-                            onChange={(v) =>
-                                form.setFieldValue('branch_id', Number(v))
-                            }
-                        />
-
-                        <NumberInput
-                            placeholder="Amount"
-                            label="Safe balance"
-                            hideControls
-                            {...form.getInputProps('safe_balance')}
-                        />
-                        <TextInput
-                            label="Safe type"
-                            placeholder="type"
-                            {...form.getInputProps('safe_type')}
-                        />
+                        <Inputs form={form} />
                     </FormGrid>
                     <FormDivider />
                     <Group>
