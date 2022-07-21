@@ -2,18 +2,18 @@ import { AxiosResponse } from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import instance from '../utils/axios';
 
-async function create<Body, Response>(url: string, data: Body) {
-    const response = await instance.post<Response>(url, data);
+async function updateFn<Body, Response>(url: string, data: Body) {
+    const response = await instance.put<Response>(url, data);
     return response.data;
 }
 
-const useCreate = <Body, Response = AxiosResponse<any>>(
+const useUpdate = <Body, Response = AxiosResponse<any>>(
     key: string[],
     url: string
 ) => {
     const queryClient = useQueryClient();
     const mutation = useMutation(
-        (data: Body) => create<Body, Response>(url, data),
+        (data: Body) => updateFn<Body, Response>(url, data),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries([...key]);
@@ -22,9 +22,9 @@ const useCreate = <Body, Response = AxiosResponse<any>>(
     );
 
     return {
-        create: mutation.mutateAsync,
-        isCreating: mutation.isLoading,
+        update: mutation.mutateAsync,
+        isUpdating: mutation.isLoading,
     };
 };
 
-export default useCreate;
+export default useUpdate;

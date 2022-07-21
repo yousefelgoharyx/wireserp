@@ -1,15 +1,7 @@
-import {
-    Button,
-    Group,
-    NumberInput,
-    Select,
-    Stack,
-    TextInput,
-} from '@mantine/core';
+import { Button, Group, Stack } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import useSafes from '../../../api/finance/useSafes';
-import { useBranchesList } from '../../../api/store/useBranches';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
