@@ -7,20 +7,39 @@ import {
     Textarea,
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
+import { useDisclosure } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
-import useSafes, { safesToSelectItems } from '../../../api/finance/useSafes';
-import useSafesTransfer from '../../../api/finance/useSafesTransfer';
+import { ColumnDef } from '@tanstack/react-table';
+import { useRef } from 'react';
+import { safesToSelectItems } from '../../../api/finance/useSafes';
 import DataGrid from '../../../components/DataGrid';
+import DeleteModal from '../../../components/DeleteModal';
+import EditDelete from '../../../components/EditDelete';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
+import useCreate from '../../../hooks/useCreate';
+import useRead from '../../../hooks/useRead';
+import useRemove from '../../../hooks/useRemove';
 import getApiError from '../../../utils/getApiError';
+import toSelectItems from '../../../utils/toSelectItems';
 import { transferColumns } from './columns';
 import { transferSchema } from './schema';
 
 const SafesTransfer = () => {
-    const transferOwner = useSafesTransfer();
-    const { data: safes } = useSafes();
+    const [opened, handle] = useDisclosure(false);
+    const selectedId = useRef<number>(null);
+    const transferOwner = useCreate<SafeTransferFormValues>(
+        ['transfer-safes'],
+        '/transfer-safes'
+    );
+    const transfers = useRead<SafeTransfer[]>(
+        ['transfer-safes'],
+        '/transfer-safes'
+    );
+    const safes = useRead<Safe[]>(['safes'], '/safes');
+    const removeOwner = useRemove(['transfer-safes'], '/transfer-safes');
+
     const form = useForm<SafeTransferFormValues>({
         schema: yupResolver(transferSchema),
         initialValues: {
@@ -33,7 +52,7 @@ const SafesTransfer = () => {
 
     async function handleSubmit(values: SafeTransferFormValues) {
         try {
-            await transferOwner.transfer(values);
+            await transferOwner.create(values);
             showNotification({
                 message: 'Transfer success',
             });
@@ -46,9 +65,51 @@ const SafesTransfer = () => {
         form.reset();
     }
 
-    let to = safes.filter((safe) => safe.id !== form.values.from_safe_id);
-    let from = safes.filter((safe) => safe.id !== form.values.to_safe_id);
+    async function handleRemove() {
+        try {
+            await removeOwner.remove(selectedId.current);
+            showNotification({
+                message: 'Transfer deleted',
+            });
+        } catch (error) {
+            showNotification({
+                message: getApiError(error.response.data),
+                color: 'red',
+            });
+        }
+        handle.close();
+    }
 
+    const cols: ColumnDef<SafeTransfer>[] = [
+        ...transferColumns,
+        {
+            id: 'select',
+            header: 'Actions',
+            cell: ({ row }) => (
+                <EditDelete
+                    onDelete={() => {
+                        handle.open();
+                        selectedId.current = row.original.id;
+                    }}
+                />
+            ),
+        },
+    ];
+
+    const to = safes.data.filter(
+        (safe) => safe.id !== form.values.from_safe_id
+    );
+    const from = safes.data.filter(
+        (safe) => safe.id !== form.values.to_safe_id
+    );
+    const selectItemsTo = toSelectItems<Safe>(to, {
+        valueKey: 'id',
+        labelKey: 'safe_name',
+    });
+    const selectItemsFrom = toSelectItems<Safe>(from, {
+        valueKey: 'id',
+        labelKey: 'safe_name',
+    });
     return (
         <Stack>
             <FormShell title="Transfer between safes">
@@ -56,7 +117,7 @@ const SafesTransfer = () => {
                     <Stack>
                         <FormGrid>
                             <Select
-                                data={safesToSelectItems(from)}
+                                data={selectItemsFrom}
                                 label="From Safe"
                                 placeholder="Select Safe"
                                 {...form.getInputProps('from_safe_id')}
@@ -68,7 +129,7 @@ const SafesTransfer = () => {
                                 }
                             />
                             <Select
-                                data={safesToSelectItems(to)}
+                                data={selectItemsTo}
                                 label="To Safe"
                                 placeholder="Select Safe"
                                 {...form.getInputProps('to_safe_id')}
@@ -98,7 +159,7 @@ const SafesTransfer = () => {
                         <FormDivider />
                         <Group>
                             <Button
-                                loading={transferOwner.isTransfering}
+                                loading={transferOwner.isCreating}
                                 type="submit"
                             >
                                 Transfer
@@ -107,7 +168,15 @@ const SafesTransfer = () => {
                     </Stack>
                 </form>
             </FormShell>
-            <DataGrid columns={transferColumns} data={transferOwner.data} />
+            <DeleteModal
+                isOpen={opened}
+                loading={removeOwner.isRemoving}
+                onConfirm={handleRemove}
+                requestClose={handle.close}
+                text="Are you sure you want to delete this transfer?"
+                title="Delete Transfer"
+            />
+            <DataGrid columns={cols} data={transfers.data} />
         </Stack>
     );
 };

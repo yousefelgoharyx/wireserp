@@ -89,7 +89,7 @@ const sidebar = [
                 label: 'البنوك',
                 icon: UserCircle,
                 items: [
-                    { label: 'اضافة مورد', to: '/suppliers/create' },
+                    { label: 'البنوك', to: '/banks' },
                     { label: 'جميع الموردين', to: '/suppliers' },
                 ],
             },
