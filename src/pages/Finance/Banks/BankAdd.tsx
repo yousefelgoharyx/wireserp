@@ -5,6 +5,7 @@ import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
 import useCreate from '../../../hooks/useCreate';
+import moneyFormatter from '../../../utils/moneyFormatter';
 import { BankAddSchema } from './model/schema';
 
 const BankAdd = () => {
@@ -44,6 +45,8 @@ const BankAdd = () => {
                             label="Balance"
                             placeholder="Enter balance"
                             hideControls
+                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                            formatter={moneyFormatter}
                             {...form.getInputProps('bank_balance')}
                         />
                     </FormGrid>

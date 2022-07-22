@@ -19,7 +19,7 @@ import {
 } from '@tanstack/react-table';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import { useRef, useState } from 'react';
-import { SortAscending, SortDescending } from 'tabler-icons-react';
+import { Search, SortAscending, SortDescending } from 'tabler-icons-react';
 
 interface DataGridProps {
     data: any[];
@@ -68,8 +68,9 @@ const DataGrid = (props: DataGridProps) => {
 
     return (
         <>
-            <Group grow style={{ maxWidth: 320 }}>
+            <Group grow>
                 <TextInput
+                    icon={<Search size={16} />}
                     placeholder="Search..."
                     value={globalFilter ?? ''}
                     onChange={(e) => setGlobalFilter(String(e.target.value))}
