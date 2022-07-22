@@ -12,6 +12,7 @@ const queryClient = new QueryClient({
         queries: {
             suspense: true,
             refetchOnWindowFocus: false,
+            retry: false,
         },
     },
 });

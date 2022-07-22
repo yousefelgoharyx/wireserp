@@ -24,12 +24,12 @@ const SafeForm = () => {
         try {
             await create(values);
             showNotification({
-                message: 'Client Created Successfully',
+                message: 'Safe added successfully',
             });
             form.reset();
         } catch (error) {
             showNotification({
-                message: 'Error Creating Client',
+                message: 'Error creating safe',
                 color: 'red',
             });
         }

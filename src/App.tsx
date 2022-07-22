@@ -17,6 +17,7 @@ import Safes from './pages/Finance/Safes/Safes';
 import SafesTransfer from './pages/Finance/Safes/SafesTransfer';
 import BankAdd from './pages/Finance/Banks/BankAdd';
 import Bank from './pages/Finance/Banks/Bank';
+import Cash from './pages/Finance/Banks/Cash';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
@@ -76,6 +77,7 @@ function App() {
 
                         <Route path="banks">
                             <Route index element={<Bank />} />
+                            <Route path="activity" element={<Cash />} />
                         </Route>
                     </Route>
                 </Routes>

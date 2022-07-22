@@ -1,6 +1,7 @@
 import { NumberInput, Select, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form/lib/use-form';
 import { useBranchesList } from '../../../api/store/useBranches';
+import moneyFormatter from '../../../utils/moneyFormatter';
 type Props = {
     form: UseFormReturnType<SafeFormValues>;
 };
@@ -28,12 +29,14 @@ const Inputs = ({ form }: Props) => {
                 placeholder="Amount"
                 label="Safe balance"
                 hideControls
+                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                formatter={moneyFormatter}
                 {...form.getInputProps('safe_balance')}
             />
             <Select
                 data={[
-                    { label: 'Main', value: 'Main' },
-                    { label: 'Sub', value: 'Sub' },
+                    { label: 'Primary', value: 'Main' },
+                    { label: 'Secondary', value: 'Sub' },
                 ]}
                 label="Safe type"
                 placeholder="type"

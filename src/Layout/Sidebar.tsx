@@ -14,83 +14,86 @@ import { SidebarLinks } from './SidebarLinks';
 
 const sidebar = [
     {
-        label: 'المتجر',
+        label: 'Store',
         icon: BuildingStore,
         items: [
             {
-                label: 'الفروع',
+                label: 'Branches',
                 icon: Switch2,
-                items: [{ label: 'جميع الفروع', to: '/branches' }],
+                items: [{ label: 'All branches', to: '/branches' }],
             },
 
             {
-                label: 'المخازن',
+                label: 'Warehouses',
                 icon: BuildingWarehouse,
                 items: [
-                    { label: 'المخازن', to: '/warehouses' },
-                    { label: 'تحويل بين المخازن', to: '/warehouses/transfer' },
-                    { label: 'جرد المخازن', to: '/warehouses/inventory' },
+                    { label: 'Warehouses', to: '/warehouses' },
+                    {
+                        label: 'Transfer between warehouses',
+                        to: '/warehouses/transfer',
+                    },
+                    { label: 'Inventoy', to: '/warehouses/inventory' },
                 ],
             },
             {
-                label: 'المنتجات',
+                label: 'Product',
                 icon: Bucket,
                 items: [
-                    { label: 'اضافة منتج', to: '/products/add' },
-                    { label: 'جميع المنتجات', to: '/products' },
+                    { label: 'Add product', to: '/products/add' },
+                    { label: 'List of products', to: '/products' },
                 ],
             },
             {
-                label: 'الفئات',
+                label: 'Categories',
                 icon: LayoutGrid,
                 items: [
-                    { label: 'الفئات الرئيسية', to: '/categories' },
-                    { label: 'الفئات الفرعية', to: '/sub-categories' },
+                    { label: 'Main categories', to: '/categories' },
+                    { label: 'Sub categories', to: '/sub-categories' },
                 ],
             },
         ],
     },
     {
-        label: 'الديون',
+        label: 'Debts',
         icon: ReportMoney,
         items: [
             {
-                label: 'العملاء',
+                label: 'Client',
                 icon: UserCircle,
                 items: [
-                    { label: 'اضافة عميل', to: '/clients/create' },
-                    { label: 'جميع العملاء', to: '/clients' },
+                    { label: 'Add client', to: '/clients/create' },
+                    { label: 'List of clients', to: '/clients' },
                 ],
             },
             {
-                label: 'الموردين',
+                label: 'Suppliers',
                 icon: UserCircle,
                 items: [
-                    { label: 'اضافة مورد', to: '/suppliers/create' },
-                    { label: 'جميع الموردين', to: '/suppliers' },
+                    { label: 'Add supplier', to: '/suppliers/create' },
+                    { label: 'List of suppliers', to: '/suppliers' },
                 ],
             },
         ],
     },
 
     {
-        label: 'الماليات',
+        label: 'Finance',
         icon: ReportMoney,
         items: [
             {
-                label: 'الخزائن',
+                label: 'Safes',
                 icon: UserCircle,
                 items: [
-                    { label: 'حميع الخزائن', to: '/safes' },
-                    { label: 'التحويل بين الخزائن', to: '/safes/transfer' },
+                    { label: 'Add Safe', to: '/safes' },
+                    { label: 'Transfer between safes', to: '/safes/transfer' },
                 ],
             },
             {
-                label: 'البنوك',
+                label: 'Banks',
                 icon: UserCircle,
                 items: [
-                    { label: 'البنوك', to: '/banks' },
-                    { label: 'جميع الموردين', to: '/suppliers' },
+                    { label: 'Add bank', to: '/banks' },
+                    { label: 'Bank activities', to: '/banks/activity' },
                 ],
             },
         ],

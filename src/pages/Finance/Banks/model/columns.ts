@@ -21,3 +21,29 @@ export const bankCols: ColumnDef<Bank>[] = [
         },
     },
 ];
+
+export const cashCols: ColumnDef<Cash>[] = [
+    {
+        accessorKey: 'id',
+        header: 'ID',
+    },
+    {
+        accessorKey: 'process_type',
+        header: 'Type',
+    },
+    {
+        accessorKey: 'amount',
+        header: 'Amount',
+        cell: (table) => {
+            return moneyFormatter(table.row.original?.amount?.toString());
+        },
+    },
+    {
+        accessorKey: 'notes',
+        header: 'Reason',
+    },
+    {
+        accessorKey: 'admin',
+        header: 'Admin',
+    },
+];
