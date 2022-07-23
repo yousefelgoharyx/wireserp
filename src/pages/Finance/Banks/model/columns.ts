@@ -28,9 +28,104 @@ export const cashCols: ColumnDef<Cash>[] = [
         header: 'ID',
     },
     {
+        accessorKey: 'bank_name',
+        header: 'Bank',
+    },
+    {
         accessorKey: 'process_type',
         header: 'Type',
     },
+    {
+        accessorKey: 'amount',
+        header: 'Amount',
+        cell: (table) => {
+            return moneyFormatter(table.row.original?.amount?.toString());
+        },
+    },
+    {
+        accessorKey: 'notes',
+        header: 'Reason',
+    },
+    {
+        accessorKey: 'admin',
+        header: 'Admin',
+    },
+];
+
+export const bankTransferCols: ColumnDef<BankTransfer>[] = [
+    {
+        accessorKey: 'id',
+        header: 'ID',
+    },
+    {
+        accessorKey: 'from_bank',
+        header: 'From Bank',
+    },
+    {
+        accessorKey: 'to_bank',
+        header: 'To Bank',
+    },
+    {
+        accessorKey: 'amount',
+        header: 'Amount',
+        cell: (table) => {
+            return moneyFormatter(table.row.original?.amount?.toString());
+        },
+    },
+    {
+        accessorKey: 'notes',
+        header: 'Reason',
+    },
+    {
+        accessorKey: 'admin',
+        header: 'Admin',
+    },
+];
+
+export const bankSafeTransferCols: ColumnDef<BankSafeTransfer>[] = [
+    {
+        accessorKey: 'id',
+        header: 'ID',
+    },
+    {
+        accessorKey: 'bank',
+        header: 'From bank',
+    },
+    {
+        accessorKey: 'safe',
+        header: 'To safe',
+    },
+    {
+        accessorKey: 'amount',
+        header: 'Amount',
+        cell: (table) => {
+            return moneyFormatter(table.row.original?.amount?.toString());
+        },
+    },
+    {
+        accessorKey: 'notes',
+        header: 'Reason',
+    },
+    {
+        accessorKey: 'admin',
+        header: 'Admin',
+    },
+];
+
+export const safeBankTransfer: ColumnDef<BankSafeTransfer>[] = [
+    {
+        accessorKey: 'id',
+        header: 'ID',
+    },
+    {
+        accessorKey: 'safe',
+        header: 'From safe',
+    },
+    {
+        accessorKey: 'bank',
+        header: 'To bank',
+    },
+
     {
         accessorKey: 'amount',
         header: 'Amount',

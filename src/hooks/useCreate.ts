@@ -8,7 +8,7 @@ async function create<Body, Response>(url: string, data: Body) {
 }
 
 const useCreate = <Body, Response = AxiosResponse<any>>(
-    key: string[],
+    keys: string[],
     url: string
 ) => {
     const queryClient = useQueryClient();
@@ -16,7 +16,9 @@ const useCreate = <Body, Response = AxiosResponse<any>>(
         (data: Body) => create<Body, Response>(url, data),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries([...key]);
+                keys.forEach((key) => {
+                    queryClient.invalidateQueries(key);
+                });
             },
         }
     );

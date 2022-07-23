@@ -9,6 +9,7 @@ import {
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import FormDivider from '../../../components/FormDivider';
+import MoneyInput from '../../../components/MoneyInput';
 import useRead from '../../../hooks/useRead';
 import useUpdate from '../../../hooks/useUpdate';
 import find from '../../../utils/find';
@@ -55,7 +56,7 @@ const BankUpdate = (props: Props) => {
                         placeholder="Enter name"
                         {...form.getInputProps('bank_name')}
                     />
-                    <NumberInput
+                    <MoneyInput
                         label="Balance"
                         placeholder="Enter balance"
                         hideControls

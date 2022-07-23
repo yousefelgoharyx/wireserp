@@ -1,4 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
+import moneyFormatter from '../../../utils/moneyFormatter';
 
 export const columns: ColumnDef<Safe>[] = [
     {
@@ -19,6 +20,9 @@ export const columns: ColumnDef<Safe>[] = [
     {
         accessorKey: 'safe_balance',
         header: 'Safe Balance',
+        cell: (table) => {
+            return moneyFormatter(table.row.original?.safe_balance?.toString());
+        },
     },
     {
         accessorKey: 'safe_type',

@@ -92,8 +92,20 @@ const sidebar = [
                 label: 'Banks',
                 icon: UserCircle,
                 items: [
-                    { label: 'Add bank', to: '/banks' },
-                    { label: 'Bank activities', to: '/banks/activity' },
+                    { label: 'List of Banks', to: '/banks' },
+                    { label: 'Bank Activities', to: '/banks/activity' },
+                    {
+                        label: 'Transfer between Banks',
+                        to: '/banks/banks-transfer',
+                    },
+                    {
+                        label: 'Transfer from Bank to Safe',
+                        to: '/banks/bank-to-safe',
+                    },
+                    {
+                        label: 'Transfer from Safe to Bank',
+                        to: '/banks/safe-to-bank',
+                    },
                 ],
             },
         ],

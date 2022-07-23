@@ -23,3 +23,35 @@ interface Cash {
     notes: string;
     admin: string;
 }
+
+interface BankTransferForm {
+    from_bank: number;
+    to_bank: number;
+    amount: number;
+    notes: string;
+}
+
+interface BankTransfer {
+    id: number;
+    from_bank: string;
+    to_bank: string;
+    amount: number;
+    notes: string;
+    admin: string;
+}
+
+interface BankSafeTransferForm {
+    safe_id: number;
+    bank_id: number;
+    amount: number;
+    notes: string;
+}
+
+interface BankSafeTransfer {
+    id: number;
+    bank: string;
+    safe: string;
+    amount: number;
+    notes: string;
+    admin: string;
+}

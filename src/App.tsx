@@ -18,6 +18,9 @@ import SafesTransfer from './pages/Finance/Safes/SafesTransfer';
 import BankAdd from './pages/Finance/Banks/BankAdd';
 import Bank from './pages/Finance/Banks/Bank';
 import Cash from './pages/Finance/Banks/Cash';
+import TransferBanks from './pages/Finance/Banks/TransferBanks';
+import TransferBankSafe from './pages/Finance/Banks/TransferBankSafe';
+import TransferSafeBank from './pages/Finance/Banks/TransferSafeBank';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
@@ -78,6 +81,18 @@ function App() {
                         <Route path="banks">
                             <Route index element={<Bank />} />
                             <Route path="activity" element={<Cash />} />
+                            <Route
+                                path="banks-transfer"
+                                element={<TransferBanks />}
+                            />
+                            <Route
+                                path="bank-to-safe"
+                                element={<TransferBankSafe />}
+                            />
+                            <Route
+                                path="safe-to-bank"
+                                element={<TransferSafeBank />}
+                            />
                         </Route>
                     </Route>
                 </Routes>

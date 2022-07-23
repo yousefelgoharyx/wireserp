@@ -1,12 +1,12 @@
-import { Button, NumberInput, Select, Stack, TextInput } from '@mantine/core';
+import { Button, Select, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
+import MoneyInput from '../../../components/MoneyInput';
 import useCreate from '../../../hooks/useCreate';
 import useRead from '../../../hooks/useRead';
-import moneyFormatter from '../../../utils/moneyFormatter';
 import toSelectItems from '../../../utils/toSelectItems';
 import { CashAddSchema } from './model/schema';
 
@@ -68,12 +68,10 @@ const CashForm = () => {
                             onChange={(v) => form.setFieldValue('bank_id', +v)}
                             value={form.values.bank_id?.toString() ?? null}
                         />
-                        <NumberInput
+                        <MoneyInput
                             label="Amount"
                             placeholder="Enter amount"
                             hideControls
-                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                            formatter={moneyFormatter}
                             {...form.getInputProps('amount')}
                         />
                         <TextInput

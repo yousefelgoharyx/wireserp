@@ -1,11 +1,11 @@
-import { Button, NumberInput, Stack, TextInput } from '@mantine/core';
+import { Button, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
+import MoneyInput from '../../../components/MoneyInput';
 import useCreate from '../../../hooks/useCreate';
-import moneyFormatter from '../../../utils/moneyFormatter';
 import { BankAddSchema } from './model/schema';
 
 const BankAdd = () => {
@@ -41,12 +41,10 @@ const BankAdd = () => {
                             placeholder="Enter name"
                             {...form.getInputProps('bank_name')}
                         />
-                        <NumberInput
+                        <MoneyInput
                             label="Balance"
                             placeholder="Enter balance"
                             hideControls
-                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                            formatter={moneyFormatter}
                             {...form.getInputProps('bank_balance')}
                         />
                     </FormGrid>

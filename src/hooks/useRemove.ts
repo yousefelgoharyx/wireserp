@@ -8,7 +8,7 @@ async function deleteFn<Response>(url: string, id: number) {
 }
 
 const useRemove = <Response = AxiosResponse<any>>(
-    key: string[],
+    keys: string[],
     url: string
 ) => {
     const queryClient = useQueryClient();
@@ -16,7 +16,9 @@ const useRemove = <Response = AxiosResponse<any>>(
         (id) => deleteFn<Response>(url, id),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries([...key]);
+                keys.forEach((key) => {
+                    queryClient.invalidateQueries(key);
+                });
             },
         }
     );
