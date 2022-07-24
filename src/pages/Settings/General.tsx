@@ -9,6 +9,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import FileInput from '../../components/FileInput';
 import FormDivider from '../../components/FormDivider';
+import FormGrid from '../../components/FormGrid';
 import useCreate from '../../hooks/useCreate';
 import useRead from '../../hooks/useRead';
 import getApiError from '../../utils/getApiError';
@@ -89,7 +90,7 @@ const General = () => {
               {...form.getInputProps('phone')}
             />
           </SettingsGrid>
-          <SimpleGrid cols={2}>
+          <FormGrid>
             <InputWrapper label="Logo" {...form.getInputProps('logo')}>
               <FileInput
                 value={form.values.logo}
@@ -106,7 +107,7 @@ const General = () => {
                 }}
               />
             </InputWrapper>
-          </SimpleGrid>
+          </FormGrid>
           <FormDivider />
           <Button loading={isCreating} type="submit">
             Submit
