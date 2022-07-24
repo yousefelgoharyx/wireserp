@@ -10,52 +10,49 @@ import Inputs from './Inputs';
 import { CouponFormSchema } from './model/schema';
 
 const CouponsForm = () => {
-    const form = useForm<CouponForm>({
-        schema: yupResolver(CouponFormSchema),
-        initialValues: {
-            code: '',
-            discount: undefined,
-            expire_date: new Date(),
-            section: 'clients',
-            item_id: null,
-        },
-    });
+  const form = useForm<CouponForm>({
+    schema: yupResolver(CouponFormSchema),
+    initialValues: {
+      code: '',
+      discount: undefined,
+      expire_date: new Date(),
+      section: 'clients',
+      item_id: null,
+    },
+  });
 
-    const { create, isCreating } = useCreate<CouponForm>(
-        ['coupons'],
-        '/coupons'
-    );
+  const { create, isCreating } = useCreate<CouponForm>(['coupons'], '/coupons');
 
-    async function handleSubmit() {
-        try {
-            await create(form.values);
-            showNotification({
-                message: 'Coupon created',
-            });
-            form.reset();
-        } catch (error) {
-            showNotification({
-                message: getApiError(error.response.data),
-                color: 'red',
-            });
-        }
+  async function handleSubmit() {
+    try {
+      await create(form.values);
+      showNotification({
+        message: 'Coupon created',
+      });
+      form.reset();
+    } catch (error) {
+      showNotification({
+        message: getApiError(error.response.data),
+        color: 'red',
+      });
     }
+  }
 
-    return (
-        <FormShell title="Add coupon">
-            <form onSubmit={form.onSubmit(handleSubmit)}>
-                <Stack>
-                    <FormGrid>
-                        <Inputs form={form} />
-                    </FormGrid>
-                    <FormDivider />
-                    <Button loading={isCreating} type="submit">
-                        Submit
-                    </Button>
-                </Stack>
-            </form>
-        </FormShell>
-    );
+  return (
+    <FormShell title="Add coupon">
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <Stack>
+          <FormGrid>
+            <Inputs form={form} />
+          </FormGrid>
+          <FormDivider />
+          <Button loading={isCreating} type="submit">
+            Submit
+          </Button>
+        </Stack>
+      </form>
+    </FormShell>
+  );
 };
 
 export default CouponsForm;
