@@ -13,7 +13,7 @@ const SubCatsForm = () => {
     const form = useForm<SubCategoryFormValues>({
         schema: yupResolver(schema),
         initialValues: {
-            category_id: undefined,
+            category_id: null,
             sub_category_name: '',
         },
     });
@@ -26,6 +26,7 @@ const SubCatsForm = () => {
                 title: 'Success',
                 message: 'Sub category created successfully',
             });
+            form.reset();
         } catch (error) {
             showNotification({
                 title: 'Success',

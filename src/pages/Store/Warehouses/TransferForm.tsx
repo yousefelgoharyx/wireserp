@@ -51,12 +51,12 @@ const TransferForm = () => {
             showNotification({
                 message: 'Transfer success',
             });
+            form.reset();
         } catch (error) {
             showNotification({
                 message: getApiError(error.response.data),
             });
         }
-        form.reset();
     }
 
     function handleFromWarehouseChange(value) {

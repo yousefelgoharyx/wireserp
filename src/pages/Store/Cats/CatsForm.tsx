@@ -25,6 +25,7 @@ const CatsForm = () => {
                 title: 'Success',
                 message: 'Category created successfully',
             });
+            form.reset();
         } catch (error) {
             showNotification({
                 title: 'Success',

@@ -48,31 +48,30 @@ const ProductsForm = () => {
         schema: yupResolver(schema),
         initialValues: {
             barcode: undefined,
-            category: undefined,
-            description: undefined,
-            image: undefined,
+            category: null,
+            description: '',
+            image: null,
             min_stock: undefined,
             piece_price: undefined,
-            product_model: undefined,
-            product_name: undefined,
-            product_unit: undefined,
-            sub_category: undefined,
+            product_model: '',
+            product_name: '',
+            product_unit: null,
+            sub_category: null,
             total_price: undefined,
             wholesale_price: undefined,
             warehouse_balance: undefined,
-            warehouse_id: undefined,
+            warehouse_id: null,
         },
     });
 
     async function handleSubmit(values: ProductFormValues) {
-        console.log(getFormData(values));
-
         try {
             await create(getFormData(values));
             showNotification({
                 title: 'Product created',
                 message: 'Product created',
             });
+            form.reset();
         } catch (error) {
             showNotification({
                 title: 'Error',

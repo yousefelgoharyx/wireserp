@@ -38,11 +38,12 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
 const Selector = (props: SelectorProps) => {
     const { loading = false, ...rest } = props;
+
     return (
         <Select
             {...rest}
             itemComponent={SelectItem}
-            disabled={loading}
+            disabled={rest.disabled || loading}
             rightSection={loading ? <Loader size={16} /> : rest.rightSection}
             placeholder={loading ? 'Please wait...' : rest.placeholder}
         />

@@ -21,6 +21,7 @@ import Cash from './pages/Finance/Banks/Cash';
 import TransferBanks from './pages/Finance/Banks/TransferBanks';
 import TransferBankSafe from './pages/Finance/Banks/TransferBankSafe';
 import TransferSafeBank from './pages/Finance/Banks/TransferSafeBank';
+import Coupons from './pages/Coupons/Coupons';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
@@ -94,6 +95,7 @@ function App() {
                                 element={<TransferSafeBank />}
                             />
                         </Route>
+                        <Route path="coupons" element={<Coupons />} />
                     </Route>
                 </Routes>
             ) : (

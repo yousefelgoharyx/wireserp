@@ -3,6 +3,7 @@ import {
     Bucket,
     BuildingStore,
     BuildingWarehouse,
+    Discount,
     LayoutGrid,
     ReportMoney,
     Switch2,
@@ -112,9 +113,9 @@ const sidebar = [
     },
 
     {
-        label: 'POS',
-        icon: UserCircle,
-        to: '/pos',
+        label: 'Coupons',
+        icon: Discount,
+        to: '/coupons',
     },
 ];
 

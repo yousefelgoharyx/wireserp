@@ -10,7 +10,6 @@ import EditDelete from '../../../components/EditDelete';
 import CatsUpdate from './ClientsUpdate';
 import { columns } from './columns';
 
-import useUsers from '../../../api/useUsers';
 const ClientsTable = () => {
     const [deleteOpened, deleteHandlers] = useDisclosure(false);
     const [editOpened, editHandler] = useDisclosure(false);

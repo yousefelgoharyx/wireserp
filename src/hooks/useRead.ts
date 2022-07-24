@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 import instance from '../utils/axios';
 
 async function read<Response>(url: string) {
