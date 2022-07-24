@@ -32,13 +32,13 @@ const General = () => {
   const form = useForm<GeneralSettingsForm>({
     schema: yupResolver(GeneralSettingsSchema),
     initialValues: {
-      name: settings[0].name,
-      business_field: settings[0].business_field,
-      founder_name: '',
-      address: '',
-      phone: settings[0].phone,
-      logo: settings[0].logo,
-      stamp: settings[0].company_stamp,
+      name: settings[0].name || '',
+      business_field: settings[0].business_field || '',
+      founder_name: settings[0].founder_name || '',
+      address: settings[0].address || '',
+      phone: settings[0].phone || '',
+      logo: settings[0].logo || null,
+      stamp: settings[0].company_stamp || null,
     },
   });
   const { create, isCreating } = useCreate<FormData>(

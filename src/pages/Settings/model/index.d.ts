@@ -17,6 +17,8 @@ interface AllSettings {
   name: string;
   phone: string;
   country: string;
+  address: string;
+  founder_name: string;
   business_field: string;
   currency: string;
   tax_number: number;
