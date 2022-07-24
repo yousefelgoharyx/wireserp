@@ -8,27 +8,28 @@ import useCreate from '../../hooks/useCreate';
 import useCurrencies from '../../hooks/useCurrencies';
 import useRead from '../../hooks/useRead';
 import getApiError from '../../utils/getApiError';
-import { ExtraSettingsSchema } from './model/schema';
+import { ExtraSchema } from './model/schema';
 
 const Extra = () => {
   const { data: settings } = useRead<AllSettings[]>(
     ['all-settings'],
     '/system-settings'
   );
+  const { create, isCreating } = useCreate<ExtraForm>(
+    ['all-settings'],
+    '/extra-settings'
+  );
   const { countriesSelect } = useContries();
   const currencies = useCurrencies();
 
-  const form = useForm<ExtraSettingsForm>({
-    schema: yupResolver(ExtraSettingsSchema),
+  const form = useForm<ExtraForm>({
+    schema: yupResolver(ExtraSchema),
     initialValues: {
       country: settings[0].country ?? null,
       currency: settings[0].currency ?? null,
     },
   });
-  const { create, isCreating } = useCreate<ExtraSettingsForm>(
-    ['all-settings'],
-    '/extra-settings'
-  );
+
   async function handleSubmit() {
     try {
       await create(form.values);
@@ -46,12 +47,14 @@ const Extra = () => {
       <Stack my={8}>
         <FormGrid>
           <Select
+            searchable
             label="Currency"
             placeholder="Select currency"
             data={currencies}
             {...form.getInputProps('currency')}
           />
           <Select
+            searchable
             label="Country"
             placeholder="Select country"
             data={countriesSelect}

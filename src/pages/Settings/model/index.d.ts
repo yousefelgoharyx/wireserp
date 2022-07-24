@@ -1,4 +1,4 @@
-interface GeneralSettingsForm {
+interface GeneralForm {
   name: string;
   founder_name: string;
   business_field: string;
@@ -7,11 +7,22 @@ interface GeneralSettingsForm {
   logo: any;
   stamp: any;
 }
-interface ExtraSettingsForm {
+interface ExtraForm {
   currency: string;
   country: string;
 }
 
+interface FiscalYearForm {
+  start_date: Date;
+  end_date: Date;
+  fiscal_year: number;
+}
+
+interface TaxesForm {
+  tax_number: number;
+  civil_registration_number: number;
+  tax_value_added: number;
+}
 interface AllSettings {
   id: 32;
   name: string;

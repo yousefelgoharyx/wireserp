@@ -13,7 +13,7 @@ import FormGrid from '../../components/FormGrid';
 import useCreate from '../../hooks/useCreate';
 import useRead from '../../hooks/useRead';
 import getApiError from '../../utils/getApiError';
-import { GeneralSettingsSchema } from './model/schema';
+import { GeneralSchema } from './model/schema';
 import SettingsGrid from './SettingsGrid';
 function getFormData(object) {
   const formData = new FormData();
@@ -29,8 +29,8 @@ const General = () => {
     '/system-settings'
   );
 
-  const form = useForm<GeneralSettingsForm>({
-    schema: yupResolver(GeneralSettingsSchema),
+  const form = useForm<GeneralForm>({
+    schema: yupResolver(GeneralSchema),
     initialValues: {
       name: settings[0].name || '',
       business_field: settings[0].business_field || '',

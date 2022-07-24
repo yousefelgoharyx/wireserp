@@ -1,9 +1,18 @@
-import { Paper, Tabs } from '@mantine/core';
+import { Paper, Stack, Tabs } from '@mantine/core';
 import { Suspense } from 'react';
-import Spinner, { FullSpinner } from '../../components/Spinner';
+import Spinner from '../../components/Spinner';
 import Extra from './Extra';
+import FiscalYear from './FiscalYear';
 import General from './General';
+import Taxes from './Taxes';
 
+function SettingsSuspender() {
+  return (
+    <Stack my={32}>
+      <Spinner />
+    </Stack>
+  );
+}
 const Settings = () => {
   return (
     <Paper p={16}>
@@ -12,12 +21,16 @@ const Settings = () => {
           <General />
         </Tabs.Tab>
         <Tabs.Tab label="Extra">
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<SettingsSuspender />}>
             <Extra />
           </Suspense>
         </Tabs.Tab>
-        <Tabs.Tab label="Backup"></Tabs.Tab>
-        <Tabs.Tab label="Invoices"></Tabs.Tab>
+        <Tabs.Tab label="Fiscal year">
+          <FiscalYear />
+        </Tabs.Tab>
+        <Tabs.Tab label="Taxes">
+          <Taxes />
+        </Tabs.Tab>
       </Tabs>
     </Paper>
   );
