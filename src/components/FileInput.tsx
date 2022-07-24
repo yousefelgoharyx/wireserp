@@ -49,7 +49,7 @@ export const dropzoneChildren = (
   >
     {file ? (
       <Image
-        src={typeof File === 'object' ? URL.createObjectURL(file) : file}
+        src={typeof file === 'object' ? URL.createObjectURL(file) : file}
       />
     ) : (
       <>
@@ -78,7 +78,7 @@ export const dropzoneChildren = (
 );
 export default function Demo({ onChange, value }) {
   const theme = useMantineTheme();
-  const [file, setFile] = useState<File | 'string'>(value);
+  const [file, setFile] = useState<File | string>(value);
   const [fileRejection, setFileRejection] = useState(null);
   return (
     <Dropzone
