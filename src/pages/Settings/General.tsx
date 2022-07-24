@@ -12,6 +12,7 @@ import FormDivider from '../../components/FormDivider';
 import FormGrid from '../../components/FormGrid';
 import useCreate from '../../hooks/useCreate';
 import useRead from '../../hooks/useRead';
+import { baseURL } from '../../utils/axios';
 import getApiError from '../../utils/getApiError';
 import { GeneralSchema } from './model/schema';
 import SettingsGrid from './SettingsGrid';
@@ -19,7 +20,7 @@ function getFormData(object) {
   const formData = new FormData();
 
   Object.keys(object).forEach((key) => {
-    if (object[key]) formData.append(key, object[key]);
+    formData.append(key, object[key]);
   });
   return formData;
 }
@@ -37,8 +38,10 @@ const General = () => {
       founder_name: settings[0].founder_name || '',
       address: settings[0].address || '',
       phone: settings[0].phone || '',
-      logo: settings[0].logo || null,
-      stamp: settings[0].company_stamp || null,
+      logo: settings[0].logo ? baseURL + settings[0].logo : null,
+      stamp: settings[0].company_stamp
+        ? baseURL + settings[0].company_stamp
+        : null,
     },
   });
   const { create, isCreating } = useCreate<FormData>(
@@ -47,8 +50,13 @@ const General = () => {
   );
 
   async function handleSubmit() {
+    const newForm: GeneralForm = {
+      ...form.values,
+    };
+    if (typeof newForm.logo === 'string') newForm.logo = '';
+    if (typeof newForm.stamp === 'string') newForm.stamp = '';
     try {
-      await create(getFormData(form.values));
+      await create(getFormData(newForm));
       showNotification({
         message: 'Settings updated successfully',
       });

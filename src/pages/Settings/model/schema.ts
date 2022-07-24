@@ -6,10 +6,10 @@ export const GeneralSchema: yup.SchemaOf<GeneralForm> = yup.object().shape({
   phone: yup.string().required('Phone is required'),
   address: yup.string().required('Address is required'),
   logo: yup.mixed().test('file', 'Select an image', function (v: any) {
-    return v instanceof File;
+    return v instanceof File || typeof v === 'string';
   }),
   stamp: yup.mixed().test('file', 'Select an image', function (v: any) {
-    return v instanceof File;
+    return v instanceof File || typeof v === 'string';
   }),
 });
 

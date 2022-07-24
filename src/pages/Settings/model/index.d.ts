@@ -4,8 +4,8 @@ interface GeneralForm {
   business_field: string;
   address: string;
   phone: string;
-  logo: any;
-  stamp: any;
+  logo: File | string;
+  stamp: File | string;
 }
 interface ExtraForm {
   currency: string;

@@ -17,6 +17,7 @@ const CouponsUpdate = (props: UpdateModal) => {
     initialValues: {
       ...find(props.selectedId, coupons),
       expire_date: new Date(find(props.selectedId, coupons).expire_date),
+      item_name: null,
     },
   });
 

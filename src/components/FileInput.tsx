@@ -7,7 +7,12 @@ import {
   Image,
 } from '@mantine/core';
 import { Upload, Photo, X, Icon as TablerIcon } from 'tabler-icons-react';
-import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import {
+  Dropzone,
+  DropzoneStatus,
+  IMAGE_MIME_TYPE,
+  MIME_TYPES,
+} from '@mantine/dropzone';
 import { useState } from 'react';
 
 function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
@@ -76,7 +81,12 @@ export const dropzoneChildren = (
     )}
   </Stack>
 );
-export default function Demo({ onChange, value }) {
+
+type FileInputProps = {
+  onChange: (file: File) => void;
+  value: File | string;
+};
+export default function FileInput({ onChange, value }: FileInputProps) {
   const theme = useMantineTheme();
   const [file, setFile] = useState<File | string>(value);
   const [fileRejection, setFileRejection] = useState(null);
@@ -92,6 +102,7 @@ export default function Demo({ onChange, value }) {
         setFileRejection(files[0].errors[0]);
       }}
       maxSize={2 * 1024 ** 2}
+      accept={IMAGE_MIME_TYPE}
     >
       {(status) => dropzoneChildren(status, theme, fileRejection, file)}
     </Dropzone>
