@@ -1,30 +1,27 @@
-import { Button, Group, Modal, Stack } from '@mantine/core';
+import { Button, Group, Modal, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
-import useClients from '../../../api/debts/useClients';
-import useSuppliers from '../../../api/debts/useSuppliers';
-import FormDivider from '../../../components/FormDivider';
-import find from '../../../utils/find';
-import getApiError from '../../../utils/getApiError';
+import FormDivider from '../../components/FormDivider';
+import useRead from '../../hooks/useRead';
+import useUpdate from '../../hooks/useUpdate';
+import find from '../../utils/find';
+import getApiError from '../../utils/getApiError';
 import Inputs from './Inputs';
-import schema from './schema';
-type Props = {
-    isOpen: boolean;
-    requestClose: () => void;
-    selectedId: number;
-};
-const SuppliersUpdate = (props: Props) => {
-    const { data: suppliers, update, isUpdating } = useSuppliers();
-    const form = useForm<Supplier>({
-        schema: yupResolver(schema),
-        initialValues: find(props.selectedId, suppliers),
+import { CouponFormSchema } from './model/schema';
+
+const CouponsUpdate = (props: UpdateModal) => {
+    const { data: coupons } = useRead<Coupon[]>(['coupons'], '/coupons');
+    const { update, isUpdating } = useUpdate<Coupon>(['coupons'], '/coupons');
+    const form = useForm<Coupon>({
+        schema: yupResolver(CouponFormSchema),
+        initialValues: find(props.selectedId, coupons),
     });
 
-    async function handleUpdate(values: Supplier) {
+    async function handleUpdate() {
         try {
-            await update(values);
+            await update(form.values);
             showNotification({
-                message: 'Supplier Updated Successfully',
+                message: 'Coupon Updated Successfully',
             });
         } catch (error) {
             showNotification({
@@ -33,6 +30,7 @@ const SuppliersUpdate = (props: Props) => {
         }
         props.requestClose();
     }
+
     return (
         <Modal
             centered
@@ -58,4 +56,4 @@ const SuppliersUpdate = (props: Props) => {
     );
 };
 
-export default SuppliersUpdate;
+export default CouponsUpdate;

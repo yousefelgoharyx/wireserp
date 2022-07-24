@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const CouponAddSchema: yup.SchemaOf<CouponForm> = yup.object().shape({
+export const CouponFormSchema: yup.SchemaOf<CouponForm> = yup.object().shape({
     code: yup.string().required('Code is required'),
     discount: yup.number().required('Discount is required'),
     expire_date: yup
@@ -11,5 +11,8 @@ export const CouponAddSchema: yup.SchemaOf<CouponForm> = yup.object().shape({
         .mixed()
         .oneOf(['clients', 'products', 'categories'])
         .required('Section is required'),
-    id: yup.number().typeError('Select an item').required('Select an item'),
+    item_id: yup
+        .number()
+        .typeError('Select an item')
+        .required('Select an item'),
 });

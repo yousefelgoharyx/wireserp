@@ -5,6 +5,12 @@ declare global {
     type ProivderProps = {
         children: React.ReactNode;
     };
+    type UpdateModal = {
+        isOpen: boolean;
+        requestClose: () => void;
+        selectedId: number;
+    };
+
     interface Context<T> {
         isRemoving: boolean;
         isCreating: boolean;

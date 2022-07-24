@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
+import dayjs from 'dayjs';
 
-export const couponsCols: ColumnDef<Bank>[] = [
+export const couponsCols: ColumnDef<Coupon>[] = [
     {
         accessorKey: 'id',
         header: 'ID',
@@ -8,7 +9,25 @@ export const couponsCols: ColumnDef<Bank>[] = [
     },
 
     {
-        accessorKey: 'bank_name',
-        header: 'Bank name',
+        accessorKey: 'code',
+        header: 'Code',
+    },
+    {
+        accessorKey: 'discount',
+        header: 'Discount',
+    },
+    {
+        accessorKey: 'expire_date',
+        header: 'Expire date',
+        cell: (table) =>
+            dayjs(table.row.original.expire_date).format('YYYY-MM-DD'),
+    },
+    {
+        accessorKey: 'section',
+        header: 'Section',
+    },
+    {
+        accessorKey: 'item_name',
+        header: 'Item',
     },
 ];
