@@ -15,7 +15,10 @@ const CashTable = () => {
   const selectedId = useRef<number>();
   const { data: cashes } = useRead<Cash[]>(['bank-activity'], '/bank-activity');
 
-  const { remove, isRemoving } = useRemove(['bank-activity'], '/bank-activity');
+  const { remove, isRemoving } = useRemove(
+    ['bank-activity', 'banks'],
+    '/bank-activity'
+  );
 
   const handleDelete = async () => {
     try {
