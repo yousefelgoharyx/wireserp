@@ -90,6 +90,7 @@ export default function FileInput({ onChange, value }: FileInputProps) {
   const theme = useMantineTheme();
   const [file, setFile] = useState<File | string>(value);
   const [fileRejection, setFileRejection] = useState(null);
+
   return (
     <Dropzone
       onDrop={(files) => {

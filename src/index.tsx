@@ -6,26 +6,27 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AuthProvider from './AuthProvider';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            suspense: true,
-            refetchOnWindowFocus: false,
-            retry: false,
-        },
+  defaultOptions: {
+    queries: {
+      suspense: true,
+      refetchOnWindowFocus: false,
+      retry: false,
     },
+  },
 });
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <AuthProvider>
-                <QueryClientProvider client={queryClient}>
-                    <App />
-                </QueryClientProvider>
-            </AuthProvider>
-        </BrowserRouter>
-    </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

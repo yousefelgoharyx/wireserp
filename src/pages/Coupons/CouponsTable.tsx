@@ -25,6 +25,7 @@ const CouponsTable = () => {
       showNotification({
         message: 'Coupon deleted successfully',
       });
+      deleteHandle.close();
     } catch (error) {
       showNotification({
         message: getApiError(error.response.data),

@@ -1,5 +1,4 @@
 import { Button, NumberInput, Stack } from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import FormDivider from '../../components/FormDivider';

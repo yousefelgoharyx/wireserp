@@ -39,6 +39,6 @@ interface AllSettings {
   company_stamp: string;
   status: string;
   fiscal_year: number;
-  fiscal_start_date: Date;
-  fiscal_end_date: Date;
+  fiscal_start_date: string;
+  fiscal_end_date: string;
 }

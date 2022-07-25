@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Stack, TextInput } from '@mantine/core';
+import { Button, Group, Modal, Stack } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import FormDivider from '../../components/FormDivider';
@@ -12,11 +12,12 @@ import { CouponFormSchema } from './model/schema';
 const CouponsUpdate = (props: UpdateModal) => {
   const { data: coupons } = useRead<Coupon[]>(['coupons'], '/coupons');
   const { update, isUpdating } = useUpdate<Coupon>(['coupons'], '/coupons');
+  const currentCoupon = find(props.selectedId, coupons);
   const form = useForm<Coupon>({
     schema: yupResolver(CouponFormSchema),
     initialValues: {
-      ...find(props.selectedId, coupons),
-      expire_date: new Date(find(props.selectedId, coupons).expire_date),
+      ...currentCoupon,
+      expire_date: new Date(currentCoupon.expire_date),
       item_name: null,
     },
   });

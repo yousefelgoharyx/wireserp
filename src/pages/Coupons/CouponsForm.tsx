@@ -21,7 +21,7 @@ const CouponsForm = () => {
     },
   });
 
-  const { create, isCreating } = useCreate<CouponForm>(['coupons'], '/coupons');
+  const { create, isCreating } = useCreate<any>(['coupons'], '/coupons');
 
   async function handleSubmit() {
     try {

@@ -1,10 +1,4 @@
-import {
-  Button,
-  InputWrapper,
-  SimpleGrid,
-  Stack,
-  TextInput,
-} from '@mantine/core';
+import { Button, InputWrapper, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import FileInput from '../../components/FileInput';
@@ -18,7 +12,6 @@ import { GeneralSchema } from './model/schema';
 import SettingsGrid from './SettingsGrid';
 function getFormData(object) {
   const formData = new FormData();
-
   Object.keys(object).forEach((key) => {
     formData.append(key, object[key]);
   });

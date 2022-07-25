@@ -6,9 +6,9 @@ import FormDivider from '../../components/FormDivider';
 import useCreate from '../../hooks/useCreate';
 import useRead from '../../hooks/useRead';
 import getApiError from '../../utils/getApiError';
+import mapRequest from '../../utils/mapRequest';
 import { FiscalYearSchema } from './model/schema';
 import SettingsGrid from './SettingsGrid';
-
 const FiscalYear = () => {
   const { data: settings } = useRead<AllSettings[]>(
     ['all-settings'],
@@ -22,18 +22,12 @@ const FiscalYear = () => {
     schema: yupResolver(FiscalYearSchema),
     initialValues: {
       fiscal_year: +settings[0].fiscal_year ?? null,
-      start_date: settings[0].fiscal_start_date
-        ? new Date(settings[0].fiscal_start_date)
-        : null,
-      end_date: settings[0].fiscal_end_date
-        ? new Date(settings[0].fiscal_end_date)
-        : null,
+      start_date: new Date(settings[0].fiscal_start_date),
+      end_date: new Date(settings[0].fiscal_end_date),
     },
   });
 
   async function handleSubmit() {
-    console.log(form.values);
-
     try {
       await create(form.values);
       showNotification({
