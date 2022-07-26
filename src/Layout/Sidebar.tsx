@@ -4,6 +4,7 @@ import {
   BuildingStore,
   BuildingWarehouse,
   Discount,
+  Home,
   LayoutGrid,
   ReportMoney,
   Settings,
@@ -15,6 +16,11 @@ import UserControl from '../components/UserControl';
 import { SidebarLinks } from './SidebarLinks';
 
 const sidebar = [
+  {
+    label: 'Dashboard',
+    icon: Home,
+    to: '/',
+  },
   {
     label: 'Store',
     icon: BuildingStore,

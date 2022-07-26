@@ -8,7 +8,7 @@ export const SaleBillForm: yup.SchemaOf<SaleBillForm> = yup.object().shape({
     .required(fieldRequired)
     .typeError('Select a warehouse'),
   value_added_tax: yup
-    .number()
+    .string()
     .required(fieldRequired)
     .typeError('Enter a value added tax'),
   final_total: yup

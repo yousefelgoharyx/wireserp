@@ -1,6 +1,6 @@
 import { Button, NumberInput, Select, Stack, Text } from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
-import { useForm, yupResolver } from '@mantine/form';
+import { useForm, yupResolver, UseFormReturnType } from '@mantine/form';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useClientsList } from '../../../api/debts/useClients';
@@ -18,34 +18,41 @@ import getTaxPrice from '../../../utils/getTaxPrice';
 import stringify from '../../../utils/stringify';
 import toSelectItems from '../../../utils/toSelectItems';
 import { unitSelect } from '../../../utils/units';
-import { SaleBillForm } from './model/schema';
+
+const priceTypes: PriceTypeSelect[] = [
+  {
+    label: 'Retail',
+    value: 'retail',
+  },
+  { label: 'Wholesale', value: 'wholesale' },
+];
+
+const getProductPrice = (type: PriceType, product: Product) => {
+  switch (type) {
+    case 'wholesale':
+      return product.wholesale_price;
+    case 'retail':
+      return product.piece_price;
+    default:
+      throw new Error("Price type doesn't exist");
+  }
+};
 
 type Props = {
   onSubmit: (data: SaleBillForm) => void;
+  isLoading: boolean;
+  form: UseFormReturnType<SaleBillForm>;
 };
+
 const InvoicesForm = (props: Props) => {
   const { data: clients } = useClientsList();
   const { data: warehouses } = useWarehousesList();
   const { data: products } = useProductsList();
   const settings = useSettings();
-  const form = useForm<SaleBillForm>({
-    validate: yupResolver(SaleBillForm),
-    initialValues: {
-      client_id: null,
-      date_time: new Date(),
-      warehouse_id: null,
-      value_added_tax: 1,
-      final_total: undefined,
-      product_id: null,
-      product_price: undefined,
-      quantity: undefined,
-      unit: 'unit',
-      quantity_price: undefined,
-    },
-  });
-
   const [tax, setTax] = useState(settings.tax_value_added);
+  const [priceType, setPriceType] = useState<PriceType>(priceTypes[0].value);
   const [product, setProduct] = useState<Product>(null);
+  const { form } = props;
 
   const clientSelect = toSelectItems<Client>(clients, {
     labelKey: 'c_name',
@@ -91,16 +98,17 @@ const InvoicesForm = (props: Props) => {
     form.setValues({
       ...form.values,
       product_id: +v,
-      product_price: product.total_price,
+      product_price: getProductPrice(priceType, product),
       quantity: 1,
-      quantity_price: product.total_price,
-      final_total: product.total_price,
+      quantity_price: getProductPrice(priceType, product),
+      final_total: getProductPrice(priceType, product),
+      unit: product.product_unit,
     });
   }
 
   function handleTaxChange(v) {
-    form.setFieldValue('value_added_tax', +v);
-    let newTax = +v ? settings.tax_value_added : 0;
+    form.setFieldValue('value_added_tax', v);
+    let newTax = v === '1' ? settings.tax_value_added : 0;
     setTax(newTax);
   }
 
@@ -136,6 +144,17 @@ const InvoicesForm = (props: Props) => {
   function handleTotalPriceChange(v: number) {
     form.setFieldValue('quantity_price', v);
     form.setFieldValue('final_total', v);
+  }
+
+  function handlePriceTypeChange(v: PriceType) {
+    setPriceType(v);
+    form.setValues({
+      ...form.values,
+      product_price: getProductPrice(v, product),
+      quantity: 1,
+      quantity_price: getProductPrice(v, product),
+      final_total: getProductPrice(v, product),
+    });
   }
 
   let isDisabled =
@@ -183,7 +202,6 @@ const InvoicesForm = (props: Props) => {
               rightSection={<Tax />}
               {...form.getInputProps('value_added_tax')}
               onChange={handleTaxChange}
-              value={stringify(form.values.value_added_tax)}
             />
             <Select
               searchable
@@ -207,14 +225,9 @@ const InvoicesForm = (props: Props) => {
               rightSection={
                 <Select
                   disabled={isDisabled}
-                  data={[
-                    {
-                      label: 'Retail',
-                      value: 'retail',
-                    },
-                    { label: 'Wholesale', value: 'wholesale' },
-                  ]}
-                  defaultValue="retail"
+                  data={priceTypes}
+                  value={priceType}
+                  onChange={handlePriceTypeChange}
                 />
               }
               rightSectionWidth={112}
@@ -225,6 +238,7 @@ const InvoicesForm = (props: Props) => {
               label="Quantity"
               placeholder="Enter quantity"
               hideControls
+              min={1}
               rightSection={
                 <Select
                   disabled={isDisabled}
@@ -255,7 +269,9 @@ const InvoicesForm = (props: Props) => {
             />
           </FormGrid>
           <FormDivider />
-          <Button type="submit">Submit</Button>
+          <Button loading={props.isLoading} type="submit">
+            Submit
+          </Button>
         </Stack>
       </form>
     </FormShell>
