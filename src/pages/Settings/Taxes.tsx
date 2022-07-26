@@ -1,6 +1,7 @@
 import { Button, NumberInput, Stack } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
+import { Percentage } from 'tabler-icons-react';
 import FormDivider from '../../components/FormDivider';
 import useCreate from '../../hooks/useCreate';
 import useRead from '../../hooks/useRead';
@@ -53,6 +54,7 @@ const Taxes = () => {
             label="Tax Value Added"
             placeholder="Enter..."
             hideControls
+            icon={<Percentage size={16} />}
             {...form.getInputProps('tax_value_added')}
           />
           <NumberInput

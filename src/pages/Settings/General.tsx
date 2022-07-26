@@ -1,6 +1,7 @@
 import { Button, InputWrapper, Stack, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
+import useSettings from '../../api/useSettings';
 import FileInput from '../../components/FileInput';
 import FormDivider from '../../components/FormDivider';
 import FormGrid from '../../components/FormGrid';
@@ -18,23 +19,17 @@ function getFormData(object) {
   return formData;
 }
 const General = () => {
-  const { data: settings } = useRead<AllSettings[]>(
-    ['all-settings'],
-    '/system-settings'
-  );
-
+  const settings = useSettings();
   const form = useForm<GeneralForm>({
     schema: yupResolver(GeneralSchema),
     initialValues: {
-      name: settings[0].name || '',
-      business_field: settings[0].business_field || '',
-      founder_name: settings[0].founder_name || '',
-      address: settings[0].address || '',
-      phone: settings[0].phone || '',
-      logo: settings[0].logo ? baseURL + settings[0].logo : null,
-      stamp: settings[0].company_stamp
-        ? baseURL + settings[0].company_stamp
-        : null,
+      name: settings.name || '',
+      business_field: settings.business_field || '',
+      founder_name: settings.founder_name || '',
+      address: settings.address || '',
+      phone: settings.phone || '',
+      logo: settings.logo ? baseURL + settings.logo : null,
+      stamp: settings.company_stamp ? baseURL + settings.company_stamp : null,
     },
   });
   const { create, isCreating } = useCreate<FormData>(

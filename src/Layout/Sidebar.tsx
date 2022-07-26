@@ -114,6 +114,18 @@ const sidebar = [
   },
 
   {
+    label: 'Sales',
+    icon: ReportMoney,
+    items: [
+      {
+        label: 'Invoices',
+        icon: UserCircle,
+        items: [{ label: 'Add invoice', to: '/invoices/create' }],
+      },
+    ],
+  },
+
+  {
     label: 'Coupons',
     icon: Discount,
     to: '/coupons',

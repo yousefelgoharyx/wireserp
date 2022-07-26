@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }) => {
   };
   const logout = () => {
     queryClient.clear();
+    navigate('/');
     setUser(null);
     setToken(null);
   };

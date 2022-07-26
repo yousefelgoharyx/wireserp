@@ -4,6 +4,7 @@ import AppProvider from './AppProvider';
 import Layout from './Layout/Layout';
 import { useAuth } from './AuthProvider';
 import { FullSpinner } from './components/Spinner';
+import Invoices from './pages/Sales/Invoices/Invoices';
 
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login/Login'));
@@ -33,7 +34,7 @@ const TransferSafeBank = lazy(
 );
 
 const ClientsForm = lazy(() => import('./pages/Debts/Clients/ClientsForm'));
-const ClientsTable = lazy(() => import('./pages/Settings/Settings'));
+const ClientsTable = lazy(() => import('./pages/Debts/Clients/ClientsTable'));
 const SuppliersForm = lazy(
   () => import('./pages/Debts/Suppliers/SuppliersForm')
 );
@@ -92,6 +93,9 @@ function App() {
               <Route path="safe-to-bank" element={<TransferSafeBank />} />
             </Route>
             <Route path="coupons" element={<Coupons />} />
+            <Route path="invoices">
+              <Route path="create" element={<Invoices />} />
+            </Route>
             <Route path="settings">
               <Route index element={<Settings />} />
             </Route>

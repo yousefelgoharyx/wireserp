@@ -16,6 +16,7 @@ import useCreate from '../../../hooks/useCreate';
 import useRead from '../../../hooks/useRead';
 import useRemove from '../../../hooks/useRemove';
 import find from '../../../utils/find';
+import getApiError from '../../../utils/getApiError';
 import moneyFormatter from '../../../utils/moneyFormatter';
 import toSelectItems from '../../../utils/toSelectItems';
 import { bankSafeTransferCols } from './model/columns';
@@ -99,7 +100,7 @@ const TransferBankSafe = () => {
       });
     } catch (error) {
       showNotification({
-        message: 'Transfer failed',
+        message: getApiError(error.response.data),
         color: 'red',
       });
     }

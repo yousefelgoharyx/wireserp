@@ -7,7 +7,6 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { Power, Search, Settings, UserCircle } from 'tabler-icons-react';
 import { useAuth } from '../AuthProvider';
