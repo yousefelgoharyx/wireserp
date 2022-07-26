@@ -1,6 +1,6 @@
 import { Button, NumberInput, Select, Stack, Text } from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
-import { useForm } from '@mantine/form';
+import { useForm, yupResolver } from '@mantine/form';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useClientsList } from '../../../api/debts/useClients';
@@ -14,16 +14,22 @@ import FormShell from '../../../components/FormShell';
 import MoneyInput from '../../../components/MoneyInput';
 import Tax from '../../../components/Tax';
 import find from '../../../utils/find';
-import getTaxOf from '../../../utils/getTaxOf';
+import getTaxPrice from '../../../utils/getTaxPrice';
+import stringify from '../../../utils/stringify';
 import toSelectItems from '../../../utils/toSelectItems';
 import { unitSelect } from '../../../utils/units';
+import { SaleBillForm } from './model/schema';
 
-const InvoicesForm = () => {
+type Props = {
+  onSubmit: (data: SaleBillForm) => void;
+};
+const InvoicesForm = (props: Props) => {
   const { data: clients } = useClientsList();
   const { data: warehouses } = useWarehousesList();
   const { data: products } = useProductsList();
   const settings = useSettings();
   const form = useForm<SaleBillForm>({
+    validate: yupResolver(SaleBillForm),
     initialValues: {
       client_id: null,
       date_time: new Date(),
@@ -76,6 +82,7 @@ const InvoicesForm = () => {
       product_price: undefined,
       quantity: undefined,
       quantity_price: undefined,
+      final_total: undefined,
     });
   }
   function handleProductChange(v: string) {
@@ -87,37 +94,25 @@ const InvoicesForm = () => {
       product_price: product.total_price,
       quantity: 1,
       quantity_price: product.total_price,
-      final_total: getTaxOf(product.total_price, tax),
+      final_total: product.total_price,
     });
   }
 
   function handleTaxChange(v) {
     form.setFieldValue('value_added_tax', +v);
-    let newTax;
-    if (+v) newTax = settings.tax_value_added;
-    else newTax = 0;
+    let newTax = +v ? settings.tax_value_added : 0;
     setTax(newTax);
-    if (form.values.quantity_price) {
-      form.setFieldValue(
-        'final_total',
-        getTaxOf(form.values.quantity_price, newTax)
-      );
-    }
   }
 
   function handleQuantityChange(quantity: number) {
     form.setFieldValue('quantity', quantity);
     if (quantity !== undefined) {
       let quantityPrice = form.values.product_price * quantity;
-      let finalPrice = getTaxOf(quantityPrice, tax);
       form.setFieldValue('quantity_price', quantityPrice);
-      form.setFieldValue('final_total', finalPrice);
+      form.setFieldValue('final_total', quantityPrice);
     } else {
       form.setFieldValue('quantity_price', form.values.product_price);
-      form.setFieldValue(
-        'final_total',
-        getTaxOf(form.values.product_price, tax)
-      );
+      form.setFieldValue('final_total', form.values.product_price);
     }
   }
 
@@ -126,13 +121,11 @@ const InvoicesForm = () => {
     if (productPrice !== undefined) {
       if (form.values.quantity) {
         let quantityPrice = form.values.quantity * productPrice;
-        let finalPrice = getTaxOf(quantityPrice, tax);
         form.setFieldValue('quantity_price', quantityPrice);
-        form.setFieldValue('final_total', finalPrice);
+        form.setFieldValue('final_total', quantityPrice);
       } else {
-        let finalPrice = getTaxOf(productPrice, tax);
         form.setFieldValue('quantity_price', productPrice);
-        form.setFieldValue('final_total', finalPrice);
+        form.setFieldValue('final_total', productPrice);
       }
     } else {
       form.setFieldValue('quantity_price', undefined);
@@ -140,15 +133,16 @@ const InvoicesForm = () => {
     }
   }
 
-  function handleSubmit() {
-    console.log(form.values);
+  function handleTotalPriceChange(v: number) {
+    form.setFieldValue('quantity_price', v);
+    form.setFieldValue('final_total', v);
   }
 
   let isDisabled =
     !form.values.product_id || form.values.value_added_tax === null;
   return (
     <FormShell title="Create invoice">
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(props.onSubmit)}>
         <Stack>
           <FormGrid>
             <Select
@@ -157,7 +151,7 @@ const InvoicesForm = () => {
               placeholder="Select client"
               {...form.getInputProps('client_id')}
               onChange={(v) => form.setFieldValue('client_id', +v)}
-              value={form.values.client_id?.toString() ?? null}
+              value={stringify(form.values.client_id)}
             />
             <Select
               data={warehouseSelect}
@@ -165,7 +159,7 @@ const InvoicesForm = () => {
               placeholder="Select warehouse"
               {...form.getInputProps('warehouse_id')}
               onChange={handleWarehouseChange}
-              value={form.values.warehouse_id?.toString() ?? null}
+              value={stringify(form.values.warehouse_id)}
             />
             <DatePicker
               label="Invoice date"
@@ -189,7 +183,7 @@ const InvoicesForm = () => {
               rightSection={<Tax />}
               {...form.getInputProps('value_added_tax')}
               onChange={handleTaxChange}
-              value={form.values.value_added_tax?.toString() ?? null}
+              value={stringify(form.values.value_added_tax)}
             />
             <Select
               searchable
@@ -203,13 +197,27 @@ const InvoicesForm = () => {
               }
               {...form.getInputProps('product_id')}
               onChange={handleProductChange}
-              value={form.values.product_id?.toString() ?? null}
+              value={stringify(form.values.product_id)}
             />
             <MoneyInput
               disabled={isDisabled}
               hideControls
               label="Product Price"
               placeholder="Enter price"
+              rightSection={
+                <Select
+                  disabled={isDisabled}
+                  data={[
+                    {
+                      label: 'Retail',
+                      value: 'retail',
+                    },
+                    { label: 'Wholesale', value: 'wholesale' },
+                  ]}
+                  defaultValue="retail"
+                />
+              }
+              rightSectionWidth={112}
               {...form.getInputProps('product_price')}
               onChange={handleProductPriceChange}
             />
@@ -219,10 +227,7 @@ const InvoicesForm = () => {
               hideControls
               rightSection={
                 <Select
-                  disabled={
-                    !form.values.product_id ||
-                    !form.values.value_added_tax !== null
-                  }
+                  disabled={isDisabled}
                   data={unitSelect}
                   {...form.getInputProps('unit')}
                 />
@@ -238,6 +243,7 @@ const InvoicesForm = () => {
               placeholder="Enter price"
               hideControls
               {...form.getInputProps('quantity_price')}
+              onChange={handleTotalPriceChange}
             />
             <MoneyInput
               disabled={isDisabled}
@@ -245,6 +251,7 @@ const InvoicesForm = () => {
               placeholder="Enter price"
               hideControls
               {...form.getInputProps('final_total')}
+              value={getTaxPrice(form.values.final_total, tax)}
             />
           </FormGrid>
           <FormDivider />
