@@ -11,7 +11,7 @@ export const salesCols: ColumnDef<SaleBillTable>[] = [
   },
   {
     accessorKey: 'amount',
-    header: 'Amount',
+    header: 'Quantity',
   },
   {
     accessorKey: 'total_price',
