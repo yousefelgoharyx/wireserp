@@ -17,3 +17,13 @@ interface SaleBillTable {
   amount: string;
   total_price: number;
 }
+
+interface AddProductForm {
+  sale_bill_id: number;
+  product_id: number;
+  product_price: number;
+  quantity: number;
+  unit: string;
+  quantity_price: number;
+  final_total: number;
+}

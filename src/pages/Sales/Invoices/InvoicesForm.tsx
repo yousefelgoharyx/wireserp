@@ -42,6 +42,7 @@ type Props = {
   onSubmit: (data: SaleBillForm) => void;
   isLoading: boolean;
   form: UseFormReturnType<SaleBillForm>;
+  isAdding: boolean;
 };
 
 const InvoicesForm = (props: Props) => {
@@ -101,7 +102,7 @@ const InvoicesForm = (props: Props) => {
       product_price: getProductPrice(priceType, product),
       quantity: 1,
       quantity_price: getProductPrice(priceType, product),
-      final_total: getProductPrice(priceType, product),
+      final_total: getTaxPrice(getProductPrice(priceType, product), tax),
       unit: product.product_unit,
     });
   }
@@ -117,10 +118,13 @@ const InvoicesForm = (props: Props) => {
     if (quantity !== undefined) {
       let quantityPrice = form.values.product_price * quantity;
       form.setFieldValue('quantity_price', quantityPrice);
-      form.setFieldValue('final_total', quantityPrice);
+      form.setFieldValue('final_total', getTaxPrice(quantityPrice, tax));
     } else {
       form.setFieldValue('quantity_price', form.values.product_price);
-      form.setFieldValue('final_total', form.values.product_price);
+      form.setFieldValue(
+        'final_total',
+        getTaxPrice(form.values.product_price, tax)
+      );
     }
   }
 
@@ -133,7 +137,7 @@ const InvoicesForm = (props: Props) => {
         form.setFieldValue('final_total', quantityPrice);
       } else {
         form.setFieldValue('quantity_price', productPrice);
-        form.setFieldValue('final_total', productPrice);
+        form.setFieldValue('final_total', getTaxPrice(productPrice, tax));
       }
     } else {
       form.setFieldValue('quantity_price', undefined);
@@ -143,7 +147,7 @@ const InvoicesForm = (props: Props) => {
 
   function handleTotalPriceChange(v: number) {
     form.setFieldValue('quantity_price', v);
-    form.setFieldValue('final_total', v);
+    form.setFieldValue('final_total', getTaxPrice(v, tax));
   }
 
   function handlePriceTypeChange(v: PriceType) {
@@ -153,7 +157,7 @@ const InvoicesForm = (props: Props) => {
       product_price: getProductPrice(v, product),
       quantity: 1,
       quantity_price: getProductPrice(v, product),
-      final_total: getProductPrice(v, product),
+      final_total: getTaxPrice(getProductPrice(v, product), tax),
     });
   }
 
@@ -265,12 +269,12 @@ const InvoicesForm = (props: Props) => {
               placeholder="Enter price"
               hideControls
               {...form.getInputProps('final_total')}
-              value={getTaxPrice(form.values.final_total, tax)}
+              value={form.values.final_total}
             />
           </FormGrid>
           <FormDivider />
           <Button loading={props.isLoading} type="submit">
-            Submit
+            {props.isAdding ? 'Add product' : 'Create invoice'}
           </Button>
         </Stack>
       </form>

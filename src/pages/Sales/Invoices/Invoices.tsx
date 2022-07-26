@@ -27,12 +27,16 @@ const Invoices = () => {
       quantity_price: undefined,
     },
   });
-  const [bill, setBill] = useState(null);
+  const [billId, setBillId] = useState<number>(null);
   const [billItems, setBillItems] = useState<SaleBillForm[]>([]);
   const { data: products } = useProductsList();
-  const { create, isCreating } = useCreate<SaleBillForm>(
+  const { create, isCreating } = useCreate<SaleBillForm, { id: number }>(
     ['sale-bills'],
     '/sale-bills'
+  );
+  const { create: add, isCreating: isAdding } = useCreate<AddProductForm>(
+    ['sale-bills'],
+    '/product-to-bill'
   );
   const salesData: SaleBillTable[] = billItems.map((bill) => ({
     product_name: find(bill.product_id, products).product_name,
@@ -43,12 +47,36 @@ const Invoices = () => {
 
   async function handleSubmit(values: SaleBillForm) {
     try {
-      await create(values);
-      setBillItems([...billItems, values]);
-      showNotification({
-        message: 'Invoice created successfully',
+      if (billId) {
+        await add({
+          product_id: values.product_id,
+          product_price: values.product_price,
+          quantity: values.quantity,
+          quantity_price: values.quantity_price,
+          final_total: values.final_total,
+          sale_bill_id: billId,
+          unit: values.unit,
+        });
+        setBillItems([...billItems, values]);
+        showNotification({
+          message: 'Added product to invoice',
+        });
+      } else {
+        const response = await create(values);
+        setBillId(response.id);
+        setBillItems([...billItems, values]);
+        showNotification({
+          message: 'Invoice created successfully',
+        });
+      }
+      form.setValues({
+        ...form.values,
+        product_id: null,
+        product_price: undefined,
+        quantity: undefined,
+        quantity_price: undefined,
+        final_total: undefined,
       });
-      form.reset();
     } catch (error) {
       showNotification({
         message: getApiError(error.response.data),
@@ -61,7 +89,8 @@ const Invoices = () => {
       <InvoicesForm
         form={form}
         onSubmit={handleSubmit}
-        isLoading={isCreating}
+        isAdding={!!billId}
+        isLoading={isCreating || isAdding}
       />
       {salesData.length > 0 && (
         <DataGrid data={salesData} columns={salesCols} />

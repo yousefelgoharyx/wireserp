@@ -10,6 +10,7 @@ const MoneyInput = (props: NumberInputProps) => {
   const settings = useSettings();
   return (
     <NumberInput
+      step={0.01}
       icon={<Text size="xs">{settings.currency}</Text>}
       formatter={formatter}
       parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
