@@ -1,4 +1,4 @@
-interface ClientFormValues {
+interface ClientForm {
   c_name: string;
   releated_user: string;
   indebt_type: string;
@@ -13,6 +13,6 @@ interface ClientFormValues {
   c_tax_number: number;
 }
 
-interface Client extends ClientFormValues {
+interface Client extends ClientForm {
   id: number;
 }

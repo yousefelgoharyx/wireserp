@@ -21,7 +21,7 @@ function getFormData(object) {
 const General = () => {
   const settings = useSettings();
   const form = useForm<GeneralForm>({
-    schema: yupResolver(GeneralSchema),
+    validate: yupResolver(GeneralSchema),
     initialValues: {
       name: settings.name || '',
       business_field: settings.business_field || '',

@@ -11,7 +11,7 @@ import schema from './schema';
 
 const SubCatsForm = () => {
   const form = useForm<SubCategoryFormValues>({
-    schema: yupResolver(schema),
+    validate: yupResolver(schema),
     initialValues: {
       category_id: null,
       sub_category_name: '',

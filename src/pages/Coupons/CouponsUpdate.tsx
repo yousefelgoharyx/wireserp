@@ -11,20 +11,29 @@ import { CouponFormSchema } from './model/schema';
 
 const CouponsUpdate = (props: UpdateModal) => {
   const { data: coupons } = useRead<Coupon[]>(['coupons'], '/coupons');
-  const { update, isUpdating } = useUpdate<Coupon>(['coupons'], '/coupons');
+  const { update, isUpdating } = useUpdate<CouponUpdate>(
+    ['coupons'],
+    '/coupons'
+  );
   const currentCoupon = find(props.selectedId, coupons);
-  const form = useForm<Coupon>({
-    schema: yupResolver(CouponFormSchema),
+  const form = useForm<CouponForm>({
+    validate: yupResolver(CouponFormSchema),
     initialValues: {
-      ...currentCoupon,
+      code: currentCoupon.code,
+      discount: currentCoupon.discount,
       expire_date: new Date(currentCoupon.expire_date),
-      item_name: null,
+      section: currentCoupon.section,
+      item_id: currentCoupon.item_id,
     },
   });
 
   async function handleUpdate() {
+    const coupon: CouponUpdate = {
+      ...form.values,
+      id: currentCoupon.id,
+    };
     try {
-      await update(form.values);
+      await update(coupon);
       showNotification({
         message: 'Coupon Updated Successfully',
       });

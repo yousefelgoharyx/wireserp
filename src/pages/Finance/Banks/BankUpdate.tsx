@@ -17,7 +17,7 @@ const BankUpdate = (props: Props) => {
   const { update, isUpdating } = useUpdate<Bank>(['banks'], '/banks');
 
   const form = useForm<Bank>({
-    schema: yupResolver(BankAddSchema),
+    validate: yupResolver(BankAddSchema),
     initialValues: find(props.selectedId, banks),
   });
 

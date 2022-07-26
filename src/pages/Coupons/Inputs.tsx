@@ -1,6 +1,6 @@
 import { NumberInput, Select, SelectItem, TextInput } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
-import { UseFormReturnType } from '@mantine/form/lib/use-form';
+import { UseFormReturnType } from '@mantine/form';
 import { useQuery } from 'react-query';
 import Selector from '../../components/Selector';
 import instance from '../../utils/axios';
@@ -17,8 +17,9 @@ const sectionItems: SectionItems[] = [
 async function fetchSections(section: Section) {
   return instance.post<any[]>(section).then((res) => res.data);
 }
+
 type InputsProps = {
-  form: UseFormReturnType<CouponForm | Coupon>;
+  form: UseFormReturnType<CouponForm>;
 };
 const Inputs = ({ form }: InputsProps) => {
   let section = form.values.section;

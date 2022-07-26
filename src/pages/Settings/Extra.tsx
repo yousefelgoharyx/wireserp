@@ -23,7 +23,7 @@ const Extra = () => {
   const currencies = useCurrencies();
 
   const form = useForm<ExtraForm>({
-    schema: yupResolver(ExtraSchema),
+    validate: yupResolver(ExtraSchema),
     initialValues: {
       country: settings[0].country ?? null,
       currency: settings[0].currency ?? null,

@@ -83,7 +83,7 @@ const TransferBankSafe = () => {
   );
 
   const form = useForm<BankSafeTransferForm>({
-    schema: yupResolver(BankSafeTransferSchema),
+    validate: yupResolver(BankSafeTransferSchema),
     initialValues: {
       bank_id: null,
       safe_id: null,

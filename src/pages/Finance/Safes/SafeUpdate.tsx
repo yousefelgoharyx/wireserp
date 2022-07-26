@@ -7,55 +7,55 @@ import find from '../../../utils/find';
 import Inputs from './SafesInputs';
 import schema from './schema';
 type Props = {
-    isOpen: boolean;
-    requestClose: () => void;
-    selectedId: number;
+  isOpen: boolean;
+  requestClose: () => void;
+  selectedId: number;
 };
 const SafeUpdate = (props: Props) => {
-    const { data: safes, update, isUpdating } = useSafes();
-    const form = useForm<Safe>({
-        schema: yupResolver(schema),
-        initialValues: find(props.selectedId, safes),
-    });
+  const { data: safes, update, isUpdating } = useSafes();
+  const form = useForm<SafeFormValues>({
+    validate: yupResolver(schema),
+    initialValues: find(props.selectedId, safes),
+  });
 
-    async function handleUpdate(values: Safe) {
-        try {
-            await update(values);
-            showNotification({
-                message: 'Safe Updated Successfully',
-            });
-        } catch {
-            showNotification({
-                message: 'Error Updating safe',
-            });
-        }
-        props.requestClose();
+  async function handleUpdate() {
+    try {
+      await update(form.values as Safe);
+      showNotification({
+        message: 'Safe Updated Successfully',
+      });
+    } catch {
+      showNotification({
+        message: 'Error Updating safe',
+      });
     }
+    props.requestClose();
+  }
 
-    return (
-        <Modal
-            centered
-            opened={props.isOpen}
-            onClose={props.requestClose}
-            withCloseButton={false}
-        >
-            <form onSubmit={form.onSubmit(handleUpdate)}>
-                <Stack>
-                    <Inputs form={form} />
+  return (
+    <Modal
+      centered
+      opened={props.isOpen}
+      onClose={props.requestClose}
+      withCloseButton={false}
+    >
+      <form onSubmit={form.onSubmit(handleUpdate)}>
+        <Stack>
+          <Inputs form={form} />
 
-                    <FormDivider />
-                    <Group>
-                        <Button loading={isUpdating} type="submit">
-                            Update
-                        </Button>
-                        <Button variant="light" onClick={props.requestClose}>
-                            Cancel
-                        </Button>
-                    </Group>
-                </Stack>
-            </form>
-        </Modal>
-    );
+          <FormDivider />
+          <Group>
+            <Button loading={isUpdating} type="submit">
+              Update
+            </Button>
+            <Button variant="light" onClick={props.requestClose}>
+              Cancel
+            </Button>
+          </Group>
+        </Stack>
+      </form>
+    </Modal>
+  );
 };
 
 export default SafeUpdate;

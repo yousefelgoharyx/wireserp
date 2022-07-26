@@ -11,7 +11,7 @@ import { CouponFormSchema } from './model/schema';
 
 const CouponsForm = () => {
   const form = useForm<CouponForm>({
-    schema: yupResolver(CouponFormSchema),
+    validate: yupResolver(CouponFormSchema),
     initialValues: {
       code: '',
       discount: undefined,

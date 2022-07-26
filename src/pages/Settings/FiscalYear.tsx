@@ -19,7 +19,7 @@ const FiscalYear = () => {
     '/fiscal-settings'
   );
   const form = useForm<FiscalYearForm>({
-    schema: yupResolver(FiscalYearSchema),
+    validate: yupResolver(FiscalYearSchema),
     initialValues: {
       fiscal_year: +settings[0].fiscal_year ?? null,
       start_date: new Date(settings[0].fiscal_start_date),

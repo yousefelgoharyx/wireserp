@@ -92,7 +92,7 @@ const TransferBanks = () => {
   );
 
   const form = useForm<BankTransferForm>({
-    schema: yupResolver(BankTransferSchema),
+    validate: yupResolver(BankTransferSchema),
     initialValues: {
       from_bank: null,
       to_bank: null,

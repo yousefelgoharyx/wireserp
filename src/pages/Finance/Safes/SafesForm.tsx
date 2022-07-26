@@ -9,48 +9,48 @@ import Inputs from './SafesInputs';
 import schema from './schema';
 
 const SafeForm = () => {
-    const form = useForm<SafeFormValues>({
-        schema: yupResolver(schema),
-        initialValues: {
-            safe_name: '',
-            branch_id: null,
-            safe_balance: undefined,
-            safe_type: '',
-        },
-    });
+  const form = useForm<SafeFormValues>({
+    validate: yupResolver(schema),
+    initialValues: {
+      safe_name: '',
+      branch_id: null,
+      safe_balance: undefined,
+      safe_type: '',
+    },
+  });
 
-    const { create, isCreating } = useSafes();
-    async function handleSubmit(values: SafeFormValues) {
-        try {
-            await create(values);
-            showNotification({
-                message: 'Safe added successfully',
-            });
-            form.reset();
-        } catch (error) {
-            showNotification({
-                message: 'Error creating safe',
-                color: 'red',
-            });
-        }
+  const { create, isCreating } = useSafes();
+  async function handleSubmit(values: SafeFormValues) {
+    try {
+      await create(values);
+      showNotification({
+        message: 'Safe added successfully',
+      });
+      form.reset();
+    } catch (error) {
+      showNotification({
+        message: 'Error creating safe',
+        color: 'red',
+      });
     }
-    return (
-        <FormShell title="Add Client">
-            <form onSubmit={form.onSubmit(handleSubmit)}>
-                <Stack>
-                    <FormGrid>
-                        <Inputs form={form} />
-                    </FormGrid>
-                    <FormDivider />
-                    <Group>
-                        <Button loading={isCreating} type="submit">
-                            Add
-                        </Button>
-                    </Group>
-                </Stack>
-            </form>
-        </FormShell>
-    );
+  }
+  return (
+    <FormShell title="Add Client">
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <Stack>
+          <FormGrid>
+            <Inputs form={form} />
+          </FormGrid>
+          <FormDivider />
+          <Group>
+            <Button loading={isCreating} type="submit">
+              Add
+            </Button>
+          </Group>
+        </Stack>
+      </form>
+    </FormShell>
+  );
 };
 
 export default SafeForm;

@@ -1,4 +1,4 @@
-import InvoicesForm from './InvoicesForm';
+import InvoicesForm from './InvoicesForm2';
 
 const Invoices = () => {
   return (

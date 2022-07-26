@@ -9,56 +9,56 @@ import Inputs from './Inputs';
 import schema from './schema';
 
 const ClientsForm = () => {
-    const form = useForm<ClientFormValues>({
-        schema: yupResolver(schema),
-        initialValues: {
-            c_name: '',
-            releated_user: null,
-            indebt_amount: undefined,
-            indebt_type: 'for',
-            c_phone: '',
-            c_notes: '',
-            c_address: '',
-            deal_type: null,
-            c_email: '',
-            c_company: '',
-            c_nationality: '',
-            c_tax_number: undefined,
-        },
-    });
+  const form = useForm<ClientForm>({
+    validate: yupResolver(schema),
+    initialValues: {
+      c_name: '',
+      releated_user: null,
+      indebt_amount: undefined,
+      indebt_type: 'for',
+      c_phone: '',
+      c_notes: '',
+      c_address: '',
+      deal_type: null,
+      c_email: '',
+      c_company: '',
+      c_nationality: '',
+      c_tax_number: undefined,
+    },
+  });
 
-    const { create, isCreating } = useClients();
-    async function handleSubmit(values: ClientFormValues) {
-        try {
-            await create(values);
-            showNotification({
-                message: 'Client Created Successfully',
-            });
-            form.reset();
-        } catch (error) {
-            showNotification({
-                message: 'Error Creating Client',
-                color: 'red',
-            });
-        }
+  const { create, isCreating } = useClients();
+  async function handleSubmit(values: ClientForm) {
+    try {
+      await create(values);
+      showNotification({
+        message: 'Client Created Successfully',
+      });
+      form.reset();
+    } catch (error) {
+      showNotification({
+        message: 'Error Creating Client',
+        color: 'red',
+      });
     }
-    return (
-        <FormShell title="Add Client">
-            <form onSubmit={form.onSubmit(handleSubmit)}>
-                <Stack>
-                    <FormGrid>
-                        <Inputs form={form} />
-                    </FormGrid>
-                    <FormDivider />
-                    <Group>
-                        <Button loading={isCreating} type="submit">
-                            Add
-                        </Button>
-                    </Group>
-                </Stack>
-            </form>
-        </FormShell>
-    );
+  }
+  return (
+    <FormShell title="Add Client">
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <Stack>
+          <FormGrid>
+            <Inputs form={form} />
+          </FormGrid>
+          <FormDivider />
+          <Group>
+            <Button loading={isCreating} type="submit">
+              Add
+            </Button>
+          </Group>
+        </Stack>
+      </form>
+    </FormShell>
+  );
 };
 
 export default ClientsForm;

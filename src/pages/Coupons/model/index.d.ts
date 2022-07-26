@@ -5,6 +5,9 @@ interface CouponForm {
   section: Section;
   item_id: number;
 }
+interface CouponUpdate extends CouponForm {
+  id: number;
+}
 
 interface Coupon extends CouponForm {
   id: number;

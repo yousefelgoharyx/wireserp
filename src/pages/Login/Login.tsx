@@ -1,12 +1,12 @@
 import { useForm, yupResolver } from '@mantine/form';
 import {
-    TextInput,
-    PasswordInput,
-    Group,
-    Button,
-    Anchor,
-    createStyles,
-    Alert,
+  TextInput,
+  PasswordInput,
+  Group,
+  Button,
+  Anchor,
+  createStyles,
+  Alert,
 } from '@mantine/core';
 
 import { Link } from 'react-router-dom';
@@ -19,80 +19,70 @@ import { AlertTriangle } from 'tabler-icons-react';
 import { useLang } from '../../AppProvider';
 
 function Login() {
-    const { classes } = useStyles();
-    const { login, status, errors } = useAuth();
-    const [lang] = useLang();
-    const form = useForm<LoginFormValues>({
-        schema: yupResolver(schema),
-        initialValues: {
-            email: '',
-            password: '',
-        },
-    });
+  const { classes } = useStyles();
+  const { login, status, errors } = useAuth();
+  const [lang] = useLang();
+  const form = useForm<LoginFormValues>({
+    validate: yupResolver(schema),
+    initialValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-    const isLoading = status === 'loading';
-    const isError = status === 'error';
+  const isLoading = status === 'loading';
+  const isError = status === 'error';
 
-    return (
-        <AuthForm>
-            <Group mb={16}>
-                <LanguagePicker />
-            </Group>
-            <form
-                className={classes.form}
-                onSubmit={form.onSubmit((v) => login(v))}
-            >
-                <Group direction="column" grow>
-                    <TextInput
-                        autoComplete="email"
-                        label="Email"
-                        placeholder="Enter your email..."
-                        {...form.getInputProps('email')}
-                    />
+  return (
+    <AuthForm>
+      <Group mb={16}>
+        <LanguagePicker />
+      </Group>
+      <form className={classes.form} onSubmit={form.onSubmit((v) => login(v))}>
+        <Group direction="column" grow>
+          <TextInput
+            autoComplete="email"
+            label="Email"
+            placeholder="Enter your email..."
+            {...form.getInputProps('email')}
+          />
 
-                    <PasswordInput
-                        autoComplete="password"
-                        label="Password"
-                        placeholder="Enter your password..."
-                        {...form.getInputProps('password')}
-                    />
-                </Group>
+          <PasswordInput
+            autoComplete="password"
+            label="Password"
+            placeholder="Enter your password..."
+            {...form.getInputProps('password')}
+          />
+        </Group>
 
-                <Group position="apart" mt="xl">
-                    <Anchor
-                        to="/signup"
-                        component={Link}
-                        type="button"
-                        color="gray"
-                        size="xs"
-                    >
-                        Don't have an account? Create one now!
-                    </Anchor>
-                    <Button loading={isLoading} type="submit">
-                        Login
-                    </Button>
-                </Group>
-                {isError && (
-                    <Alert
-                        icon={<AlertTriangle />}
-                        my={16}
-                        color="red"
-                        title="Oops!"
-                    >
-                        {errors
-                            ? errors[`alert_${lang}`]
-                            : 'Internal server error'}
-                    </Alert>
-                )}
-            </form>
-        </AuthForm>
-    );
+        <Group position="apart" mt="xl">
+          <Anchor
+            to="/signup"
+            component={Link}
+            type="button"
+            color="gray"
+            size="xs"
+          >
+            Don't have an account? Create one now!
+          </Anchor>
+          <Button loading={isLoading} type="submit">
+            Login
+          </Button>
+        </Group>
+        {isError && (
+          <Alert icon={<AlertTriangle />} my={16} color="red" title="Oops!">
+            {errors ? errors[`alert_${lang}`] : 'Internal server error'}
+          </Alert>
+        )}
+      </form>
+    </AuthForm>
+  );
 }
 
 const useStyles = createStyles({
-    form: {
-        width: '100%',
-    },
+  form: {
+    width: '100%',
+  },
 });
 
 export default Login;

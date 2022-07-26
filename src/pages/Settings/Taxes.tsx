@@ -19,7 +19,7 @@ const Taxes = () => {
     '/taxs-settings'
   );
   const form = useForm<TaxesForm>({
-    schema: yupResolver(TaxesSchema),
+    validate: yupResolver(TaxesSchema),
     initialValues: {
       tax_number: +settings[0].tax_number || undefined,
       tax_value_added: +settings[0].tax_value_added || undefined,

@@ -20,7 +20,7 @@ const CashForm = () => {
     '/bank-activity'
   );
   const form = useForm<CashForm>({
-    schema: yupResolver(CashAddSchema),
+    validate: yupResolver(CashAddSchema),
     initialValues: {
       bank_id: null,
       amount: undefined,
