@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 
-export const salesCols: ColumnDef<SaleBillTable>[] = [
+export const invoiceCols: ColumnDef<InvoiceItem>[] = [
   {
     accessorKey: 'product_name',
     header: 'Product Name',

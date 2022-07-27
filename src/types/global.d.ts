@@ -23,9 +23,17 @@ declare global {
   }
   type Unit = 'unit' | 'gm' | 'kg' | 'ton';
 
-  type PriceType = 'retail' | 'wholesale';
-  interface PriceTypeSelect {
+  type PricingType = 'retail' | 'wholesale';
+  interface PricingSelectItem {
     label: string;
-    value: PriceType;
+    value: PricingType;
+  }
+  type ID = { id: number };
+
+  type ExpenseType = 'percent' | 'currency';
+  type Expense = 'total' | 'shipping';
+  interface ExpenseSelectItem {
+    label: string;
+    value: ExpenseType;
   }
 }

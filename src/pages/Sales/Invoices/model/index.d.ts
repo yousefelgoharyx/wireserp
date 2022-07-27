@@ -1,4 +1,4 @@
-interface SaleBillForm {
+interface InvoiceForm {
   client_id: number;
   date_time: Date;
   warehouse_id: number;
@@ -11,14 +11,15 @@ interface SaleBillForm {
   quantity_price: number;
 }
 
-interface SaleBillTable {
+interface InvoiceItem {
   product_name: string;
   product_price: number;
   amount: string;
-  total_price: number;
+  total_price: string;
+  product_id: number;
 }
 
-interface AddProductForm {
+interface InvoiceProductForm {
   sale_bill_id: number;
   product_id: number;
   product_price: number;
@@ -26,4 +27,16 @@ interface AddProductForm {
   unit: string;
   quantity_price: number;
   final_total: number;
+}
+
+interface ExpenseForm {
+  id: number;
+  action: Expense;
+  action_type: ExpenseType;
+  value: number;
+}
+
+interface PaymentForm {
+  id: number;
+  value: number;
 }

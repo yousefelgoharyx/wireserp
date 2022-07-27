@@ -1,6 +1,6 @@
-import { Button, NumberInput, Select, Stack, Text } from '@mantine/core';
+import { Button, NumberInput, Select, Stack } from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
-import { useForm, yupResolver, UseFormReturnType } from '@mantine/form';
+import { UseFormReturnType } from '@mantine/form';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useClientsList } from '../../../api/debts/useClients';
@@ -13,36 +13,17 @@ import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
 import MoneyInput from '../../../components/MoneyInput';
 import Tax from '../../../components/Tax';
+import { pricingTypes, taxOptions, units } from '../../../constants/constants';
+import { withTax, stringify } from '../../../utils/all';
 import find from '../../../utils/find';
-import getTaxPrice from '../../../utils/getTaxPrice';
-import stringify from '../../../utils/stringify';
 import toSelectItems from '../../../utils/toSelectItems';
-import { unitSelect } from '../../../utils/units';
-
-const priceTypes: PriceTypeSelect[] = [
-  {
-    label: 'Retail',
-    value: 'retail',
-  },
-  { label: 'Wholesale', value: 'wholesale' },
-];
-
-const getProductPrice = (type: PriceType, product: Product) => {
-  switch (type) {
-    case 'wholesale':
-      return product.wholesale_price;
-    case 'retail':
-      return product.piece_price;
-    default:
-      throw new Error("Price type doesn't exist");
-  }
-};
+import { getProductPrice } from './controller/invoiceUtils';
 
 type Props = {
-  onSubmit: (data: SaleBillForm) => void;
+  onSubmit: (data: InvoiceForm) => void;
   isLoading: boolean;
-  form: UseFormReturnType<SaleBillForm>;
-  isAdding: boolean;
+  form: UseFormReturnType<InvoiceForm>;
+  status: 'creating' | 'adding';
 };
 
 const InvoicesForm = (props: Props) => {
@@ -51,7 +32,9 @@ const InvoicesForm = (props: Props) => {
   const { data: products } = useProductsList();
   const settings = useSettings();
   const [tax, setTax] = useState(settings.tax_value_added);
-  const [priceType, setPriceType] = useState<PriceType>(priceTypes[0].value);
+  const [priceType, setPriceType] = useState<PricingType>(
+    pricingTypes[0].value
+  );
   const [product, setProduct] = useState<Product>(null);
   const { form } = props;
 
@@ -95,14 +78,15 @@ const InvoicesForm = (props: Props) => {
   }
   function handleProductChange(v: string) {
     const product = find(+v, products);
+    const price = getProductPrice(product, priceType);
     setProduct(product);
     form.setValues({
       ...form.values,
       product_id: +v,
-      product_price: getProductPrice(priceType, product),
+      product_price: price,
       quantity: 1,
-      quantity_price: getProductPrice(priceType, product),
-      final_total: getTaxPrice(getProductPrice(priceType, product), tax),
+      quantity_price: price,
+      final_total: withTax(price, tax),
       unit: product.product_unit,
     });
   }
@@ -118,12 +102,12 @@ const InvoicesForm = (props: Props) => {
     if (quantity !== undefined) {
       let quantityPrice = form.values.product_price * quantity;
       form.setFieldValue('quantity_price', quantityPrice);
-      form.setFieldValue('final_total', getTaxPrice(quantityPrice, tax));
+      form.setFieldValue('final_total', withTax(quantityPrice, tax));
     } else {
       form.setFieldValue('quantity_price', form.values.product_price);
       form.setFieldValue(
         'final_total',
-        getTaxPrice(form.values.product_price, tax)
+        withTax(form.values.product_price, tax)
       );
     }
   }
@@ -137,7 +121,7 @@ const InvoicesForm = (props: Props) => {
         form.setFieldValue('final_total', quantityPrice);
       } else {
         form.setFieldValue('quantity_price', productPrice);
-        form.setFieldValue('final_total', getTaxPrice(productPrice, tax));
+        form.setFieldValue('final_total', withTax(productPrice, tax));
       }
     } else {
       form.setFieldValue('quantity_price', undefined);
@@ -147,17 +131,18 @@ const InvoicesForm = (props: Props) => {
 
   function handleTotalPriceChange(v: number) {
     form.setFieldValue('quantity_price', v);
-    form.setFieldValue('final_total', getTaxPrice(v, tax));
+    form.setFieldValue('final_total', withTax(v, tax));
   }
 
-  function handlePriceTypeChange(v: PriceType) {
+  function handlePriceTypeChange(v: PricingType) {
     setPriceType(v);
+    const price = getProductPrice(product, v);
     form.setValues({
       ...form.values,
-      product_price: getProductPrice(v, product),
+      product_price: price,
       quantity: 1,
-      quantity_price: getProductPrice(v, product),
-      final_total: getTaxPrice(getProductPrice(v, product), tax),
+      quantity_price: price,
+      final_total: withTax(price, tax),
     });
   }
 
@@ -198,10 +183,7 @@ const InvoicesForm = (props: Props) => {
             <Select
               label="Taxes"
               placeholder="Select"
-              data={[
-                { label: 'Not include tax', value: '0' },
-                { label: 'Including tax', value: '1' },
-              ]}
+              data={taxOptions}
               rightSectionWidth={120}
               rightSection={<Tax />}
               {...form.getInputProps('value_added_tax')}
@@ -229,7 +211,7 @@ const InvoicesForm = (props: Props) => {
               rightSection={
                 <Select
                   disabled={isDisabled}
-                  data={priceTypes}
+                  data={pricingTypes}
                   value={priceType}
                   onChange={handlePriceTypeChange}
                 />
@@ -243,10 +225,11 @@ const InvoicesForm = (props: Props) => {
               placeholder="Enter quantity"
               hideControls
               min={1}
+              max={product?.warehouse_balance ?? 0}
               rightSection={
                 <Select
                   disabled={isDisabled}
-                  data={unitSelect}
+                  data={units}
                   {...form.getInputProps('unit')}
                 />
               }
@@ -274,7 +257,7 @@ const InvoicesForm = (props: Props) => {
           </FormGrid>
           <FormDivider />
           <Button loading={props.isLoading} type="submit">
-            {props.isAdding ? 'Add product' : 'Create invoice'}
+            {props.status === 'adding' ? 'Add product' : 'Create invoice'}
           </Button>
         </Stack>
       </form>
