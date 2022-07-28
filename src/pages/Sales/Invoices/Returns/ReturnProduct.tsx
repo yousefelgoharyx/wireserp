@@ -10,7 +10,7 @@ import { DatePicker, TimeInput } from '@mantine/dates';
 import { useForm, yupResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import dayjs from 'dayjs';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useInvoicesMutation,
   useInvoicesQuery,
@@ -26,6 +26,7 @@ import { ReturnProductSchema } from './model/schema';
 
 const ReturnProduct = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const returnService = useReturnsMutation();
   const { data: invoices } = useInvoicesQuery();
   const state = location.state as ReturnProductState;
@@ -56,6 +57,7 @@ const ReturnProduct = () => {
   async function handleReturn() {
     try {
       await returnService.returnProduct(form.values);
+      navigate('/invoices/returns');
       showNotification({
         message: 'Product returned successfully',
       });

@@ -33,9 +33,17 @@ export function getViewAllCols({ onView, onDelete, isDeleting }: ViewAllProps) {
       cell: (table) =>
         new Intl.DateTimeFormat('en-US', {
           dateStyle: 'medium',
+        }).format(new Date(table.row.original?.date_time)),
+      size: 150,
+    },
+    {
+      accessorKey: 'date_time',
+      header: 'Time',
+      cell: (table) =>
+        new Intl.DateTimeFormat('en-US', {
           timeStyle: 'medium',
         }).format(new Date(table.row.original?.date_time)),
-      size: 220,
+      size: 150,
     },
     {
       accessorKey: 'final_total',

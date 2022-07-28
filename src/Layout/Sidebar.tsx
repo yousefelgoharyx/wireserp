@@ -3,9 +3,12 @@ import {
   Bucket,
   BuildingStore,
   BuildingWarehouse,
+  CurrencyDollar,
   Discount,
+  FileInvoice,
   Home,
   LayoutGrid,
+  Report,
   ReportMoney,
   Settings,
   Switch2,
@@ -63,7 +66,7 @@ const sidebar = [
   },
   {
     label: 'Debts',
-    icon: ReportMoney,
+    icon: Report,
     items: [
       {
         label: 'Client',
@@ -121,15 +124,15 @@ const sidebar = [
 
   {
     label: 'Sales',
-    icon: ReportMoney,
+    icon: CurrencyDollar,
     items: [
       {
         label: 'Invoices',
-        icon: UserCircle,
+        icon: FileInvoice,
         items: [
           { label: 'Add invoice', to: '/invoices/create' },
-          { label: 'View all', to: '/invoices/view' },
-          { label: 'View returns', to: '/invoices/returns' },
+          { label: 'List of Invoices', to: '/invoices/view' },
+          { label: 'List of invoices returns', to: '/invoices/returns' },
         ],
       },
     ],
