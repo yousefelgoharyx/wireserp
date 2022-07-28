@@ -1,7 +1,7 @@
 import { showNotification, updateNotification } from '@mantine/notifications';
 import { Check, Error404 } from 'tabler-icons-react';
-import useRemove from '../../../../hooks/useRemove';
-import getApiError from '../../../../utils/getApiError';
+import useRemove from '../../../../../hooks/useRemove';
+import getApiError from '../../../../../utils/getApiError';
 import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoiceRemove = () => {

@@ -1,9 +1,9 @@
 import { useForm, UseFormReturnType, yupResolver } from '@mantine/form';
 import React from 'react';
-import { useProductsList } from '../../../../api/store/useProducts';
-import find from '../../../../utils/find';
-import moneyFormatter from '../../../../utils/moneyFormatter';
+import { useProductsList } from '../../../../../api/store/useProducts';
+import find from '../../../../../utils/find';
 import { ExpenseForm, InvoiceForm, PaymentForm } from '../model/schema';
+import { getExpensePrice } from './invoiceUtils';
 
 const invoiceInitialValues: InvoiceForm = {
   client_id: null,
@@ -40,6 +40,8 @@ interface Context {
   setShippingType: (v: ExpenseType) => void;
   payment: number;
   setPayment: (n: number) => void;
+  fullPrice: number;
+  fullPriceWithExpenses: number;
 }
 
 const InvoiceContext = React.createContext<Context>(null);
@@ -93,6 +95,14 @@ const InvoiceProvider = ({ children }) => {
       total_price: item.final_total,
     };
   });
+  let fullPrice: number = invoiceRows.reduce(
+    (acc, row) => acc + row.total_price,
+    0
+  );
+  let fullPriceWithExpenses =
+    fullPrice -
+    getExpensePrice(fullPrice, discount, discountType) +
+    getExpensePrice(fullPrice, shipping, shippingType);
   return (
     <InvoiceContext.Provider
       value={{
@@ -117,6 +127,8 @@ const InvoiceProvider = ({ children }) => {
         setDiscountType,
         shippingType,
         setShippingType,
+        fullPrice,
+        fullPriceWithExpenses,
       }}
     >
       {children}

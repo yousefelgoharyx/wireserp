@@ -12,6 +12,7 @@ const MoneyInput = (props: NumberInputProps) => {
     <NumberInput
       noClampOnBlur
       hideControls
+      precision={2}
       icon={<Text size="xs">{settings.currency}</Text>}
       formatter={formatter}
       parser={(value) => value.replace(/\$\s?|(,*)/g, '')}

@@ -1,22 +1,21 @@
 import { Button, Stack } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import MoneyInput from '../../../components/MoneyInput';
+import MoneyInput from '../../../../components/MoneyInput';
+import { useInvoiceContext } from './context/InvoiceContext';
 
 type Props = {
   onSubmit: () => void;
-  form: UseFormReturnType<PaymentForm>;
   isLoading: boolean;
 };
 const InvoicesPaymentForm = (props: Props) => {
-  console.log(props.form);
-
+  const { paymentForm, fullPrice } = useInvoiceContext();
   return (
-    <form onSubmit={props.form.onSubmit(props.onSubmit)}>
+    <form onSubmit={paymentForm.onSubmit(props.onSubmit)}>
       <Stack>
         <MoneyInput
           label="Amount"
           placeholder="value"
-          {...props.form.getInputProps('value')}
+          max={fullPrice}
+          {...paymentForm.getInputProps('value')}
         />
         <Button type="submit" loading={props.isLoading}>
           Record payment

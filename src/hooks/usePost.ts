@@ -12,7 +12,7 @@ const usePost = <Body, Response = any>(keys: string[], url: string) => {
   const mutation = useMutation(
     (data: Body) => create<Body, Response>(url, data),
     {
-      onSuccess: () => {
+      onSettled: () => {
         keys.forEach((key) => {
           queryClient.invalidateQueries(key);
         });

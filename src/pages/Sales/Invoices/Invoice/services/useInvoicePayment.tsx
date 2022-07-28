@@ -1,6 +1,6 @@
 import { showNotification } from '@mantine/notifications';
-import usePost from '../../../../hooks/usePost';
-import getApiError from '../../../../utils/getApiError';
+import usePost from '../../../../../hooks/usePost';
+import getApiError from '../../../../../utils/getApiError';
 import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoicePayment = () => {
@@ -19,6 +19,8 @@ const useInvoicePayment = () => {
       invoice.setPayment(invoice.paymentForm.values.value);
       showNotification({ message: 'Payment recorded' });
     } catch (error) {
+      invoice.setPayment(0);
+      invoice.paymentForm.setFieldError('value', 0);
       showNotification({
         message: getApiError(error.response.data),
         color: 'red',

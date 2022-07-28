@@ -16,7 +16,7 @@ const useUpdate = <Body, Response = AxiosResponse<any>>(
   const mutation = useMutation(
     (data: Body) => updateFn<Body, Response>(url, data),
     {
-      onSuccess: () => {
+      onSettled: () => {
         keys.forEach((key) => {
           queryClient.invalidateQueries(key);
         });

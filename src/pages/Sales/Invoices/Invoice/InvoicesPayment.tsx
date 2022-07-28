@@ -1,5 +1,4 @@
 import { Modal } from '@mantine/core';
-import { useInvoiceContext } from './context/InvoiceContext';
 import InvoicesPaymentForm from './InvoicesPaymentForm';
 import useInvoicePayment from './services/useInvoicePayment';
 
@@ -8,7 +7,6 @@ type Props = {
   onClose: () => void;
 };
 const InvoicesPayment = (props: Props) => {
-  const invoice = useInvoiceContext();
   const invoicePayment = useInvoicePayment();
   return (
     <Modal
@@ -18,7 +16,6 @@ const InvoicesPayment = (props: Props) => {
       onClose={props.onClose}
     >
       <InvoicesPaymentForm
-        form={invoice.paymentForm}
         isLoading={invoicePayment.isLoading}
         onSubmit={async () => {
           await invoicePayment.recordPayment();

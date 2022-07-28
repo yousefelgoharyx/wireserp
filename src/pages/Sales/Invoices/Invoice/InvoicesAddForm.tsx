@@ -2,21 +2,26 @@ import { Button, NumberInput, Select, Stack } from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
 import { UseFormReturnType } from '@mantine/form';
 import dayjs from 'dayjs';
-import { useState } from 'react';
-import { useClientsList } from '../../../api/debts/useClients';
-import { useProductsList } from '../../../api/store/useProducts';
-import { useWarehousesList } from '../../../api/store/useWarehouses';
-import useSettings from '../../../api/useSettings';
-import CountOfInput from '../../../components/CountOfInput';
-import FormDivider from '../../../components/FormDivider';
-import FormGrid from '../../../components/FormGrid';
-import FormShell from '../../../components/FormShell';
-import MoneyInput from '../../../components/MoneyInput';
-import Tax from '../../../components/Tax';
-import { pricingTypes, taxOptions, units } from '../../../constants/constants';
-import { withTax, stringify } from '../../../utils/all';
-import find from '../../../utils/find';
-import toSelectItems from '../../../utils/toSelectItems';
+import { useEffect, useState } from 'react';
+import { useClientsList } from '../../../../api/debts/useClients';
+import { useProductsList } from '../../../../api/store/useProducts';
+import { useWarehousesList } from '../../../../api/store/useWarehouses';
+import useSettings from '../../../../api/useSettings';
+import CountOfInput from '../../../../components/CountOfInput';
+import FormDivider from '../../../../components/FormDivider';
+import FormGrid from '../../../../components/FormGrid';
+import FormShell from '../../../../components/FormShell';
+import MoneyInput from '../../../../components/MoneyInput';
+import Tax from '../../../../components/Tax';
+import {
+  pricingTypes,
+  taxOptions,
+  units,
+} from '../../../../constants/constants';
+import { withTax, stringify } from '../../../../utils/all';
+import find from '../../../../utils/find';
+import toSelectItems from '../../../../utils/toSelectItems';
+import { useInvoiceContext } from './context/InvoiceContext';
 import { getProductPrice } from './context/invoiceUtils';
 
 type Props = {
@@ -31,13 +36,17 @@ const InvoicesForm = (props: Props) => {
   const { data: warehouses } = useWarehousesList();
   const { data: products } = useProductsList();
   const settings = useSettings();
+  const { form, id } = useInvoiceContext();
   const [tax, setTax] = useState(settings.tax_value_added);
   const [priceType, setPriceType] = useState<PricingType>(
     pricingTypes[0].value
   );
   const [product, setProduct] = useState<Product>(null);
-  const { form } = props;
 
+  useEffect(() => {
+    const product = find(form.values.product_id, products);
+    setProduct(product);
+  }, [form.values.product_id, products]);
   const clientSelect = toSelectItems<Client>(clients, {
     labelKey: 'c_name',
     valueKey: 'id',
@@ -80,20 +89,21 @@ const InvoicesForm = (props: Props) => {
     const product = find(+v, products);
     const price = getProductPrice(product, priceType);
     setProduct(product);
-    form.setValues({
-      ...form.values,
-      product_id: +v,
-      product_price: price,
-      quantity: 1,
-      quantity_price: price,
-      final_total: withTax(price, tax),
-      unit: product.product_unit,
-    });
+    form.setFieldValue('product_id', +v);
+    form.setFieldValue('product_price', price);
+    form.setFieldValue('quantity', 1);
+    form.setFieldValue('quantity_price', price);
+    form.setFieldValue('final_total', withTax(price, tax));
+    form.setFieldValue('unit', product.product_unit);
   }
 
   function handleTaxChange(v) {
     form.setFieldValue('value_added_tax', v);
     let newTax = v === '1' ? settings.tax_value_added : 0;
+    form.setFieldValue(
+      'final_total',
+      withTax(form.values.quantity_price, newTax)
+    );
     setTax(newTax);
   }
 
@@ -154,6 +164,7 @@ const InvoicesForm = (props: Props) => {
         <Stack>
           <FormGrid>
             <Select
+              disabled={id}
               data={clientSelect}
               label="Client"
               placeholder="Select client"
@@ -224,6 +235,7 @@ const InvoicesForm = (props: Props) => {
               label="Quantity"
               placeholder="Enter quantity"
               hideControls
+              precision={0}
               min={1}
               max={product?.warehouse_balance ?? 0}
               rightSection={

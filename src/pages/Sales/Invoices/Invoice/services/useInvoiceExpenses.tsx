@@ -1,6 +1,6 @@
 import { showNotification } from '@mantine/notifications';
-import usePost from '../../../../hooks/usePost';
-import getApiError from '../../../../utils/getApiError';
+import usePost from '../../../../../hooks/usePost';
+import getApiError from '../../../../../utils/getApiError';
 import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoiceExpenses = () => {
