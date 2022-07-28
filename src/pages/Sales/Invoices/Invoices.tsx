@@ -1,6 +1,6 @@
 import { Stack } from '@mantine/core';
 import InvoiceAdd from './InvoicesAdd';
-import InvoiceProvider from './controller/InvoiceContext';
+import InvoiceProvider from './context/InvoiceContext';
 import InvoicesTable from './InvoicesTable';
 import InvoicesExpenses from './InvoicesExpenses';
 import InvoicesControls from './InvoicesControls';

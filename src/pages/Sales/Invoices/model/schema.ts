@@ -31,7 +31,6 @@ export const InvoiceForm: yup.SchemaOf<InvoiceForm> = yup.object().shape({
     .typeError('Enter a quantity price'),
 });
 export const ExpenseForm: yup.SchemaOf<ExpenseForm> = yup.object().shape({
-  id: yup.number().required(fieldRequired).typeError('Select an expense'),
   action: yup
     .mixed<Expense>()
     .oneOf(['total', 'shipping'])
@@ -46,6 +45,5 @@ export const ExpenseForm: yup.SchemaOf<ExpenseForm> = yup.object().shape({
 });
 
 export const PaymentForm: yup.SchemaOf<PaymentForm> = yup.object().shape({
-  id: yup.number().required(fieldRequired).typeError('Select an expense'),
   value: yup.number().required(fieldRequired).typeError('Enter a value'),
 });

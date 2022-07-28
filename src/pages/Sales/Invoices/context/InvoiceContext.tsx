@@ -30,6 +30,16 @@ interface Context {
   shippingForm: UseFormReturnType<ExpenseForm>;
   paymentForm: UseFormReturnType<PaymentForm>;
   invoiceRows: InvoiceItem[];
+  discount: number;
+  discountType: ExpenseType;
+  setDiscount: (n: number) => void;
+  setDiscountType: (v: ExpenseType) => void;
+  shipping: number;
+  shippingType: ExpenseType;
+  setShipping: (n: number) => void;
+  setShippingType: (v: ExpenseType) => void;
+  payment: number;
+  setPayment: (n: number) => void;
 }
 
 const InvoiceContext = React.createContext<Context>(null);
@@ -37,6 +47,11 @@ const InvoiceContext = React.createContext<Context>(null);
 const InvoiceProvider = ({ children }) => {
   const [id, setId] = React.useState<number | null>(null);
   const [items, setItems] = React.useState<InvoiceForm[]>([]);
+  const [discount, setDiscount] = React.useState<number>(0);
+  const [discountType, setDiscountType] = React.useState<ExpenseType>(null);
+  const [shipping, setShipping] = React.useState<number>(0);
+  const [shippingType, setShippingType] = React.useState<ExpenseType>(null);
+  const [payment, setPayment] = React.useState<number>(0);
   const [status, setStatus] = React.useState<'creating' | 'adding'>('creating');
   const { data: products } = useProductsList();
   const form = useForm<InvoiceForm>({
@@ -47,7 +62,6 @@ const InvoiceProvider = ({ children }) => {
   const discountForm = useForm<ExpenseForm>({
     validate: yupResolver(ExpenseForm),
     initialValues: {
-      id: null,
       action: 'total',
       action_type: 'currency',
       value: undefined,
@@ -57,7 +71,6 @@ const InvoiceProvider = ({ children }) => {
   const shippingForm = useForm<ExpenseForm>({
     validate: yupResolver(ExpenseForm),
     initialValues: {
-      id: null,
       action: 'shipping',
       action_type: 'currency',
       value: undefined,
@@ -67,7 +80,6 @@ const InvoiceProvider = ({ children }) => {
   const paymentForm = useForm<PaymentForm>({
     validate: yupResolver(PaymentForm),
     initialValues: {
-      id: null,
       value: undefined,
     },
   });
@@ -78,7 +90,7 @@ const InvoiceProvider = ({ children }) => {
       product_id: item.product_id,
       product_price: item.product_price,
       amount: item.quantity + ' ' + item.unit,
-      total_price: moneyFormatter(item.final_total.toString()),
+      total_price: item.final_total,
     };
   });
   return (
@@ -95,6 +107,16 @@ const InvoiceProvider = ({ children }) => {
         shippingForm,
         paymentForm,
         invoiceRows,
+        discount,
+        setDiscount,
+        shipping,
+        setShipping,
+        payment,
+        setPayment,
+        discountType,
+        setDiscountType,
+        shippingType,
+        setShippingType,
       }}
     >
       {children}

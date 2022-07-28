@@ -1,7 +1,7 @@
 import { showNotification } from '@mantine/notifications';
 import usePost from '../../../../hooks/usePost';
 import getApiError from '../../../../utils/getApiError';
-import { useInvoiceContext } from '../controller/InvoiceContext';
+import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoiceAdd = () => {
   const { post: createInvoice, isPosting: isCreatingInvoice } =
@@ -29,12 +29,10 @@ const useInvoiceAdd = () => {
         showNotification({ message: 'Added product to invoice' });
       } else {
         const response = await createInvoice(values);
+        console.log(response);
         invoice.setStatus('adding');
         invoice.setId(response.id);
         invoice.setItems([...invoice.items, values]);
-        invoice.discountForm.setFieldValue('id', response.id);
-        invoice.shippingForm.setFieldValue('id', response.id);
-        invoice.paymentForm.setFieldValue('id', response.id);
         showNotification({ message: 'Invoice created successfully' });
       }
       invoice.form.setValues({

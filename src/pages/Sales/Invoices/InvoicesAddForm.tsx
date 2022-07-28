@@ -17,7 +17,7 @@ import { pricingTypes, taxOptions, units } from '../../../constants/constants';
 import { withTax, stringify } from '../../../utils/all';
 import find from '../../../utils/find';
 import toSelectItems from '../../../utils/toSelectItems';
-import { getProductPrice } from './controller/invoiceUtils';
+import { getProductPrice } from './context/invoiceUtils';
 
 type Props = {
   onSubmit: (data: InvoiceForm) => void;

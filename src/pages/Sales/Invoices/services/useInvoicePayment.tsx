@@ -1,18 +1,22 @@
 import { showNotification } from '@mantine/notifications';
 import usePost from '../../../../hooks/usePost';
 import getApiError from '../../../../utils/getApiError';
-import { useInvoiceContext } from '../controller/InvoiceContext';
+import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoicePayment = () => {
   const invoice = useInvoiceContext();
-  const { post, isPosting } = usePost<PaymentForm>(
+  const { post, isPosting } = usePost<withID<PaymentForm>>(
     ['invoices'],
     '/record-payment'
   );
 
   async function recordPayment() {
     try {
-      await post(invoice.paymentForm.values);
+      await post({
+        id: invoice.id,
+        ...invoice.paymentForm.values,
+      });
+      invoice.setPayment(invoice.paymentForm.values.value);
       showNotification({ message: 'Payment recorded' });
     } catch (error) {
       showNotification({

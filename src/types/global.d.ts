@@ -36,4 +36,6 @@ declare global {
     label: string;
     value: ExpenseType;
   }
+
+  type withID<T> = T & { id: number };
 }

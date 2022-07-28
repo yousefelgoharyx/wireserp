@@ -1,5 +1,5 @@
 import { Modal } from '@mantine/core';
-import { useInvoiceContext } from './controller/InvoiceContext';
+import { useInvoiceContext } from './context/InvoiceContext';
 import InvoicesPaymentForm from './InvoicesPaymentForm';
 import useInvoicePayment from './services/useInvoicePayment';
 

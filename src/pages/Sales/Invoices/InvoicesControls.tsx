@@ -1,5 +1,5 @@
 import { Button, Group } from '@mantine/core';
-import { useInvoiceContext } from './controller/InvoiceContext';
+import { useInvoiceContext } from './context/InvoiceContext';
 import useInvoiceRemove from './services/useInvoiceRemove';
 
 type Props = {
@@ -11,15 +11,16 @@ const InvoicesControls = (props: Props) => {
   if (!invoice.id) return;
   return (
     <Group>
+      <Button>Print</Button>
+      <Button color="gray" onClick={props.onRecordPayment}>
+        Record
+      </Button>
       <Button
         loading={invoiceRemover.isRemovingInvoice}
         onClick={invoiceRemover.removeInvoice}
         color="red"
       >
         Cancel Invoice
-      </Button>
-      <Button color="gray" onClick={props.onRecordPayment}>
-        Record
       </Button>
     </Group>
   );

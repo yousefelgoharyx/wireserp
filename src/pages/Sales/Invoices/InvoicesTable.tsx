@@ -2,7 +2,7 @@ import { Stack } from '@mantine/core';
 import { ColumnDef } from '@tanstack/react-table';
 import DataGrid from '../../../components/DataGrid';
 import EditDelete from '../../../components/EditDelete';
-import { useInvoiceContext } from './controller/InvoiceContext';
+import { useInvoiceContext } from './context/InvoiceContext';
 import { invoiceCols } from './model/columns';
 import useInvoiceRemove from './services/useInvoiceRemove';
 

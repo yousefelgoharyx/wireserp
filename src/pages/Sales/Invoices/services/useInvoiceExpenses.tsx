@@ -1,15 +1,23 @@
 import { showNotification } from '@mantine/notifications';
 import usePost from '../../../../hooks/usePost';
 import getApiError from '../../../../utils/getApiError';
-import { useInvoiceContext } from '../controller/InvoiceContext';
+import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoiceExpenses = () => {
   const invoice = useInvoiceContext();
-  const expenses = usePost<ExpenseForm>(['invoices'], '/sale-bills-extra');
+  const expenses = usePost<withID<ExpenseForm>>(
+    ['invoices'],
+    '/sale-bills-extra'
+  );
 
   async function setDiscount() {
     try {
-      await expenses.post(invoice.discountForm.values);
+      await expenses.post({
+        id: invoice.id,
+        ...invoice.discountForm.values,
+      });
+      invoice.setDiscount(invoice.discountForm.values.value);
+      invoice.setDiscountType(invoice.discountForm.values.action_type);
       showNotification({ message: 'Discount added' });
     } catch (error) {
       showNotification({
@@ -21,7 +29,12 @@ const useInvoiceExpenses = () => {
 
   async function setShipping() {
     try {
-      await expenses.post(invoice.shippingForm.values);
+      await expenses.post({
+        id: invoice.id,
+        ...invoice.shippingForm.values,
+      });
+      invoice.setShipping(invoice.shippingForm.values.value);
+      invoice.setShippingType(invoice.shippingForm.values.action_type);
       showNotification({ message: 'Shipping added' });
     } catch (error) {
       showNotification({

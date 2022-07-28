@@ -15,7 +15,7 @@ interface InvoiceItem {
   product_name: string;
   product_price: number;
   amount: string;
-  total_price: string;
+  total_price: number;
   product_id: number;
 }
 
@@ -30,13 +30,11 @@ interface InvoiceProductForm {
 }
 
 interface ExpenseForm {
-  id: number;
   action: Expense;
   action_type: ExpenseType;
   value: number;
 }
 
 interface PaymentForm {
-  id: number;
   value: number;
 }
