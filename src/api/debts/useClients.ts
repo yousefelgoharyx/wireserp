@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import instance from '../../utils/axios';
+import toSelectItems from '../../utils/toSelectItems';
 
 async function fetcher() {
   const response = await instance.post<Client[]>('/clients');
@@ -33,7 +34,15 @@ const useClients = () => {
 };
 
 export const useClientsList = () => {
-  return useQuery('clients', fetcher);
+  const { data } = useQuery('clients', fetcher);
+  const selectItems = toSelectItems(data, {
+    labelKey: 'c_name',
+    valueKey: 'id',
+  });
+  return {
+    data,
+    selectItems,
+  };
 };
 
 export default useClients;

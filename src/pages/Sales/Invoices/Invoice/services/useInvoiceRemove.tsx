@@ -1,18 +1,12 @@
 import { showNotification, updateNotification } from '@mantine/notifications';
 import { Check, Error404 } from 'tabler-icons-react';
-import useRemove from '../../../../../hooks/useRemove';
+import { useInvoicesMutation } from '../../../../../api/sales/useInvoices';
 import getApiError from '../../../../../utils/getApiError';
 import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoiceRemove = () => {
   const invoice = useInvoiceContext();
-  const { remove: rmvInvoice, isRemoving: isRemovingInvoice } = useRemove(
-    ['invoices'],
-    '/sale-bills'
-  );
-
-  const { remove: rmvInvoiceProduct, isRemoving: isRemovingInvoiceProduct } =
-    useRemove(['invoices'], `/product-to-bill/${invoice.id}`);
+  const invoiceService = useInvoicesMutation(invoice.id);
 
   async function removeInvoice() {
     showNotification({
@@ -24,7 +18,7 @@ const useInvoiceRemove = () => {
       disallowClose: true,
     });
     try {
-      await rmvInvoice(invoice.id);
+      await invoiceService.removeInvoice(invoice.id);
       invoice.setId(null);
       invoice.setItems([]);
       invoice.setStatus('creating');
@@ -56,7 +50,7 @@ const useInvoiceRemove = () => {
       disallowClose: true,
     });
     try {
-      await rmvInvoiceProduct(id);
+      await invoiceService.removeInvoiceProduct(id);
       invoice.setItems(invoice.items.filter((item) => item.product_id !== id));
       updateNotification({
         id: 'remove-invoice-product',
@@ -76,8 +70,8 @@ const useInvoiceRemove = () => {
   return {
     removeInvoice,
     removeInvoiceProduct,
-    isRemovingInvoice,
-    isRemovingInvoiceProduct,
+    isRemovingInvoice: invoiceService.isRemovingInvoice,
+    isRemovingInvoiceProduct: invoiceService.isRemovingInvoiceProduct,
   };
 };
 

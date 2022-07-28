@@ -1,13 +1,11 @@
 import { showNotification } from '@mantine/notifications';
-import usePost from '../../../../../hooks/usePost';
+import { useInvoicesMutation } from '../../../../../api/sales/useInvoices';
 import getApiError from '../../../../../utils/getApiError';
 import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoiceAdd = () => {
-  const { post: createInvoice, isPosting: isCreatingInvoice } =
-    usePost<InvoiceForm>(['invoices'], '/sale-bills');
-  const { post: addToInvoice, isPosting: isAddingInvoice } =
-    usePost<InvoiceProductForm>(['invoices'], '/product-to-bill');
+  const { createInvoice, addToInvoice, isCreatingInvoice, isAddingInvoice } =
+    useInvoicesMutation();
 
   const invoice = useInvoiceContext();
 

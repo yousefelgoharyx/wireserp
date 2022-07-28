@@ -6,6 +6,9 @@ import { useAuth } from './AuthProvider';
 import { FullSpinner } from './components/Spinner';
 import Invoice from './pages/Sales/Invoices/Invoice/Invoice';
 import ViewInvoices from './pages/Sales/Invoices/ViewInvoices/ViewInvoices';
+import ViewInvoice from './pages/Sales/Invoices/ViewInvoices/ViewInvoice';
+import ReturnProduct from './pages/Sales/Invoices/Returns/ReturnProduct';
+import Returns from './pages/Sales/Invoices/Returns/Returns';
 
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login/Login'));
@@ -96,7 +99,13 @@ function App() {
             <Route path="coupons" element={<Coupons />} />
             <Route path="invoices">
               <Route path="create" element={<Invoice />} />
-              <Route path="all" element={<ViewInvoices />} />
+              <Route path=":id" element={<ViewInvoices />} />
+              <Route path="view">
+                <Route index element={<ViewInvoices />} />
+                <Route path=":id" element={<ViewInvoice />} />
+              </Route>
+              <Route path="return-product" element={<ReturnProduct />} />
+              <Route path="returns" element={<Returns />} />
             </Route>
             <Route path="settings">
               <Route index element={<Settings />} />

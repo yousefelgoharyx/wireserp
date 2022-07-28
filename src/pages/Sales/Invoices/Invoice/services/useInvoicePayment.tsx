@@ -1,18 +1,15 @@
 import { showNotification } from '@mantine/notifications';
-import usePost from '../../../../../hooks/usePost';
+import { useInvoicesMutation } from '../../../../../api/sales/useInvoices';
 import getApiError from '../../../../../utils/getApiError';
 import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoicePayment = () => {
   const invoice = useInvoiceContext();
-  const { post, isPosting } = usePost<withID<PaymentForm>>(
-    ['invoices'],
-    '/record-payment'
-  );
+  const invoiceService = useInvoicesMutation();
 
   async function recordPayment() {
     try {
-      await post({
+      await invoiceService.recordPayment({
         id: invoice.id,
         ...invoice.paymentForm.values,
       });
@@ -30,7 +27,7 @@ const useInvoicePayment = () => {
 
   return {
     recordPayment,
-    isLoading: isPosting,
+    isLoading: invoiceService.isRecordingPayment,
   };
 };
 

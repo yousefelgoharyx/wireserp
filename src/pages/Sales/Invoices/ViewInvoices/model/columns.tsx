@@ -1,13 +1,17 @@
-import { ActionIcon, Group } from '@mantine/core';
+import { ActionIcon, Group, Tooltip } from '@mantine/core';
 import { ColumnDef } from '@tanstack/react-table';
-import { Eye, Trash } from 'tabler-icons-react';
+import { ArrowBack, Eye, Trash } from 'tabler-icons-react';
 
-interface Props {
+interface ViewAllProps {
   onView: (id: number) => void;
   onDelete: (id: number) => void;
   isDeleting: boolean;
 }
-export function getViewAllCols({ onView, onDelete, isDeleting }: Props) {
+interface ProductProps {
+  onReturn: (id: number) => void;
+  isReturning: boolean;
+}
+export function getViewAllCols({ onView, onDelete, isDeleting }: ViewAllProps) {
   const cols: ColumnDef<Invoice>[] = [
     {
       accessorKey: 'id',
@@ -60,6 +64,65 @@ export function getViewAllCols({ onView, onDelete, isDeleting }: Props) {
             >
               <Trash size={20} />
             </ActionIcon>
+          </Group>
+        );
+      },
+    },
+  ];
+  return cols;
+}
+
+export function getInvoiceProductsCols({
+  onReturn,
+  isReturning,
+}: ProductProps) {
+  const cols: ColumnDef<InvoiceProduct>[] = [
+    {
+      accessorKey: 'id',
+      header: '#',
+      size: 80,
+    },
+    {
+      accessorKey: 'product_name',
+      header: 'Product Name',
+    },
+
+    {
+      accessorKey: 'product_price',
+      header: 'Product Price',
+    },
+
+    {
+      accessorKey: 'quantity',
+      header: 'Quantity',
+    },
+    {
+      accessorKey: 'quantity_price',
+      header: 'Quantity Price',
+    },
+    {
+      accessorKey: 'unit',
+      header: 'Unit',
+    },
+    {
+      accessorKey: 'final_total',
+      header: 'Full price',
+    },
+
+    {
+      id: 'actions',
+      header: 'Actions',
+      cell: (table) => {
+        return (
+          <Group>
+            <Tooltip label="Return product" transition="scale">
+              <ActionIcon
+                loading={isReturning}
+                onClick={() => onReturn(table.row.original.product_id)}
+              >
+                <ArrowBack size={20} />
+              </ActionIcon>
+            </Tooltip>
           </Group>
         );
       },

@@ -28,7 +28,7 @@ const CouponsUpdate = (props: UpdateModal) => {
   });
 
   async function handleUpdate() {
-    const coupon: CouponUpdate = {
+    const coupon = {
       ...form.values,
       id: currentCoupon.id,
     };

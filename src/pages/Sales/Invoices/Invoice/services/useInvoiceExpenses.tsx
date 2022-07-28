@@ -1,18 +1,15 @@
 import { showNotification } from '@mantine/notifications';
-import usePost from '../../../../../hooks/usePost';
+import { useInvoicesMutation } from '../../../../../api/sales/useInvoices';
 import getApiError from '../../../../../utils/getApiError';
 import { useInvoiceContext } from '../context/InvoiceContext';
 
 const useInvoiceExpenses = () => {
   const invoice = useInvoiceContext();
-  const expenses = usePost<withID<ExpenseForm>>(
-    ['invoices'],
-    '/sale-bills-extra'
-  );
+  const { createExpense, isCreatingExpense } = useInvoicesMutation();
 
   async function setDiscount() {
     try {
-      await expenses.post({
+      await createExpense({
         id: invoice.id,
         ...invoice.discountForm.values,
       });
@@ -29,7 +26,7 @@ const useInvoiceExpenses = () => {
 
   async function setShipping() {
     try {
-      await expenses.post({
+      await createExpense({
         id: invoice.id,
         ...invoice.shippingForm.values,
       });
@@ -46,7 +43,7 @@ const useInvoiceExpenses = () => {
   return {
     setDiscount,
     setShipping,
-    isLoading: expenses.isPosting,
+    isLoading: isCreatingExpense,
   };
 };
 

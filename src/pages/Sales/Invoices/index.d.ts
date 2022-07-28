@@ -23,13 +23,7 @@ interface Invoice {
   paid: number;
   status: string;
   products: InvoiceProduct[];
-  extras: Extra[];
-}
-
-interface Extra {
-  action: string;
-  action_type: string;
-  value: number;
+  extras: ExpenseForm[];
 }
 
 interface InvoiceProduct {
@@ -69,4 +63,29 @@ interface ExpenseForm {
 
 interface PaymentForm {
   value: number;
+}
+
+interface ReturnProductForm {
+  id: number;
+  product_id: number;
+  quantity: number;
+  date_time: Date;
+  notes: string;
+}
+
+interface ReturnProductState {
+  id: number;
+  product_id: number;
+}
+
+interface Return {
+  id: number;
+  bill_id: number;
+  product_id: number;
+  product_name: string;
+  client_id: number;
+  client_name: string;
+  quantity: 5;
+  date_time: Date;
+  notes: string;
 }

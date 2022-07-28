@@ -19,7 +19,6 @@ import {
   SubcatsToSelectItems,
   useSubCatsList,
 } from '../../../api/store/useSubCats';
-import { units } from '../../../api/useUnits';
 
 import {
   useWarehousesList,
@@ -28,6 +27,7 @@ import {
 import FormDivider from '../../../components/FormDivider';
 import FormGrid from '../../../components/FormGrid';
 import FormShell from '../../../components/FormShell';
+import { units } from '../../../constants/constants';
 import getApiError from '../../../utils/getApiError';
 import schema from './schema';
 

@@ -128,7 +128,8 @@ const sidebar = [
         icon: UserCircle,
         items: [
           { label: 'Add invoice', to: '/invoices/create' },
-          { label: 'View all', to: '/invoices/all' },
+          { label: 'View all', to: '/invoices/view' },
+          { label: 'View returns', to: '/invoices/returns' },
         ],
       },
     ],

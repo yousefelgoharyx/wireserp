@@ -23,7 +23,11 @@ export const InvoiceForm: yup.SchemaOf<InvoiceForm> = yup.object().shape({
     .number()
     .required(fieldRequired)
     .typeError('Enter a product price'),
-  quantity: yup.number().required(fieldRequired).typeError('Enter a quantity'),
+  quantity: yup
+    .number()
+    .min(0, 'Quantity must be greater than 0')
+    .required(fieldRequired)
+    .typeError('Enter a quantity'),
   unit: yup.string().required(fieldRequired).typeError('Enter a unit'),
   quantity_price: yup
     .number()

@@ -20,13 +20,13 @@ import {
   SubcatsToSelectItems,
   useSubCatsList,
 } from '../../../api/store/useSubCats';
-import { units } from '../../../api/useUnits';
 import {
   useWarehousesList,
   WarehousesToSelectItems,
 } from '../../../api/store/useWarehouses';
 import FormDivider from '../../../components/FormDivider';
 import Spinner from '../../../components/Spinner';
+import { units } from '../../../constants/constants';
 import find from '../../../utils/find';
 import getApiError from '../../../utils/getApiError';
 import schema from './schema';
