@@ -9,6 +9,7 @@ import ViewInvoices from './pages/Sales/Invoices/ViewInvoices/ViewInvoices';
 import ViewInvoice from './pages/Sales/Invoices/ViewInvoices/ViewInvoice';
 import ReturnProduct from './pages/Sales/Invoices/Returns/ReturnProduct';
 import Returns from './pages/Sales/Invoices/Returns/Returns';
+import Pos from './pages/Sales/Pos/Pos';
 
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login/Login'));
@@ -107,6 +108,7 @@ function App() {
               <Route path="return-product" element={<ReturnProduct />} />
               <Route path="returns" element={<Returns />} />
             </Route>
+            <Route path="pos" element={<Pos />} />
             <Route path="settings">
               <Route index element={<Settings />} />
             </Route>

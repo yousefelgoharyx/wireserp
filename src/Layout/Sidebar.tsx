@@ -144,6 +144,11 @@ const sidebar = [
     to: '/coupons',
   },
   {
+    label: 'POS',
+    icon: Discount,
+    to: '/pos',
+  },
+  {
     label: 'Settings',
     icon: Settings,
     to: '/settings',

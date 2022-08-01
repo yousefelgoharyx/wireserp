@@ -44,7 +44,11 @@ const useProducts = () => {
 };
 
 export const useProductsList = () => {
-  return useQuery('products', fetcher);
+  const query = useQuery('products', fetcher);
+  return {
+    ...query,
+    selectItems: productsToSelectItems(query.data),
+  };
 };
 
 export function productsToSelectItems(products: Product[]): SelectItem[] {

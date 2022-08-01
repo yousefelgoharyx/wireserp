@@ -38,4 +38,7 @@ declare global {
   }
 
   type withID<T> = T & { id: number };
+
+  type useStateReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>];
+  type setStateAction<T> = React.Dispatch<React.SetStateAction<T>>;
 }
