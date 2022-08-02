@@ -33,3 +33,9 @@ export const units: UnitSelectItem[] = [
     value: 'ton',
   },
 ];
+
+export const paymentMethods = [
+  { label: 'Cash', value: 'cash' },
+  { label: 'Visa', value: 'visa' },
+  { label: 'Coupon', value: 'coupon' },
+];
